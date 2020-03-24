@@ -1,0 +1,3 @@
+m=m
+pol=lop
+tytry=f

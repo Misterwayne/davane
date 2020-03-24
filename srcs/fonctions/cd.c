@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/22 18:10:40 by truepath         ###   ########.fr       */
+/*   Updated: 2020/03/24 16:15:35 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int     cd(const char *path)
 }
 
 
-int     main(int argc, char **argv)
-{
-    cd(argv[1]);
-    return (0);
-}
+// int     main(int argc, char **argv)
+// {
+//     cd(argv[1]);
+//     return (0);
+// }
