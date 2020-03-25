@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/24 17:14:57 by truepath         ###   ########.fr       */
+/*   Updated: 2020/03/25 14:57:03 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int     is_var(char *var, int fd2)
     {
         if (strnstr(line, var, ft_strlen(var)) != NULL)
         {
-            write(fd2, "$", 1);
             write(fd2, line, ft_strlen(line));
             write(fd2, "\n", 1);
             return (1);
@@ -37,18 +36,18 @@ int     is_var(char *var, int fd2)
     return (0);
 }
 
-int     main(int argc, char **argv)
-{
-    int fd;
-    int i;
+// int     main(int argc, char **argv)
+// {
+//     int fd;
+//     int i;
 
-    i = 1;
-    if (!(fd = open("env_var.txt", O_WRONLY | O_CREAT | O_APPEND)))
-        return (1);
-    if (is_var(argv[1],fd))
-        write(1, "varaible ajouter", 17);
-    else
-            return (1);
-    close(fd);
-    return (0);
-}
+//     i = 1;
+//     if (!(fd = open("env_var.txt", O_WRONLY | O_CREAT | O_APPEND)))
+//         return (1);
+//     if (is_var(argv[1],fd))
+//         write(1, "varaible ajouter", 17);
+//     else
+//             return (1);
+//     close(fd);
+//     return (0);
+// }

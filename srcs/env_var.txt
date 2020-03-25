@@ -1,2 +1,2 @@
-$tytry=f
-$m=m
+tytry=f
+m=m

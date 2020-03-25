@@ -11,6 +11,12 @@ typedef struct	s_var
 	int		nb_var;
 }				t_var;
 
+typedef struct	s_env
+{
+	char 	**var;
+	int		nb_var;
+}				t_env;
+
 char	**ft_split(char const *s, char c);
 char     *pwd(void);
 
