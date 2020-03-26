@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include "gnl/get_next_line.h"
+#include "../parsing/gnl/get_next_line.h"
 #include <stdio.h>
 
 int	ft_len(char *str)

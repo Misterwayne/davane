@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/25 16:19:27 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/25 16:20:26 by truepath         ###   ########.fr       */
+/*   Created: 2019/10/10 15:08:52 by mwane             #+#    #+#             */
+/*   Updated: 2019/10/13 18:31:49 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
+#include <stdlib.h>
+#include "libft.h"
 
-int     main(int argc, char **argv)
+void	ft_bzero(void *s, size_t size)
 {
-    
+	unsigned char *str;
+
+	str = (unsigned char*)s;
+	while (size-- > 0)
+		*(str++) = 0;
 }

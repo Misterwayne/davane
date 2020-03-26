@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
+/*   Updated: 2020/03/26 19:40:00 by truepath         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../headers/minishell.h"
-#include "gnl/get_next_line.h"
-#include <string.h>
 
 char	**lsh_split_line(char *line)
 {
@@ -27,13 +37,13 @@ int		load_env(t_env *env)
 	char	*line;
 
 	i = 0;
-	if (!(fd = open("env_var.txt", O_RDONLY)))
+	if (!(fd = open("data/env_var.txt", O_RDONLY)))
         return (1);
 	while (get_next_line(fd, &line))
 	{
 		env->var[i] = strdup(line);
 		i++;
-		free(line);
+		// free(line);
 	}
 	env->nb_var = i;
 	close(fd);
@@ -63,13 +73,13 @@ char	*get_value(t_env *env, char *line)
 	return (temp);
 }
 
-int		check_command(char *line, t_var *var, t_env *env)
+int		check_var(char *line, t_var *var, t_env *env)
 {
 	int i;
 	int fd;
 
 	i = 0;
-	if (!(fd = open("var.txt", O_RDWR | O_CREAT | O_APPEND, 00700)))
+	if (!(fd = open("data/var.txt", O_RDWR | O_CREAT | O_APPEND, 00700)))
         		return (1);
 	while (line[i])// ecrit les variables shell dans une struct et dans un fichier txt
 	{			   // uniquement si un '=' est present dans la string
@@ -90,27 +100,37 @@ int		check_command(char *line, t_var *var, t_env *env)
 	return (1);
 }
 
-void	lsh_loop(void)
+void		lsh_loop(void)
 {
 	char *line;
 	char **args;
 	t_var vars;
 	t_env env; // struct qui contient les variables
+	t_cmd cmd;
 	int red;
 	int on;
+	int i;
 
+	i = 0;
 	on = 0;
 	vars.var = malloc(sizeof(char*) * 20);
 	env.var = malloc(sizeof(char*) * 20);
+	cmd.cmd_lst =env.var = malloc(sizeof(char*) * 20);
 	env.nb_var = 0;
 	vars.nb_var = 0;
 	load_env(&env);
+	load_cmd(&cmd);
 	while (on == 0)
 	{
 		print_promt();
 		red = get_next_line(0, &line);
-		check_command(line, &vars, &env); // premier parsing
+		write(1, "Da !\n", strlen("Da !\n")); // premier parsing
 		args = lsh_split_line(line);
+		if (check_commande(&cmd, args[0]))
+			launch(args[0], args);
+		else
+			printf("Minishell : Commande not found : %s\n",args[0]);
+		free(args);
 	}
 	free(line);
 }

@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   launch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 18:34:28 by truepath         ###   ########.fr       */
+/*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
+/*   Updated: 2020/03/26 19:39:47 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
+#include "../../headers/minishell.h"
 
-
-char     *pwd(void)
+int launch(char *prog, char **argv)
 {
-    char *buff;
+	pid_t pid;
 
-    buff = malloc(sizeof(char)* 1024);
-    getwd(buff);
-    return (buff);
-}
-
-int     main(int argc, char **argv)
-{
-    char *str;
-
-    str = pwd();
-    write(1, str, strlen(str));
-    free(str);
-    return (0);
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork failed");
+		exit(1);
+	}
+	if (pid == 0)
+		execvp(prog, argv);
+	else
+		waitpid(pid, NULL, 0);
+	return (0);
 }

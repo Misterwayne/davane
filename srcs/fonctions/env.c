@@ -1,36 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 18:34:28 by truepath         ###   ########.fr       */
+/*   Created: 2020/03/25 16:19:27 by truepath          #+#    #+#             */
+/*   Updated: 2020/03/26 18:21:45 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-
-
-char     *pwd(void)
-{
-    char *buff;
-
-    buff = malloc(sizeof(char)* 1024);
-    getwd(buff);
-    return (buff);
-}
-
-int     main(int argc, char **argv)
-{
-    char *str;
-
-    str = pwd();
-    write(1, str, strlen(str));
-    free(str);
-    return (0);
-}
+#include <fcntl.h>

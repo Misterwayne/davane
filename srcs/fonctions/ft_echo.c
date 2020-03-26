@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
+/*   Updated: 2020/03/26 18:57:14 by truepath         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -66,8 +78,8 @@ void open_write(char **argv)
 int main(int argc, char **argv)
 {
 
-	for (int i = 0; i < argc; i++) 
-		printf("%s, ", argv[i]);
+	for (int i = 0; i < 3; i++) 
+		printf("ok");
 	printf("\n");
 	open_write(argv);
 	printf("\n");
