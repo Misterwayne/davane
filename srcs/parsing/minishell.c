@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 19:40:00 by truepath         ###   ########.fr       */
+/*   Updated: 2020/03/26 19:44:21 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		lsh_loop(void)
 	char **args;
 	t_var vars;
 	t_env env; // struct qui contient les variables
-	t_cmd cmd;
+	t_cmd cmd; // contient la liste des commande
 	int red;
 	int on;
 	int i;
