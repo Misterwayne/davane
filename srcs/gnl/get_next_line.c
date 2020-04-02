@@ -24,12 +24,12 @@ int				ft_read(int fd, char **line, char *buf)
 		ft_fill(BUFFER_SIZE, &buf[0]);
 		if ((red = read(fd, &buf[0], BUFFER_SIZE)) == -1)
 			return (-1);
-		if (!(*line = ft_strjoin(*line, &buf[0])))
+		if (!(*line = ft_strjoin_gnl(*line, &buf[0])))
 			return (-1);
 		i = ft_find_n(&buf[0]);
 	}
 	if (i != -1)
-		ft_memmove(&buf[0], &(buf[i + 1]), BUFFER_SIZE + 1);
+		ft_memmove_gnl(&buf[0], &(buf[i + 1]), BUFFER_SIZE + 1);
 	if (red == 0)
 		return (0);
 	return (1);
@@ -48,11 +48,11 @@ int				get_next_line(int fd, char **line)
 	*line = NULL;
 	if (buf[0])
 	{
-		if (!(*line = ft_strjoin(*line, &buf[0])))
+		if (!(*line = ft_strjoin_gnl(*line, &buf[0])))
 			return (-1);
 		i = ft_find_n(&buf[0]);
 		if (i != -1)
-			ft_memmove(&buf[0], &(buf[i + 1]), BUFFER_SIZE + 1);
+			ft_memmove_gnl(&buf[0], &(buf[i + 1]), BUFFER_SIZE + 1);
 	}
 	if (i == -1)
 		return (ft_read(fd, line, &buf[0]));

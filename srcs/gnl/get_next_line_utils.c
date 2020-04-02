@@ -51,7 +51,7 @@ void		ft_fill(int len, char *str)
 	}
 }
 
-void		ft_memmove(char *dst, char *src, int len)
+void		ft_memmove_gnl(char *dst, char *src, int len)
 {
 	int	i;
 
@@ -68,7 +68,7 @@ void		ft_memmove(char *dst, char *src, int len)
 	}
 }
 
-char		*ft_strjoin(char *s1, char *s2)
+char		*ft_strjoin_gnl(char *s1, char *s2)
 {
 	int		len1;
 	int		len2;

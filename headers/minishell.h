@@ -6,6 +6,8 @@
 #include <string.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include "libft.h"
+#include "header.h"
 
 typedef struct	s_var
 {
