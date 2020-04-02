@@ -16,9 +16,11 @@ LIBRARY = libft/libft.a printf/libftprintf.a
 
 all: 	compile
 
-compile: 
-			gcc $(FILES) -o $(NAME) -L. $(LIBRARY)
-			
+compile: libraries
+			$(FILES) -o $(NAME) -L. $(LIBRARY)
+libraries:
+			$(MAKE) -C ./libft
+			$(MAKE) -C ./printf
 clean: 
 			rm -rf $(NAME)
 
