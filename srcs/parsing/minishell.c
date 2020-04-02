@@ -128,6 +128,8 @@ void		lsh_loop(void)
 		args = lsh_split_line(line);
 		if (check_commande(&cmd, args[0]))
 			launch(args[0], args);
+		else if (strcmp("exit", args[0]))
+			on = 1;
 		else
 			printf("Minishell : Commande not found : %s\n",args[0]);
 		free(args);
