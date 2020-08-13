@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 19:16:34 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/13 16:13:38 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int     check_commande(t_cmd *cmd, char *line)
     i = 0;
     while (cmd->cmd_lst[i] != NULL)
     {
-        if (strcmp(cmd->cmd_lst[i], line) == 0)
+        if (ft_strcmp(cmd->cmd_lst[i], line) == 0)
             return (1);
         i++;
     }

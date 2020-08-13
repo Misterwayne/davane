@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/04/04 18:16:03 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/13 16:21:25 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define ERROR -1
 
 #include <unistd.h>
-#include "../srcs/gnl/get_next_line.h"
+#include "../srcs/parsing/gnl/get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include "libft.h"
@@ -52,15 +52,15 @@ typedef struct	s_shell
 char			**ft_split(char const *s, char c);
 void			print_promt(void);
 int 			launch(char *prog, char **argv);
-void    		load_cmd(t_shell *shell);
+void    		load_cmd(t_cmd *cmd);
 char   			*pwd(void);
 void			lsh_loop(void);
 char			*get_value(t_env *env, char *line);
 int				add_var(char *line, t_shell *shell);
-int     		check_commande(t_shell *shell, char *line);
-int     		check_var(char *line);
+int     		check_commande(t_cmd *cnd, char *line);
+int     		check_var(char *line, t_var *var, t_env *env);
 int				parsing_line(t_shell *shell, char **args);
-int				load_env(t_shell *shell);
+int				load_env(t_env *env);
 char			**lsh_split_line(char *line);
 
 #endif
