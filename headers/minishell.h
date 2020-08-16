@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/13 16:21:25 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/16 14:41:25 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,19 @@
 #include "../srcs/parsing/gnl/get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 #include "libft.h"
 #include "header.h"
+
+
+/*
+We need a struc that will hold all of the environment variable.
+we also need a struct that will hold the argv of the commands.
+maybe a chained list for the yet to be exported variables.
+we need an array of function for our bulltin.
+*/
 
 typedef struct	s_var
 {

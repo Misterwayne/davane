@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 18:57:14 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/16 14:26:16 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void open_write(char **argv)
 	close(fd);
 }
 
-int main(int argc, char **argv)
+int echo(int argc, char **argv)
 {
 
 	for (int i = 0; i < 3; i++) 

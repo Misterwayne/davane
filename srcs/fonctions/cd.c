@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 17:17:26 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/16 14:25:32 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ int     cd(const char *path)
         write(1, "\n", 1);
         return (-1);
     }
-    return (0);
-}
-
-int     main(int argc, char **argv)
-{
-    cd(argv[1]);
+    
     return (0);
 }

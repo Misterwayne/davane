@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../gnl/get_next_line.h"
+#include "../parsing/gnl/get_next_line.h"
 
 void	display_var(char **argv)
 {
@@ -21,7 +21,7 @@ void	display_var(char **argv)
 	close(fd);
 }
 
-int main(int argc, char **argv)
+int ft_env(int argc, char **argv)
 {
 	 if (argc == 1)
 		display_var(argv);

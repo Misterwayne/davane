@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/13 16:57:56 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/16 14:25:17 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		lsh_loop(void)
 	char **args;
 	t_var vars;
 	t_env env; // struct qui contient les variables
-	t_cmd cmd; // contient la liste des commande
+	t_cmd cmd; // contient la liste des commandes
 	int red;
 	int on;
 	int i;
@@ -139,6 +139,11 @@ void		lsh_loop(void)
 
 int		main(int argc, char **argv)
 {
+	/*
+	Using a array of pointer to funcion is better than running the binary of our functions,and i think its the real way to do this project.
+	We shouldn't use a text file to save our environemt varialble, nobody doest it in their minishell, a chained list is probably better.
+	The list of env variable that we need is listed here "http://manpagesfr.free.fr/man/man1/bash.1.html" 
+	*/
 	lsh_loop();
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 18:34:28 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/16 14:31:32 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-
-char     *pwd(void)
+int     pwd(int argc, char **argv)
 {
     char *buff;
 
     buff = malloc(sizeof(char)* 1024);
     getwd(buff);
-    return (buff);
-}
-
-int     main(int argc, char **argv)
-{
-    char *str;
-
-    str = pwd();
-    write(1, str, strlen(str));
-    free(str);
+    write(1, buff, ft_strlen(buff));
+    free(buff);
     return (0);
 }

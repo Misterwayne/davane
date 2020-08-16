@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 19:39:47 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/16 14:35:26 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int launch(char *prog, char **argv)
 		perror("fork failed");
 		exit(1);
 	}
-	if (pid == 0)
+	if (pid == 0)//replace this part by a selection by key from the array of function
+	{
+		
 		execvp(prog, argv);
+	}
 	else
 		waitpid(pid, NULL, 0);
 	return (0);

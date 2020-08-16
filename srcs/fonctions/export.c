@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/03/26 17:16:58 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/16 14:25:45 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int     is_var(char *var, int fd2)
     return (0);
 }
 
-int     main(int argc, char **argv)
+int     export(int argc, char **argv)
 {
     int fd;
     int i;

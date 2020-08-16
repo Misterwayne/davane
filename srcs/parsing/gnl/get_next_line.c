@@ -3,58 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:16:05 by davlasov          #+#    #+#             */
-/*   Updated: 2020/01/10 17:10:51 by davlasov         ###   ########.fr       */
+/*   Created: 2019/10/23 11:11:15 by mwane             #+#    #+#             */
+/*   Updated: 2019/11/02 18:22:16 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-int				ft_read(int fd, char **line, char *buf)
+int		scan_save(char *save)
 {
-	int		red;
-	int		i;
-
-	i = -1;
-	red = 1;
-	while (i == -1 && red != 0)
-	{
-		ft_fill(BUFFER_SIZE, &buf[0]);
-		if ((red = read(fd, &buf[0], BUFFER_SIZE)) == -1)
-			return (-1);
-		if (!(*line = ft_strjoin_gnl(*line, &buf[0])))
-			return (-1);
-		i = ft_find_n(&buf[0]);
-	}
-	if (i != -1)
-		ft_memmove_gnl(&buf[0], &(buf[i + 1]), BUFFER_SIZE + 1);
-	if (red == 0)
-		return (0);
-	return (1);
+	if (save)
+		return (1);
+	free(save);
+	return (0);
 }
 
-int				get_next_line(int fd, char **line)
+int		get_next_line(int fd, char **line)
 {
-	int			red;
-	int			i;
-	static char	buf[BUFFER_SIZE + 1];
+	char		*buffer;
+	char static	*save;
+	int			count;
 
-	i = -1;
-	red = 1;
-	if (BUFFER_SIZE < 1 || fd < 0 || line == 0)
+	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))) || fd == -1)
 		return (-1);
-	*line = NULL;
-	if (buf[0])
+	while ((count = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
-		if (!(*line = ft_strjoin_gnl(*line, &buf[0])))
-			return (-1);
-		i = ft_find_n(&buf[0]);
-		if (i != -1)
-			ft_memmove_gnl(&buf[0], &(buf[i + 1]), BUFFER_SIZE + 1);
+		buffer[count] = '\0';
+		printf("buffer = %s\ncount = %d\n",buffer, count);
+		save = reallocbuff(buffer, save);
+		if (scan_buffer(save))
+		{
+			*line = giveline(save);
+			save = setup_save(save);
+			free(buffer);
+			return (1);
+		}
 	}
-	if (i == -1)
-		return (ft_read(fd, line, &buf[0]));
-	return (1);
+	free(buffer);
+	if (count == -1)
+		return (-1);
+	*line = giveline(save);
+	save = setup_save(save);
+	return ((scan_save(save)) ? 1 : 0);
+}
+
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+
+int main(void)
+{
+	int fd = 0;
+	//int i = 1;
+	char	*line;
+	int res = 1;
+	
+	line = NULL;
+	fd = open("test.txt", O_RDONLY);
+	while (res > 0)
+	{
+		res = get_next_line(0, &line);
+		printf("ligne %d |%s|\n",res ,line);
+		free(line);
+	}
+	close(fd);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
+
+	return 0;
 }
