@@ -1,18 +1,17 @@
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include "../parsing/gnl/get_next_line.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/17 13:28:22 by mwane             #+#    #+#             */
+/*   Updated: 2020/08/17 14:37:46 by mwane            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_len(char *str)
-{
-	int i;
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
+#include "../parsing/gnl/get_next_line.h"
+#include "../../headers/minishell.h"
 
 
 void	replace(char **argv, int fd, int n, char *line)
@@ -31,12 +30,12 @@ void	replace(char **argv, int fd, int n, char *line)
 		red_new = get_next_line(fd_new, &line);
 		i++;
 	}
-	write(fd_new, line, ft_len(line));
+	write(fd_new, line, ft_strlen(line));
 	while (red == 1)
 	{
 		red = get_next_line(fd, &line);
 		red_new = get_next_line(fd_new, &line_new);
-		write(fd_new, line, ft_len(line));
+		write(fd_new, line, ft_strlen(line));
 	}
 	//write(fd_new, "\0", 1);
 	close(fd);
@@ -79,9 +78,8 @@ void	open_close(char **argv)
 }
 
 
-int main(int argc, char **argv)
+int		unset(char **argv)
 {
-	if (argc == 2)
-		open_close(argv);
+	open_close(argv);
 	return (0);
 }

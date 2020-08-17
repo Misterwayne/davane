@@ -6,14 +6,12 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/16 14:25:45 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:15:01 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
 #include "../parsing/gnl/get_next_line.h"
+#include "../../headers/minishell.h"
 
 int     is_var(char *var, int fd2)
 {
@@ -36,7 +34,7 @@ int     is_var(char *var, int fd2)
     return (0);
 }
 
-int     export(int argc, char **argv)
+int     export(char **argv)
 {
     int fd;
     int i;

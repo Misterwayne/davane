@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/16 14:41:25 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:54:31 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,27 @@ we need an array of function for our bulltin.
 
 typedef struct	s_var
 {
-	char 		**var;
-	int			nb_var;
+	char 		*key;						//the key to the var
+	char		*value;						//the value of the var
+	int			index;
+	struct s_var		*next;						//begining of the chained list
+	struct s_var		*prev;
+	struct s_var		*first;
 }				t_var;
 
 typedef struct	s_env
 {
-	char 		**var;
-	int			nb_var;
+	struct t_var		*first;						//pointer to the first node of the chained list
+	char		*path;						//the current path
+	int			nb_var;						//the total number of varariable in the env
 }				t_env;
 
 typedef struct  s_cmd
 {
-	char		**cmd_lst;
-	char		*path;
+	char		**cmd_lst;									//the list of command that zill be used later as key for builtin_array
+	char		**argvs;									//2d array for the arguments of the builtin
+	char		*path;										
+	int			(*builtin_array[8])(char **argv);		//array of pointer to function 
 }				t_cmd;
 
 typedef struct	s_shell
@@ -60,18 +67,32 @@ typedef struct	s_shell
 	int			var_flags;
 }				t_shell;
 
-char			**ft_split(char const *s, char c);
-void			print_promt(void);
-int 			launch(char *prog, char **argv);
-void    		load_cmd(t_cmd *cmd);
-char   			*pwd(void);
-void			lsh_loop(void);
-char			*get_value(t_env *env, char *line);
-int				add_var(char *line, t_shell *shell);
-int     		check_commande(t_cmd *cnd, char *line);
-int     		check_var(char *line, t_var *var, t_env *env);
-int				parsing_line(t_shell *shell, char **args);
-int				load_env(t_env *env);
+
+// PARSING FUNCTIONS
+
 char			**lsh_split_line(char *line);
+char			**ft_split(char const *s, char c);
+char			*get_value(t_env *env, char *line);
+int     		check_commande(t_cmd *cnd, char *line);
+int				parsing_line(t_shell *shell, char **args);
+int     		check_var(char *line, t_var *var, t_env *env);
+
+// MINISHELL CORE
+
+void			lsh_loop(void);
+int 			launch(t_shell *shell, int index, char **argv);
+void    		load_cmd(t_cmd *cmd);
+int				add_var(char *line, t_shell *shell);
+int				load_env(t_env *env);
+void			print_promt(void);
+
+// BUILTIN
+
+int     cd(char **argv);
+int     export(char **argv);
+int 	echo(char **argv);
+int 	env(char **argv);
+int		unset(char **argv);
+int     pwd(char **argv);
 
 #endif

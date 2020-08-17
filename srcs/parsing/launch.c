@@ -6,13 +6,13 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/16 14:35:26 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:17:29 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int launch(char *prog, char **argv)
+int		launch(t_shell *shell, int index, char **argv)
 {
 	pid_t pid;
 
@@ -24,8 +24,10 @@ int launch(char *prog, char **argv)
 	}
 	if (pid == 0)//replace this part by a selection by key from the array of function
 	{
-		
-		execvp(prog, argv);
+		if (index > 6)
+			return ERROR;
+		shell->cmd->builtin_array[index](argv);
+		// execvp(prog, argv);
 	}
 	else
 		waitpid(pid, NULL, 0);

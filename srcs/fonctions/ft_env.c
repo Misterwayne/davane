@@ -1,7 +1,16 @@
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/17 13:29:07 by mwane             #+#    #+#             */
+/*   Updated: 2020/08/17 14:14:33 by mwane            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../headers/minishell.h"
 #include "../parsing/gnl/get_next_line.h"
 
 void	display_var(char **argv)
@@ -21,9 +30,8 @@ void	display_var(char **argv)
 	close(fd);
 }
 
-int ft_env(int argc, char **argv)
+int 	env(char **argv)
 {
-	 if (argc == 1)
-		display_var(argv);
+	display_var(argv);
 	return (0);
 }

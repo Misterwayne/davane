@@ -6,80 +6,87 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:11:15 by mwane             #+#    #+#             */
-/*   Updated: 2019/11/02 18:22:16 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:44:56 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
+#include "../../../libft/libft.h"
 
-int		scan_save(char *save)
+char	*get_save(char *save)
 {
-	if (save)
-		return (1);
+	char	*rtn;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!save)
+		return (0);
+	while (save[i] && save[i] != '\n')
+		i++;
+	if (!save[i])
+	{
+		free(save);
+		return (0);
+	}
+	if (!(rtn = malloc(sizeof(char) * ((ft_strlen(save) - i) + 1))))
+		return (0);
+	i++;
+	while (save[i])
+		rtn[j++] = save[i++];
+	rtn[j] = '\0';
 	free(save);
-	return (0);
+	return (rtn);
+}
+
+char	*get_line(char *str)
+{
+	int		i;
+	char	*rtn;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (!(rtn = malloc(sizeof(char) * (i + 1))))
+		return (0);
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		rtn[i] = str[i];
+		i++;
+	}
+	rtn[i] = '\0';
+	return (rtn);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	char		*buffer;
-	char static	*save;
-	int			count;
+	char			*buff;
+	static char		*save;
+	int				reader;
 
-	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))) || fd == -1)
+	reader = 1;
+	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	while ((count = read(fd, buffer, BUFFER_SIZE)) > 0)
+	if (!(buff = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (-1);
+	while (!has_return(save) && reader != 0)
 	{
-		buffer[count] = '\0';
-		printf("buffer = %s\ncount = %d\n",buffer, count);
-		save = reallocbuff(buffer, save);
-		if (scan_buffer(save))
+		if ((reader = read(fd, buff, BUFFER_SIZE)) == -1)
 		{
-			*line = giveline(save);
-			save = setup_save(save);
-			free(buffer);
-			return (1);
+			free(buff);
+			return (-1);
 		}
+		buff[reader] = '\0';
+		save = join_str(save, buff);
 	}
-	free(buffer);
-	if (count == -1)
-		return (-1);
-	*line = giveline(save);
-	save = setup_save(save);
-	return ((scan_save(save)) ? 1 : 0);
-}
-
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
-
-int main(void)
-{
-	int fd = 0;
-	//int i = 1;
-	char	*line;
-	int res = 1;
-	
-	line = NULL;
-	fd = open("test.txt", O_RDONLY);
-	while (res > 0)
-	{
-		res = get_next_line(0, &line);
-		printf("ligne %d |%s|\n",res ,line);
-		free(line);
-	}
-	close(fd);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-	// printf("count = %d ligne %d = %s\n\n",get_next_line(fd, &line),i++,line);
-
-	return 0;
+	free(buff);
+	*line = get_line(save);
+	save = get_save(save);
+	if (reader == 0)
+		return (0);
+	return (1);
 }
