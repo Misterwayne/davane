@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/17 15:22:41 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/18 17:40:03 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 void    load_cmd(t_cmd *cmd)
 {
+    // initialize the array function and the list of commandes
     cmd->cmd_lst[0] = "pwd";
     cmd->cmd_lst[1] = "cd";
     cmd->cmd_lst[2] = "export";
     cmd->cmd_lst[3] = "env";
     cmd->cmd_lst[4] = "unset";
     cmd->cmd_lst[5] = "echo";
-    cmd->cmd_lst[6] = "exit()"; 
-    cmd->cmd_lst[7] = NULL;
+    cmd->cmd_lst[6] = NULL;
+    // initialize the array of pointer to function
     cmd->builtin_array[0] = &pwd;
     cmd->builtin_array[1] = &cd;
     cmd->builtin_array[2] = &export;
     cmd->builtin_array[3] = &env;
     cmd->builtin_array[4] = &unset;
     cmd->builtin_array[5] = &echo;
-    cmd->builtin_array[6] = &exit;
+    cmd->builtin_array[6] = &ft_exit;
     cmd->builtin_array[7] = NULL;
 }
 
@@ -36,6 +37,7 @@ int     check_commande(t_cmd *cmd, char *line)
 {
     int i;
 
+    // parse the commande list to find a match then return the index
     i = 0;
     if (line == NULL)
         return (ERROR);

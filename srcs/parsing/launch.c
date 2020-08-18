@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/17 14:17:29 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/18 17:34:17 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ int		launch(t_shell *shell, int index, char **argv)
 {
 	pid_t pid;
 
+	
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork failed");
 		exit(1);
 	}
-	if (pid == 0)//replace this part by a selection by key from the array of function
+	if (pid == 0)// use the index to acces the right function and then passes the argvs 
 	{
 		if (index > 6)
 			return ERROR;
 		shell->cmd->builtin_array[index](argv);
-		// execvp(prog, argv);
 	}
 	else
 		waitpid(pid, NULL, 0);

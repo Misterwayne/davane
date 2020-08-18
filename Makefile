@@ -6,19 +6,20 @@
 #    By: mwane <mwane@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/07 17:46:04 by davlasov          #+#    #+#              #
-#    Updated: 2020/08/17 14:04:01 by mwane            ###   ########.fr        #
+#    Updated: 2020/08/18 17:47:19 by mwane            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =  minishell
 FILES = srcs/parsing/*.c 
 GNL =   srcs/parsing/gnl/*.c
-BULITIN =	srcs/fonctions/ft_echo.c \
-			srcs/fonctions/ft_env.c \
-			srcs/fonctions/export.c \
-			srcs/fonctions/ft_unset.c \
-			srcs/fonctions/pwd.c \
-			srcs/fonctions/cd.c
+BULITIN =	srcs/builtin/ft_echo.c \
+			srcs/builtin/ft_env.c \
+			srcs/builtin/export.c \
+			srcs/builtin/ft_unset.c \
+			srcs/builtin/pwd.c \
+			srcs/builtin/cd.c \
+			srcs/builtin/ft_exit.c
 
 LIBRARY = libft/libft.a printf/libftprintf.a
 
