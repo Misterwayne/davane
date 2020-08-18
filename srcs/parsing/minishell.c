@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:31:20 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/18 18:10:10 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		lsh_loop(t_shell *shell)
 		print_promt();
 		red = get_next_line(0, &line);	// premier parsing
 		args = lsh_split_line(line);	//split the line by white space
+		// line = check_v(shell, line);
 		i = check_commande(shell->cmd, args[0]);			//check if a word in the line correspond to a commande
 		if (i >= 0 && i < 6)
 			launch(shell, i, args);				// if yes, launch that commande based on the index i

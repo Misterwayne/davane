@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 13:29:07 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/17 14:14:33 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/18 17:58:45 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,7 @@
 
 void	display_var(char **argv)
 {
-	int fd;
-	int red;
-	char *line;
 
-	fd = open("var.txt", O_RDONLY);
-	red = 1;
-	while(red == 1)
-	{
-		red = get_next_line(fd, &line);
-		printf("%s\n", line);
-		//free(line);
-	}
-	close(fd);
 }
 
 int 	env(char **argv)

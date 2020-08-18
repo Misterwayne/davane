@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:46:21 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/18 18:15:01 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_var
 {
 	char 				*key;						//the key to the var
 	char				*value;						//the value of the var
-	int					index;						//index of the key,value pair
+	int					index;						//index of the key, value pair
 	struct s_var		*next;						
 	struct s_var		*prev;
 	struct s_var		*first;
@@ -75,6 +75,7 @@ char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
 int     		check_var(char *line, t_var *var, t_env *env);
+char     		*check_v(t_shell *shell, char *line);
 
 // MINISHELL CORE
 
