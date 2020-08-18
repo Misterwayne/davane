@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/17 13:25:41 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/17 13:25:59 by mwane            ###   ########.fr       */
+/*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
+/*   Updated: 2020/08/17 16:05:39 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		ft_exit(t_shell *shell, char **argv)
-{
-	exit(0);
+
+int     cd(char **argv)
+{   
+    char  *path;
+
+    path = argv[1];
+    if (chdir(path) == -1)
+    {
+        write(1, "cd: no such file or directory: ", 31);
+        write(1, path, strlen(path));
+        write(1, "\n", 1);
+        return (-1);
+    }
+    return (0);
 }

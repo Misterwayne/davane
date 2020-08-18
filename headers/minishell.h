@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/17 14:54:31 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/18 18:15:01 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,24 @@ we need an array of function for our bulltin.
 
 typedef struct	s_var
 {
-	char 		*key;						//the key to the var
-	char		*value;						//the value of the var
-	int			index;
-	struct s_var		*next;						//begining of the chained list
+	char 				*key;						//the key to the var
+	char				*value;						//the value of the var
+	int					index;						//index of the key, value pair
+	struct s_var		*next;						
 	struct s_var		*prev;
 	struct s_var		*first;
+	struct s_var		*current;
 }				t_var;
 
 typedef struct	s_env
 {
-	struct t_var		*first;						//pointer to the first node of the chained list
-	char		*path;						//the current path
-	int			nb_var;						//the total number of varariable in the env
+
 }				t_env;
 
 typedef struct  s_cmd
 {
-	char		**cmd_lst;									//the list of command that zill be used later as key for builtin_array
-	char		**argvs;									//2d array for the arguments of the builtin
+	char		**cmd_lst;								//the list of command that zill be used later as key for builtin_array
+	char		**argvs;								//2d array for the arguments of the builtin
 	char		*path;										
 	int			(*builtin_array[8])(char **argv);		//array of pointer to function 
 }				t_cmd;
@@ -76,23 +75,25 @@ char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
 int     		check_var(char *line, t_var *var, t_env *env);
+char     		*check_v(t_shell *shell, char *line);
 
 // MINISHELL CORE
 
-void			lsh_loop(void);
-int 			launch(t_shell *shell, int index, char **argv);
-void    		load_cmd(t_cmd *cmd);
-int				add_var(char *line, t_shell *shell);
-int				load_env(t_env *env);
-void			print_promt(void);
+void			lsh_loop(t_shell *shell);				//main function
+int 			launch(t_shell *shell, int index, char **argv);	//Where we launch everything
+void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
+int				add_var(char *line, t_shell *shell);	// ad variable to the env
+int				load_env(t_env *env);					// init the env struct
+void			print_promt(void);						// print the promt
 
 // BUILTIN
 
-int     cd(char **argv);
-int     export(char **argv);
-int 	echo(char **argv);
-int 	env(char **argv);
-int		unset(char **argv);
-int     pwd(char **argv);
+int     cd(char **argv);			// this one zorks but some errors are still possible
+int     export(char **argv);		//this function needs to stock the variable inside the chained list
+int 	echo(char **argv);			//it needs to be able to print an env variable from a key
+int 	env(char **argv);			//i don't know yet
+int		unset(char **argv);			//it needs to pop a variable from the chained list
+int     pwd(char **argv);			//this one works too
+int		ft_exit(char **argv);		//this will need to  be able to free anything still allocated
 
 #endif
