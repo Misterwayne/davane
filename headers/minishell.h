@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 18:09:01 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 18:35:25 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ maybe a chained list for the yet to be exported variables.
 we need an array of function for our bulltin.
 */
 
+typedef struct	s_shell t_shell;
+
 typedef struct	s_var								//this is a first in, last out chained list
 {
 	char 				*key;						//the key to the var
@@ -55,7 +57,7 @@ typedef struct  s_cmd
 	char		**cmd_lst;								//the list of command that zill be used later as key for builtin_array
 	char		**argvs;								//2d array for the arguments of the builtin
 	char		*path;										
-	int			(*builtin_array[8])(char **argv, t_shell *shell);		//array of pointer to function 
+	int			(*builtin_array[8])(char **argv, struct s_shell *shell);		//array of pointer to function 
 }				t_cmd;
 
 typedef struct	s_shell
