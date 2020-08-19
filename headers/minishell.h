@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/04/04 18:16:03 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/18 23:18:43 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,45 @@
 # define ERROR -1
 
 #include <unistd.h>
-#include "../srcs/gnl/get_next_line.h"
+#include "../srcs/parsing/gnl/get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 #include "libft.h"
 #include "header.h"
 
-typedef struct	s_var
+
+/*
+We need a struc that will hold all of the environment variable.
+we also need a struct that will hold the argv of the commands.
+maybe a chained list for the yet to be exported variables.
+we need an array of function for our bulltin.
+*/
+
+typedef struct	s_var								//this is a first in, last out chained list
 {
-	char 		**var;
-	int			nb_var;
+	char 				*key;						//the key to the var
+	char				*value;						//the value of the var						
+	struct s_var		*next;
+	struct s_var		*prev;
+	struct s_var		*first;
 }				t_var;
 
 typedef struct	s_env
 {
-	char 		**var;
-	int			nb_var;
-}				t_env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct  s_cmd
 {
-	char		**cmd_lst;
-	char		*path;
+	char		**cmd_lst;								//the list of command that zill be used later as key for builtin_array
+	char		**argvs;								//2d array for the arguments of the builtin
+	char		*path;										
+	int			(*builtin_array[8])(char **argv);		//array of pointer to function 
 }				t_cmd;
 
 typedef struct	s_shell
@@ -49,18 +66,34 @@ typedef struct	s_shell
 	int			var_flags;
 }				t_shell;
 
-char			**ft_split(char const *s, char c);
-void			print_promt(void);
-int 			launch(char *prog, char **argv);
-void    		load_cmd(t_shell *shell);
-char   			*pwd(void);
-void			lsh_loop(void);
-char			*get_value(t_env *env, char *line);
-int				add_var(char *line, t_shell *shell);
-int     		check_commande(t_shell *shell, char *line);
-int     		check_var(char *line);
-int				parsing_line(t_shell *shell, char **args);
-int				load_env(t_shell *shell);
+
+// PARSING FUNCTIONS
+
 char			**lsh_split_line(char *line);
+char			**ft_split(char const *s, char c);
+char			*get_value(t_env *env, char *line);
+int     		check_commande(t_cmd *cnd, char *line);
+int				parsing_line(t_shell *shell, char **args);
+int     		check_var(char *line, t_var *var, t_env *env);
+char     		*check_v(t_shell *shell, char *line);
+
+// MINISHELL CORE
+
+void			lsh_loop(t_shell *shell);				//main function
+int 			launch(t_shell *shell, int index, char **argv);	//Where we launch everything
+void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
+int				add_var(char *line, t_shell *shell);	// ad variable to the env
+int				load_env(t_env *env);					// init the env struct
+void			print_promt(void);						// print the promt
+
+// BUILTIN
+
+int     cd(char **argv);			// this one zorks but some errors are still possible
+int     export(char **argv);		//this function needs to stock the variable inside the chained list
+int 	echo(char **argv);			//it needs to be able to print an env variable from a key
+int 	env(char **argv);			//i don't know yet
+int		unset(char **argv);			//it needs to pop a variable from the chained list
+int     pwd(char **argv);			//this one works too
+int		ft_exit(char **argv);		//this will need to  be able to free anything still allocated
 
 #endif

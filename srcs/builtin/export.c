@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch.c                                           :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:34:17 by mwane            ###   ########.fr       */
+/*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
+/*   Updated: 2020/08/18 17:59:51 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../parsing/gnl/get_next_line.h"
 #include "../../headers/minishell.h"
 
-int		launch(t_shell *shell, int index, char **argv)
+int     is_var(char *var, int fd2)
 {
-	pid_t pid;
 
-	
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork failed");
-		exit(1);
-	}
-	if (pid == 0)// use the index to acces the right function and then passes the argvs 
-	{
-		if (index > 6)
-			return ERROR;
-		shell->cmd->builtin_array[index](argv);
-	}
-	else
-		waitpid(pid, NULL, 0);
-	return (0);
+    return (0);
+}
+
+int     export(char **argv)
+{
+    return (0);
 }

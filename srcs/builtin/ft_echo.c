@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch.c                                           :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:34:17 by mwane            ###   ########.fr       */
+/*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
+/*   Updated: 2020/08/18 17:58:05 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		launch(t_shell *shell, int index, char **argv)
+void	print_arguments(char **argv)
 {
-	pid_t pid;
+	int i;
 
-	
-	pid = fork();
-	if (pid < 0)
+	i = 1;
+
+	while (argv[i] != NULL)
 	{
-		perror("fork failed");
-		exit(1);
+		ft_printf("%s", argv[i]);
+		i++;
 	}
-	if (pid == 0)// use the index to acces the right function and then passes the argvs 
-	{
-		if (index > 6)
-			return ERROR;
-		shell->cmd->builtin_array[index](argv);
-	}
-	else
-		waitpid(pid, NULL, 0);
+}
+
+void open_write(char **argv)
+{
+	print_arguments(argv);
+}
+
+int		echo(char **argv)
+{
+
+	printf("\n");
+	open_write(argv);
+	printf("\n");
 	return (0);
 }

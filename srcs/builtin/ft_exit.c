@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch.c                                           :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:34:17 by mwane            ###   ########.fr       */
+/*   Created: 2020/08/17 13:25:41 by mwane             #+#    #+#             */
+/*   Updated: 2020/08/18 17:44:04 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		launch(t_shell *shell, int index, char **argv)
+int		ft_exit(char **argv)
 {
-	pid_t pid;
-
-	
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork failed");
-		exit(1);
-	}
-	if (pid == 0)// use the index to acces the right function and then passes the argvs 
-	{
-		if (index > 6)
-			return ERROR;
-		shell->cmd->builtin_array[index](argv);
-	}
-	else
-		waitpid(pid, NULL, 0);
-	return (0);
+	exit(0);
 }

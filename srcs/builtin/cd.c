@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch.c                                           :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:34:17 by mwane            ###   ########.fr       */
+/*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
+/*   Updated: 2020/08/17 16:05:39 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		launch(t_shell *shell, int index, char **argv)
-{
-	pid_t pid;
 
-	
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork failed");
-		exit(1);
-	}
-	if (pid == 0)// use the index to acces the right function and then passes the argvs 
-	{
-		if (index > 6)
-			return ERROR;
-		shell->cmd->builtin_array[index](argv);
-	}
-	else
-		waitpid(pid, NULL, 0);
-	return (0);
+int     cd(char **argv)
+{   
+    char  *path;
+
+    path = argv[1];
+    if (chdir(path) == -1)
+    {
+        write(1, "cd: no such file or directory: ", 31);
+        write(1, path, strlen(path));
+        write(1, "\n", 1);
+        return (-1);
+    }
+    return (0);
 }

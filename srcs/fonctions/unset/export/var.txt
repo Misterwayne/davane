@@ -1,3 +1,0 @@
-dasha=5
-nikita=4
-kirill=5kirill=5dasha=5nikita=4kirill=5dasha=5nikita=4

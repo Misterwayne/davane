@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch.c                                           :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:34:17 by mwane            ###   ########.fr       */
+/*   Created: 2019/10/23 11:15:47 by mwane             #+#    #+#             */
+/*   Updated: 2020/08/17 14:44:02 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int		launch(t_shell *shell, int index, char **argv)
-{
-	pid_t pid;
+# include <stdlib.h>
+# include <unistd.h>
+# define BUFFER_SIZE 1
 
-	
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork failed");
-		exit(1);
-	}
-	if (pid == 0)// use the index to acces the right function and then passes the argvs 
-	{
-		if (index > 6)
-			return ERROR;
-		shell->cmd->builtin_array[index](argv);
-	}
-	else
-		waitpid(pid, NULL, 0);
-	return (0);
-}
+int					get_next_line(int fd, char **line);
+int					has_return(char *str);
+
+
+char				*join_str(const char *s1, const char *s2);
+
+#endif
