@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 13:29:07 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/19 19:24:12 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/19 19:27:02 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 void	display_var(char **argv, t_env *env)
 {
-	int i;
-	i = 0;
 	while(env)
 	{
 		ft_printf("%s", env->key);
@@ -26,7 +24,6 @@ void	display_var(char **argv, t_env *env)
 			env = env->next;
 		else
 			return ;
-		i++;
 	}
 }
 
