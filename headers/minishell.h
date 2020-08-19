@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 18:35:25 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 19:15:45 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ typedef struct	s_env
 {
 	char			*key;
 	char			*value;
+	struct s_env	*prev;
 	struct s_env	*next;
-}				t_env;
+}					t_env;
+
 
 typedef struct  s_cmd
 {
@@ -96,7 +98,7 @@ void			lsh_loop(t_shell *shell);				//main function
 int 			launch(t_shell *shell, int index, char **argv);	//Where we launch everything
 void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
 int				add_var(char *line, t_shell *shell);	// ad variable to the env
-int				load_env(t_env *env);					// init the env struct
+int				load_env(char **env, t_shell *shell);					// init the env struct
 void			print_promt(void);						// print the promt
 
 // BUILTIN

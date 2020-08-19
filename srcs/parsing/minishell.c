@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 18:42:47 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/19 19:14:53 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		main(int argc, char **argv, char **env)
 
 	var = new_node("0=0");		// init the chained list, the element "0=0" will always be the last;
 	cmd.cmd_lst = malloc(sizeof(char*) * 20);
-	load_env(env);
+	load_env(env, &shell);
 	load_cmd(&cmd);
 	shell.cmd = &cmd;
 	shell.var = var;
