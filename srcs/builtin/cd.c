@@ -6,14 +6,14 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/17 16:05:39 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 18:03:50 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 
-int     cd(char **argv)
+int     cd(char **argv, t_shell *shell)
 {   
     char  *path;
 

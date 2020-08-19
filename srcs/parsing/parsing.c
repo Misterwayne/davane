@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 15:03:06 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 17:45:34 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int     check_commande(t_cmd *cmd, char *line)
     return (ERROR);
 }
 
-char     *check_v(t_shell *shell, char **args)// this function will check if $x is a key to a value if yes returns it or return NULL
+char     *check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
 {
     t_var *l;
     int i; 

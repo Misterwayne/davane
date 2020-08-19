@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 14:52:14 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 18:09:01 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct  s_cmd
 	char		**cmd_lst;								//the list of command that zill be used later as key for builtin_array
 	char		**argvs;								//2d array for the arguments of the builtin
 	char		*path;										
-	int			(*builtin_array[8])(char **argv);		//array of pointer to function 
+	int			(*builtin_array[8])(char **argv, t_shell *shell);		//array of pointer to function 
 }				t_cmd;
 
 typedef struct	s_shell
@@ -75,14 +75,16 @@ char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
 int     		check_var(char *line, t_var *var, t_env *env);
-char     		*check_v(t_shell *shell, char **args);
-int         	as_equal(t_shell *shell, char *line);
+char     		*check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
+int         	is_a_var(t_shell *shell, char *line);		//check if line contains one '=', if so, it becomes a variable declaration
 
 // CHAINED LIST FUNCTION
 
-t_var        *new_node(char *line);
-t_var        *new_var(t_var *var, char *line);
-void         print_chainedlist(t_var *var);
+t_var        	*new_node(char *line);				//creat a new node
+t_var        	*new_var(t_var *var, char *line);	//add a node to the list
+void         	print_chainedlist(t_var *var);		// print the chained list
+int     	 	is_in_list(t_var *var, char *line); //check if line is a key in the chained list
+void    	 	replace_var(t_var *var, char* line);//replace the value of a node by linne
 
 
 
@@ -97,12 +99,12 @@ void			print_promt(void);						// print the promt
 
 // BUILTIN
 
-int     cd(char **argv);			// this one zorks but some errors are still possible
-int     export(char **argv);		//this function needs to stock the variable inside the chained list
-int 	echo(char **argv);			//it needs to be able to print an env variable from a key
-int 	env(char **argv);			//i don't know yet
-int		unset(char **argv);			//it needs to pop a variable from the chained list
-int     pwd(char **argv);			//this one works too
-int		ft_exit(char **argv);		//this will need to  be able to free anything still allocated
+int     cd(char **argv, t_shell *shell);			// this one works but some errors are still possible
+int     export(char **argv, t_shell *shell);		//this function needs to stock the variable inside the chained list
+int 	echo(char **argv, t_shell *shell);			//it needs to be able to print an env variable from a key
+int 	env(char **argv, t_shell *shell);			//i don't know yet
+int		unset(char **argv, t_shell *shell);			//it needs to pop a variable from the chained list
+int     pwd(char **argv, t_shell *shell);			//this one works too
+int		ft_exit(char **argv, t_shell *shell);		//this will need to  be able to free anything still allocated
 
 #endif

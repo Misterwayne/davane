@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 13:28:22 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/18 17:59:22 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 18:04:31 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	open_close(char **argv)
 }
 
 
-int		unset(char **argv)
+int		unset(char **argv, t_shell *shell)
 {
 	open_close(argv);
 	return (0);

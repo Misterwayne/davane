@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:15:34 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/19 15:10:17 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 17:36:59 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,26 @@ t_var        *new_node(char *line)
     new_node->value = value;
     new_node->next = NULL;
     new_node->prev = NULL;
-    return new_node;
+    return (new_node);
 }
 
 t_var        *new_var(t_var *var, char *line)
 {
     t_var *new_n;
 
-    new_n = new_node(line);
-    var->next = new_n;
-    new_n->prev = var;
-    new_n->first = new_n;
-
-    return new_n; 
+    if (is_in_list(var, line))
+    {
+        replace_var(var, line);
+        return (var);
+    }
+    else
+    {
+        new_n = new_node(line);
+        var->next = new_n;
+        new_n->prev = var;
+        new_n->first = new_n;
+        return (new_n);
+    }
 }
 
 void        print_chainedlist(t_var *var)
@@ -65,14 +72,12 @@ void        print_chainedlist(t_var *var)
 
 void        pop_var(t_var *var)
 {
-
 }
 
-int         as_equal(t_shell *shell, char *line)
+int         is_a_var(t_shell *shell, char *line)
 {
     int i;
     int r;
-    t_var *l;
 
     r = 0;
     i = 1;

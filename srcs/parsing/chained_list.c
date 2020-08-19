@@ -8,6 +8,7 @@ typedef struct	s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
+	struct s_env	*prev;
 }					t_env;
 
 void	ft_put_data(char *data, t_env *elem)
@@ -56,7 +57,6 @@ void	ft_create_list(char **env)
 	begin_list = ft_create_elem(env[0]);
 	while (env[i])
 	{
-
 		new = ft_create_elem(env[i]);
 		new->next = begin_list;
 		find_end(begin_list, new);
@@ -68,7 +68,6 @@ void	ft_create_list(char **env)
 		printf("%s:%s",new->key,new->value);
 		new = new->next;
 	}
-
 }
 
 // int main(int argc, char **argv, char **env)

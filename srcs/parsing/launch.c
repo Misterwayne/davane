@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 13:46:35 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 18:03:19 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		launch(t_shell *shell, int index, char **argv)
 	{
 		if (index > 6)
 			return ERROR;
-		shell->cmd->builtin_array[index](argv);
+		shell->cmd->builtin_array[index](argv, shell);
 	}
 	else
 		waitpid(pid, NULL, 0);

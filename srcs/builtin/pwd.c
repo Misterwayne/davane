@@ -6,13 +6,13 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 17:12:47 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/17 15:25:49 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 18:04:42 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int     pwd(char **argv)
+int     pwd(char **argv, t_shell *shell)
 {
     char *buff;
 
