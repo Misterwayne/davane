@@ -71,11 +71,11 @@ void	ft_create_list(char **env)
 
 }
 
-int main(int argc, char **argv, char **env)
-{
-	int i;
-	i = 0;
+// int main(int argc, char **argv, char **env)
+// {
+// 	int i;
+// 	i = 0;
 
-	ft_create_list(env);
-	return(0);
-}
+// 	ft_create_list(env);
+// 	return(0);
+// }

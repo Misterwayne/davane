@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 23:18:43 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/19 14:52:14 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
-}					t_env;
+}				t_env;
 
 typedef struct  s_cmd
 {
@@ -75,7 +75,16 @@ char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
 int     		check_var(char *line, t_var *var, t_env *env);
-char     		*check_v(t_shell *shell, char *line);
+char     		*check_v(t_shell *shell, char **args);
+int         	as_equal(t_shell *shell, char *line);
+
+// CHAINED LIST FUNCTION
+
+t_var        *new_node(char *line);
+t_var        *new_var(t_var *var, char *line);
+void         print_chainedlist(t_var *var);
+
+
 
 // MINISHELL CORE
 

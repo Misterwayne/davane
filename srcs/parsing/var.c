@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:15:34 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/18 23:15:38 by truepath         ###   ########.fr       */
+/*   Updated: 2020/08/19 15:10:17 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_var        *new_var(t_var *var, char *line)
     new_n = new_node(line);
     var->next = new_n;
     new_n->prev = var;
+    new_n->first = new_n;
 
     return new_n; 
 }
@@ -53,13 +54,13 @@ void        print_chainedlist(t_var *var)
     void    *l;
 
     l = var;
+    ft_printf("the state of the chained list is\n");
     while (var != NULL)
     {
-        printf("%s=%s\n", var->key, var->value);
+        ft_printf("%s=%s\n", var->key, var->value);
         var = var->prev;
     }
     var = l;
-    printf("%s\n", var->value);
 }
 
 void        pop_var(t_var *var)
@@ -67,15 +68,25 @@ void        pop_var(t_var *var)
 
 }
 
-int        main(void)
+int         as_equal(t_shell *shell, char *line)
 {
-    t_var   *list;
+    int i;
+    int r;
+    t_var *l;
 
-    list = new_node("lol=lel");
-    list = new_var(list, "lil=pouet");
-    list = new_var(list, "ok=ko");
-    print_chainedlist(list);
-    list = new_var(list, "pok=kopp");
-    print_chainedlist(list);
-    return 0;
+    r = 0;
+    i = 1;
+    while (line[i])
+    {
+        if (line[i] == '=')
+            r++;
+        i++;
+    }
+    if (r == 1)
+    {
+        shell->var = new_var(shell->var, line);
+        print_chainedlist(shell->var);
+        return (1);
+    }
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/18 17:58:05 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/19 15:05:41 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void open_write(char **argv)
 int		echo(char **argv)
 {
 
-	printf("\n");
 	open_write(argv);
 	printf("\n");
 	return (0);
