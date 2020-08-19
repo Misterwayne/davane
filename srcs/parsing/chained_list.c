@@ -48,7 +48,7 @@ t_env	*put_to_the_end(t_env *list, char *data)
 	}
 }
 
-int		main(int argc, char **argv, char **env)
+void		load_env(char **env)
 {
 	t_env	*begin_list;
 	int		i;
@@ -68,5 +68,4 @@ int		main(int argc, char **argv, char **env)
 			begin_list = begin_list->next;
 		i++;
 	}
-	return(0);
 }
