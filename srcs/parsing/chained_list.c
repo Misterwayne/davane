@@ -54,13 +54,6 @@ int		load_env(char **env, t_shell *shell)
 		i++;
 	}
 	i = 0;
-	// while(env[i])
-	// {
-	// 	printf("%s\n", begin_list->key);
-	// 	if (begin_list->next)
-	// 		begin_list = begin_list->next;
-	// 	i++;
-	// }
 	shell->env = begin_list;
 	return(0);
 }
