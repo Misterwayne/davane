@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 17:58:36 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/20 19:02:40 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void	print_promt(t_shell *shell)// affiche la prompt
 
 
 	get_pwd(shell);
-	write(1, "\x1b[32m", 6);
+	write(1, "\x1b[32m", 6);// Green
 	write(1, "-> ", 3);
-	write(1, "\x1b[34m", 6);
+	write(1, "\x1b[34m", 6); // blue
 	write(1, "(", 1);
-	write(1, "\x1b[31m", 6);
+	write(1, "\x1b[31m", 6); // RED
 	write(1, shell->usr, ft_strlen(shell->usr));
 	write(1, "\x1b[34m", 6);
 	write(1, ") ", 2);
 	write(1, "\x1b[36m", 6);
 	write(1, shell->current_pwd, ft_strlen(shell->current_pwd));
-	write(1, "\x1b[0m", 5);
+	write(1, "\x1b[0m", 5); // reset
 	write(1, " :", 2);
 	return ;
 }
@@ -56,20 +56,25 @@ void		lsh_loop(t_shell *shell)
 	while (on == 0)
 	{
 		print_promt(shell);
-		red = get_next_line(0, &line);	// premier parsing
-		args = lsh_split_line(line);	//split the line by white space
-		check_v(shell, args);			// this will check for '$' and replace the key by its value
-		if (!(is_a_var(shell, args[0]))) // check if the first argv as one equal and if so add the varible to the chaine list
+		red = get_next_line(0, &line);
+		if (line[0] != '\0')
 		{
-			i = check_commande(shell->cmd, args[0]);			//check if a word in the line correspond to a commande
-			if (i >= 0 && i < 6)
-				launch(shell, i, args);				// if yes, launch that commande based on the index i
-			else if (i == 6)
-				on = 1;
-			else if (!launch_from_path(shell->enviro, args, args[0]))
-				ft_printf("Minishell : Commande not found : %s\n",args[0]);
+		// premier parsing
+			args = lsh_split_line(line);	//split the line by white space
+			check_v(shell, args);			// this will check for '$' and replace the key by its value
+			if (!(is_a_var(shell, args[0]))) // check if the first argv as one equal and if so add the varible to the chaine list
+			{
+				i = check_commande(shell->cmd, args[0]);		//check if a word in the line correspond to a commande
+				if (i >= 0 && i < 6)
+					launch(shell, i, args);				// if yes, launch that commande based on the index i
+				else if (i == 6)
+					on = 1;
+				else if (!launch_from_path(shell->enviro, args, args[0]))
+					ft_printf("Minishell : Commande not found : %s\n",args[0]);
+			}
+			free(args);
 		}
-		free(args);
+		free(line);
 	}
 	free(line);
 }
