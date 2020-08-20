@@ -16,7 +16,7 @@ char	**ft_split_env(char *s)
 	{
 		if (s_copy[i] == '=')
 		{
-			s[i] = '\0';
+			s_copy[i] = '\0';
 			split[0] = ft_strdup((const char *)s_copy);
 			split[1] = ft_strdup((const char *)&(s_copy[i + 1]));
 			return (split);
