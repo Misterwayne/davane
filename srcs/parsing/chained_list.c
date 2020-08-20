@@ -55,6 +55,7 @@ t_env	*put_to_the_end(t_env *list, char *data)
 		beginin = list;
 		while(list->next)
 			list = list->next;
+		tmp->prev = list;
 		list->next = tmp;
 		return(beginin);
 	}
