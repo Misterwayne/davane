@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 19:14:53 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/20 16:25:51 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		lsh_loop(t_shell *shell)
 				launch(shell, i, args);				// if yes, launch that commande based on the index i
 			else if (i == 6)
 				on = 1;
-			else
+			else if (!launch_from_path(shell->enviro, args, args[0]))
 				ft_printf("Minishell : Commande not found : %s\n",args[0]);
 		}
 		free(args);
@@ -103,6 +103,7 @@ int		main(int argc, char **argv, char **env)
 	load_cmd(&cmd);
 	shell.cmd = &cmd;
 	shell.var = var;
+	shell.enviro = env;
 	lsh_loop(&shell);
 	return (0);
 }

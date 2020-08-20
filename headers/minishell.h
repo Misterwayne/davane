@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 19:15:45 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/20 16:30:29 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct	s_shell
 	t_cmd		*cmd;
 	t_env		*env;
 	t_var		*var;
+	char		**enviro;
 	int			var_flags;
 }				t_shell;
 
@@ -100,6 +101,8 @@ void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
 int				add_var(char *line, t_shell *shell);	// ad variable to the env
 int				load_env(char **env, t_shell *shell);					// init the env struct
 void			print_promt(void);						// print the promt
+int     		launch_from_path(char **env,char **args, char *cmd);
+int     		launch_bin(char *line, char **args);
 
 // BUILTIN
 
