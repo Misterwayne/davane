@@ -6,11 +6,13 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 16:25:51 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/20 17:58:36 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	get_pwd(t_shell *shell);
 
 char	**lsh_split_line(char *line)
 {
@@ -20,13 +22,24 @@ char	**lsh_split_line(char *line)
 	return(tockens);
 }
 
-void	print_promt(void)// affiche la prompt
+void	print_promt(t_shell *shell)// affiche la prompt
 {
 	char *prompt;
 
-	prompt = "|Minishell| ";
-	write(1, prompt, ft_strlen(prompt));
-	write(1, ">> :", 4);
+
+	get_pwd(shell);
+	write(1, "\x1b[32m", 6);
+	write(1, "-> ", 3);
+	write(1, "\x1b[34m", 6);
+	write(1, "(", 1);
+	write(1, "\x1b[31m", 6);
+	write(1, shell->usr, ft_strlen(shell->usr));
+	write(1, "\x1b[34m", 6);
+	write(1, ") ", 2);
+	write(1, "\x1b[36m", 6);
+	write(1, shell->current_pwd, ft_strlen(shell->current_pwd));
+	write(1, "\x1b[0m", 5);
+	write(1, " :", 2);
 	return ;
 }
 
@@ -42,7 +55,7 @@ void		lsh_loop(t_shell *shell)
 	on = 0;
 	while (on == 0)
 	{
-		print_promt();
+		print_promt(shell);
 		red = get_next_line(0, &line);	// premier parsing
 		args = lsh_split_line(line);	//split the line by white space
 		check_v(shell, args);			// this will check for '$' and replace the key by its value
@@ -59,6 +72,39 @@ void		lsh_loop(t_shell *shell)
 		free(args);
 	}
 	free(line);
+}
+
+void	get_pwd(t_shell *shell)
+{
+	int		j;
+	char	*path;
+
+	j = 0;
+	path = malloc(sizeof(char) * 1024);
+	getwd(path);
+	j = ft_strlen(path);
+	while (path[j] != '/')
+		j--;
+	shell->current_pwd = (path + (j + 1));
+}
+
+void	get_usr(t_shell *shell, char **env)
+{
+	int i;
+	int j;
+	
+	i = 0;
+	j = 0;
+	while (env[i])
+    {
+        if (ft_strncmp(env[i],"USER",4) == 0)
+            break;
+        i++;
+    }
+	j = ft_strlen(env[i]);
+	while (env[i][j] != '=')
+		j--;
+	shell->usr = (env[i] + (j + 1));
 }
 
 int		main(int argc, char **argv, char **env)
@@ -82,7 +128,7 @@ int		main(int argc, char **argv, char **env)
 		Unset
 		env
 
-	- integrating the binaries (cat,mkdir,etc..)
+	- (Done)integrating the binaries (cat,mkdir,etc..)
 
 	- ">>" and ">" redirection
 
@@ -104,6 +150,8 @@ int		main(int argc, char **argv, char **env)
 	shell.cmd = &cmd;
 	shell.var = var;
 	shell.enviro = env;
+	get_pwd(&shell);
+	get_usr(&shell, env);
 	lsh_loop(&shell);
 	return (0);
 }

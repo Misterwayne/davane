@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:15:34 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/19 17:36:59 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/20 17:25:23 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int         is_a_var(t_shell *shell, char *line)
     if (r == 1)
     {
         shell->var = new_var(shell->var, line);
-        print_chainedlist(shell->var);
         return (1);
     }
     return (0);
