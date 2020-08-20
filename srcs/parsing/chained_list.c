@@ -3,7 +3,26 @@
 #include <stdlib.h>
 #include "../../headers/minishell.h"
 
-char	**ft_split(char const *s, char c);
+char	**ft_split_env(char *s)
+{
+	char **split;
+	int i;
+
+	i = 0;
+	split = malloc(sizeof(char *)* 2);
+	while (s[i] != '\0')
+	{
+		if (s[i] == '=')
+		{
+			s[i] = '\0';
+			split[0] = ft_strdup((const char *)s);
+			split[1] = ft_strdup((const char *)&(s[i + 1]));
+			return (split);
+		}
+		i++;
+	}
+	return(0);
+}
 
 t_env	*ft_create_elem(char *data)
 {
@@ -12,7 +31,7 @@ t_env	*ft_create_elem(char *data)
 	char	**split;
 
 	elem = malloc(sizeof(t_env));
-	split = ft_split((const char *)data, '=');
+	split = ft_split_env(data);
 	elem->key = split[0];
 	elem->value = split[1];
 	elem->prev = NULL;

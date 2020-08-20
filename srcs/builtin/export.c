@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 17:15:57 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/20 17:53:08 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void    add_variable(t_env *env, char *data)
 	else
 	{
 		tmp = ft_create_elem(data);
-        ft_printf("%s\n", tmp->value);
         if (find_variable(env, tmp) == -1)
             return ;
 		while(env->next)
