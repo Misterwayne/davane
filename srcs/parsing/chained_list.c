@@ -5,22 +5,25 @@
 
 char	**ft_split_env(char *s)
 {
-	char **split;
+	char	**split;
+	char	*s_copy;
 	int i;
 
 	i = 0;
+	s_copy = ft_strdup((const char *)s);
 	split = malloc(sizeof(char *)* 2);
-	while (s[i] != '\0')
+	while (s_copy[i] != '\0')
 	{
-		if (s[i] == '=')
+		if (s_copy[i] == '=')
 		{
 			s[i] = '\0';
-			split[0] = ft_strdup((const char *)s);
-			split[1] = ft_strdup((const char *)&(s[i + 1]));
+			split[0] = ft_strdup((const char *)s_copy);
+			split[1] = ft_strdup((const char *)&(s_copy[i + 1]));
 			return (split);
 		}
 		i++;
 	}
+	free (s_copy);
 	return(0);
 }
 
