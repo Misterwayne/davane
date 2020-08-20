@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 13:28:22 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/20 18:45:44 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/20 19:09:21 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ void	search_for_var(char **argv, t_env *env)
 		if (ft_strcmp(argv[1], tmp->key) == 0)
 		{
 			ft_printf("CHECK");
-			prev = tmp->prev;
-			next = tmp->next;
-			free(tmp);
+			// prev = tmp->prev;
+			// next = tmp->next;
+			// free(tmp->key);
+			// free(tmp->next);
+			//free(tmp);
+			//prev = next;
 			// prev->next = next;
 			// next->prev = prev;
 		}
