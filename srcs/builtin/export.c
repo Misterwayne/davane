@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 16:30:22 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/20 17:15:57 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,38 @@
 void    display_var(char **argv, t_env *env);
 t_env   *ft_create_elem(char *data);
 
-void    add_variable(t_env *list, char *data)
+int    find_variable(t_env *env, t_env *new)
+{
+    while(env)
+    {
+        if (ft_strcmp(env->key, new->key) == 0)
+        {
+            env->value = new->value;
+            return (-1);
+        }
+        env = env->next;
+    }
+    return (0);
+}
+
+void    add_variable(t_env *env, char *data)
 {
    	t_env	*tmp;
 	
-	if (!(list))
+	if (!(env))
 	{
-		list = ft_create_elem(data);
+		env = ft_create_elem(data);
 		return ;
 	}
 	else
 	{
 		tmp = ft_create_elem(data);
-		while(list->next)
-			{
-                if (list->key == tmp->key)
-                    {
-                        list->value = tmp->value;
-                        return ;
-                    }
-                list = list->next;
-            }
-		list->next = tmp;
+        ft_printf("%s\n", tmp->value);
+        if (find_variable(env, tmp) == -1)
+            return ;
+		while(env->next)
+            env = env->next;
+        env->next = tmp;
         return ;
 	}
 }
