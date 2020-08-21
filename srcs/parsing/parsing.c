@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 16:07:36 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/21 16:41:33 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,18 @@ char     *check_v(t_shell *shell, char **args)// this function will check if $st
     {
         if (args[i][0] == '$')
         {
+            if (args[i][1] == '?')
+            {
+                    free(args[i]);
+                    args[i] = ft_itoa(shell->last_return);
+                    return 0; 
+            }
+            if (args[i][1] == '$')
+            {
+                    free(args[i]);
+                    args[i] = ft_itoa(shell->last_pid);
+                    return 0;
+            }
             change_local_vars(args, shell->var, i);
             change_env_vars(args, shell->env, i);
         }
