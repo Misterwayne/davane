@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 17:11:32 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/21 15:52:01 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct	s_shell
 	char		**enviro;
 	char		*current_pwd;
 	char		*usr;
+	int			last_pid;
+	int			last_return;
 	int			var_flags;
 }				t_shell;
 
@@ -103,8 +105,8 @@ void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
 int				add_var(char *line, t_shell *shell);	// ad variable to the env
 int				load_env(char **env, t_shell *shell);					// init the env struct
 void			print_promt(t_shell *shell);						// print the promt
-int     		launch_from_path(char **env,char **args, char *cmd);
-int     		launch_bin(char *line, char **args);
+int     		launch_from_path(t_shell *shell,char **args, char *cmd);
+int     		launch_bin(char *line, char **args, t_shell *shell);
 
 // BUILTIN
 

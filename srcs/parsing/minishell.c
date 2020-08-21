@@ -6,7 +6,7 @@
 /*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 19:02:40 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/21 15:59:04 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	print_promt(t_shell *shell)// affiche la prompt
 	write(1, ") ", 2);
 	write(1, "\x1b[36m", 6);
 	write(1, shell->current_pwd, ft_strlen(shell->current_pwd));
-	write(1, "\x1b[0m", 5); // reset
 	write(1, " :", 2);
+	write(1, "\x1b[0m", 5); // reset
 	return ;
 }
 
@@ -69,8 +69,8 @@ void		lsh_loop(t_shell *shell)
 					launch(shell, i, args);				// if yes, launch that commande based on the index i
 				else if (i == 6)
 					on = 1;
-				else if (!launch_from_path(shell->enviro, args, args[0]))
-					ft_printf("Minishell : Commande not found : %s\n",args[0]);
+				else if (!launch_from_path(shell, args, args[0]))
+					ft_printf("Minishell : Commande not found : pid = %d return = %d\n",shell->last_pid,shell->last_return);
 			}
 			free(args);
 		}
