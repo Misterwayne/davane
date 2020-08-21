@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 15:59:47 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/21 16:07:36 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	change_env_vars(char **args, t_env *env, int i)
 
 char     *check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
 {
-    t_var *l;
     int i; 
     
     i = 0;
