@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/19 17:45:34 by mwane            ###   ########.fr       */
+/*   Updated: 2020/08/21 16:07:36 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,47 @@ int     check_commande(t_cmd *cmd, char *line)
     return (ERROR);
 }
 
+void	change_local_vars(char **args, t_var *var, int i)
+{
+    while (var->key[0] != '0')
+    {
+        if (ft_strcmp(var->key, (args[i] + 1)) == 0)
+        {
+            free(args[i]);
+            args[i] = var->value;
+            return ;
+        }
+        var = var->prev;
+    }
+}
+
+void	change_env_vars(char **args, t_env *env, int i)
+{
+    while (env)
+    {
+        if (ft_strcmp(env->key, (args[i] + 1)) == 0)
+        {
+            free(args[i]);
+            args[i] = env->value; 
+            return ;
+        }
+        env = env->next;
+    }
+    args[i] = "";
+}
+
 char     *check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
 {
-    t_var *l;
     int i; 
     
     i = 0;
-    l = shell->var;
     while (args[i])
     {
         if (args[i][0] == '$')
         {
-            while (shell->var->key[0] != '0')
-            {
-                if (ft_strcmp(shell->var->key, (args[i] + 1)) == 0)
-                {
-                    free(args[i]);
-                    args[i] = shell->var->value;
-                }
-                shell->var = shell->var->prev;
-            }
+            change_local_vars(args, shell->var, i);
+            change_env_vars(args, shell->env, i);
         }
-        shell->var = l;
         i++;
     }
     return ("");
