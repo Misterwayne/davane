@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/20 17:53:08 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/08/21 14:40:42 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int    find_variable(t_env *env, t_env *new)
     {
         if (ft_strcmp(env->key, new->key) == 0)
         {
+            free(env->value);
             env->value = new->value;
             return (-1);
         }
