@@ -51,28 +51,28 @@ void 	ls_call(int fd, int action)
 	//char *args[] = {"/bin/cat", "new.c", "new.txt", 0};
 	char *args[] = {"/bin/ls", 0};
 	fd_tmp = open("check", O_RDWR + O_APPEND);
-	// if (fork() == 0)
-    //     {
-	// 		if (action == 0)
-	// 			dup2(fd, 1);
-	// 		else
-	// 		{
-	// 			//dup2(fd, 1);
-	// 			//fd_tmp = dup2(fd_tmp, 1);
-	// 			//add_data(fd, fd_tmp);
-	// 		}	
-	// 		execv(args[0], args); // child: call execv with the path and the args
-	// 	}
+	if (fork() == 0)
+        {
+			if (action == 0)
+				dup2(fd, 1);
+			else
+			{
+				dup2(fd_tmp, 1);
+				//fd_tmp = dup2(fd_tmp, 1);
+				//add_data(fd, fd_tmp);
+			}	
+			execv(args[0], args); // child: call execv with the path and the args
+		}
     // else
     //     wait(&status);        // parent: wait for the child (not really necessary)
 	reader = 1;
-	while ((reader = get_next_line(fd, &line)) == 1)
-	{
-		write(fd_tmp, line, ft_strlen(line));
-		//printf("%s", line);
-		write(fd_tmp, "\n", 1);
-		//free(line);
-	}
+	// while ((reader = get_next_line(fd, &line)) == 1)
+	// {
+	// 	write(fd_tmp, line, ft_strlen(line));
+	// 	//printf("%s", line);
+	// 	write(fd_tmp, "\n", 1);
+	// 	//free(line);
+	// }
 	//write(fd_tmp, "kiki", 5);
 	close (fd_tmp);
 	ft_printf("success_ls\n");
