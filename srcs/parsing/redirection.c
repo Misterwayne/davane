@@ -7,38 +7,6 @@ int					get_next_line(int fd, char **line);
 int					has_return(char *str);
 char				*join_str(const char *s1, const char *s2);
 
-void	copy_file_data(int fd, int fd_tmp)
-{
-	int		reader;
-	char	*line;
-
-	while ((reader = get_next_line(fd_tmp, &line)) == 1)
-	{
-		ft_printf("OUT:%s\n", line);
-		//write(fd, line, ft_strlen(line));
-		free(line);
-	}
-
-}
-
-void	add_data(int fd, int fd_tmp)
-{
-	int		reader;
-	char	*line;
-	int i;
-	i = 0;
-
-	reader = 1;
-	//reader = get_next_line(fd_tmp, &line);
-	while ((reader = get_next_line(fd_tmp, &line)) == 1)
-	{
-		ft_printf("OUT:%s\n", line);
-		//write(fd, line, ft_strlen(line));
-		free(line);
-	}
-	close(fd);
-}
-
 void 	ls_call(int fd)
 {
 	int status;
@@ -53,6 +21,7 @@ void 	ls_call(int fd)
 		}
     else
         wait(&status);        // parent: wait for the child (not really necessary)
+	//write(fd, "privet", 6);
 	ft_printf("success_ls\n");
 }
 
@@ -60,8 +29,8 @@ void	open_create_close_file(char *file)
 {
 	int fd;
 
-	//fd = open(file, O_RDWR | O_CREAT + O_RDWR); // begining of file
-	fd = open(file, O_RDWR + O_APPEND | O_CREAT + O_RDWR); // enf of file
+	fd = open(file, O_TRUNC + O_RDWR | O_CREAT + O_RDWR); // begining of file
+	//fd = open(file, O_RDWR + O_APPEND | O_CREAT + O_RDWR); // enf of file
 	ls_call(fd);
 	close (fd);
 	printf("succes2\n");
