@@ -115,7 +115,6 @@ void	rewrite_the_file(char **argv, char **argv_new, int i)
 	close (fd);
 }
 
-
 void	read_from_file(char **argv, char **argv_new, int i)
 {
 	char	*file;
