@@ -1,12 +1,12 @@
+#include "../../headers/minishell.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "../../headers/minishell.h"
 
 int					get_next_line(int fd, char **line);
-int					has_return(char *str);
 char				*join_str(const char *s1, const char *s2);
-void	print_arguments(char **argv, t_env *env);
+void				print_arguments(char **argv, t_env *env);
 
 void 	call_binaries(int fd)
 {
@@ -14,7 +14,7 @@ void 	call_binaries(int fd)
 	char *data;
 
 	//char *args[] = {"/bin/cat", "new.c", "new.txt", 0};
-	char *args[] = {"/bin/ls", 0};
+	char *args[] = {"/bin/pwd", 0};
 	if (fork() == 0)
         {
 			dup2(fd, 1);	
@@ -34,32 +34,93 @@ void	call_builtin(char **argv, int fd)
 	if (fork() == 0)
     {
 		dup2(fd, 1);	
-		print_arguments(argv, 0);// child: call execv with the path and the args
+		print_arguments(argv, 0); // child: call execv with the path and the args
 		exit(0);
 	}
     else
         wait(&status);        // parent: wait for the child (not really necessary)
-	printf("succ");
+	ft_printf("success1\n");
 }
 
-void	redirection(char **argv, char *file)
+void	redirection(char **argv, int fd)
 {
-	int fd;
-
-	//fd = open(file, O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR |  S_IRGRP | S_IROTH); // begining of file
-	fd = open(file, O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR |  S_IRGRP | S_IROTH); // enf of file
-	call_binaries(fd); // for binaries
 	//call_builtin(argv, fd); // for builtins
-	close (fd);
-	printf("succes2\n");
+	call_binaries(fd); // for binaries
+	ft_printf("success2\n");
 }
 
-int main(int argc, char **argv)
+char	*check_for_file(char **argv, int i)
 {
-	if (argc != 1)
-		redirection(argv, "check.c");
+	char *file;
+
+	if (argv[i + 1])
+		file = argv[i + 1];
 	else
+		{
+			ft_printf("parse error near \'\\n\n");
+			exit (-1); 
+		}
+	return (file);
+}
+
+void	write_to_file(char **argv, char **argv_new, int i)
+{
+	char	*file;
+	int		fd;
+
+	file = check_for_file(argv, i);
+	fd = open(file, O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH); 
+	redirection(argv_new, fd);
+	close (fd);
+}
+
+void	rewrite_the_file(char **argv, char **argv_new, int i)
+{
+	char	*file;
+	int		fd;
+
+	file = check_for_file(argv, i);
+	fd = open(file, O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	redirection(argv_new, fd);
+	close (fd);
+}
+
+
+void	split_redirection(char **argv, int i)
+{
+	char 	**argv_new;
+	int 	j;
+
+	j = 1;
+	argv_new = malloc(sizeof(char *)*i);
+	while(j < i)
 	{
-		printf("enter argumets");
+		argv_new[j] = ft_strdup(argv[j]);
+		printf("%s\n", argv_new[j]);
+		j++;
 	}
+	argv_new = NULL;
+	while (argv[i] != NULL)
+	{
+		if (ft_strcmp(">", argv[i]) == 0)
+			rewrite_the_file(argv, argv_new, i);
+		if (ft_strcmp(">>", argv[i]) == 0)
+			write_to_file(argv, argv_new, i);
+		i++;
+	}
+	exit(0);
+}
+
+int find_redirection(char **argv)
+{
+	int i;
+
+	i = 1;
+	while (argv[i] != NULL)
+	{
+		if ((ft_strcmp(">", argv[i]) == 0) || (ft_strcmp(">>", argv[i]) == 0))
+			split_redirection(argv, i);
+		i++;
+	}
+	return (0);
 }
