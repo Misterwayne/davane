@@ -42,10 +42,29 @@ void	call_builtin(char **argv, int fd)
 	ft_printf("success1\n");
 }
 
+
+
 void	redirection(char **argv, int fd)
 {
+	int status;
+	char *data;
+	char *args[] = {"/bin/pwd", 0};
+
+	if (fork() == 0)
+    {
+		dup2(fd, 1);	
+		if (ft_strcmp(argv[0], "pwd") == 0)
+			execv(args[0], args); // child: call execv with the path and the args
+		else if (ft_strcmp(argv[0], "echo") == 0)
+			print_arguments(argv, 0); // child: call execv with the path and the args
+		exit(0);
+	}
+    else
+        wait(&status);        // parent: wait for the child (not really necessary)
+
 	//call_builtin(argv, fd); // for builtins
-	call_binaries(fd); // for binaries
+	//call_binaries(fd); // for binaries
+
 	ft_printf("success2\n");
 }
 
@@ -79,6 +98,7 @@ void	rewrite_the_file(char **argv, char **argv_new, int i)
 	char	*file;
 	int		fd;
 
+
 	file = check_for_file(argv, i);
 	fd = open(file, O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	redirection(argv_new, fd);
@@ -91,15 +111,15 @@ void	split_redirection(char **argv, int i)
 	char 	**argv_new;
 	int 	j;
 
-	j = 1;
+	j = 0;
 	argv_new = malloc(sizeof(char *)*i);
-	while(j < i)
+	while(j + 1 < i)
 	{
-		argv_new[j] = ft_strdup(argv[j]);
+		argv_new[j] = ft_strdup(argv[j + 1]);
 		printf("%s\n", argv_new[j]);
 		j++;
 	}
-	argv_new = NULL;
+	argv_new[j] = NULL;
 	while (argv[i] != NULL)
 	{
 		if (ft_strcmp(">", argv[i]) == 0)
