@@ -12,26 +12,29 @@
 
 #include "../../headers/minishell.h"
 
-void	print_arguments(char **argv, t_env *env)
-{
-	int i;
+char	*call_set(void);
 
+void	print_arguments(char **argv, t_shell *shell)
+{
+	int		i;
+	t_env	*env;
+	char	*var;
+
+	env = shell->env;
 	i = 1;
 	while (argv[i] != NULL)
 	{
+		var = call_set();
 		ft_printf("%s ", argv[i]);
 		i++;
 	}
-}
-
-void open_write(char **argv, t_env *env)
-{
-	print_arguments(argv, env);
+	ft_printf("\n");
+	exit(0);
 }
 
 int		echo(char **argv, t_shell *shell)
 {
-	open_write(argv, shell->env);
+	print_arguments(argv, shell);
 	ft_printf("\n");
 	return (0);
 }

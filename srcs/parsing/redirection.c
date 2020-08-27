@@ -61,16 +61,18 @@ void	redirect_output(char **argv, int fd)
 	int status;
 	char *data;
 	char *args[] = {"/bin/pwd", 0};
-
+	//char *args[] = { "/bin/zsh", "-c", "set", 0};
 	//call_builtin(argv, fd); // for builtins
 	//call_binaries(fd); // for binaries
 	if (fork() == 0)
     {
-		dup2(fd, 1);	
-		if (ft_strcmp(argv[0], "pwd") == 0)
-			execv(args[0], args); // child: call execv with the path and the args
-		else if (ft_strcmp(argv[0], "echo") == 0)
-			print_arguments(argv, 0); // child: call execv with the path and the args
+		execv(args[0], args); // child: call execv with the path and the args
+		
+		// dup2(fd, 1);	
+		// if (ft_strcmp(argv[0], "pwd") == 0)
+		// 	execv(args[0], args); // child: call execv with the path and the args
+		// else if (ft_strcmp(argv[0], "echo") == 0)
+		// 	print_arguments(argv, 0); // child: call execv with the path and the args
 		exit(0);
 	}
     else

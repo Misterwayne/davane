@@ -54,6 +54,14 @@ typedef struct	s_env
 }					t_env;
 
 
+typedef struct 		s_local
+{
+	char			*key;
+	char			*value;
+	struct s_local	*prev;
+}					t_local;
+
+
 typedef struct  s_cmd
 {
 	char		**cmd_lst;								//the list of command that zill be used later as key for builtin_array
@@ -67,6 +75,7 @@ typedef struct	s_shell
 	t_cmd		*cmd;
 	t_env		*env;
 	t_var		*var;
+	t_local		*local;
 	char		**enviro;
 	char		*current_pwd;
 	char		*usr;
