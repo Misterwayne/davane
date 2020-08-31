@@ -61,7 +61,7 @@ void		lsh_loop(t_shell *shell)
 		{
 		// premier parsing
 			args = lsh_split_line(line);	//split the line by white space
-			check_v(shell, args);			// this will check for '$' and replace the key by its value
+			//check_v(shell, args);			// this will check for '$' and replace the key by its value
 			if (!(is_a_var(shell, args[0]))) // check if the first argv as one equal and if so add the varible to the chaine list
 			{
 				i = check_commande(shell->cmd, args[0]);		//check if a word in the line correspond to a commande
@@ -69,8 +69,9 @@ void		lsh_loop(t_shell *shell)
 					launch(shell, i, args);				// if yes, launch that commande based on the index i
 				else if (i == 6)
 					on = 1;
-				else if (!launch_from_path(shell, args, args[0]))
-					ft_printf("Minishell : Commande not found : pid = %d return = %d\n",shell->last_pid,shell->last_return);
+				else
+					launch_bin(shell, args, 0);
+				//ft_printf("Minishell : Commande not found : pid = %d return = %d\n",shell->last_pid,shell->last_return);
 			}
 			free(args);
 		}

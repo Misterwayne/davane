@@ -114,8 +114,8 @@ void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
 int				add_var(char *line, t_shell *shell);	// ad variable to the env
 int				load_env(char **env, t_shell *shell);					// init the env struct
 void			print_promt(t_shell *shell);						// print the promt
-int     		launch_from_path(t_shell *shell,char **args, char *cmd);
-int     		launch_bin(char *line, char **args, t_shell *shell);
+char 			*launch_from_path(t_shell *shell,char **args, char *cmd);
+int     		launch_bin(t_shell *shell, char **args, int intput);
 
 // BUILTIN
 
