@@ -127,7 +127,7 @@ void	read_from_file(char **argv, char **argv_new, int i)
 }
 
 
-void	split_redirection(char **argv, int i)
+void	split_redirection_old(char **argv, int i)
 {
 	char 	**argv_new;
 	int 	j;
@@ -154,16 +154,16 @@ void	split_redirection(char **argv, int i)
 	exit(0);
 }
 
-int find_redirection(char **argv)
+int find_redirection_old(char **argv)
 {
 	int i;
 
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		if ((ft_strcmp(">", argv[i]) == 0) || (ft_strcmp(">>", argv[i]) == 0) ||
-			(ft_strcmp(">", argv[i]) == 0) || (ft_strcmp("<", argv[i]) == 0))
-			split_redirection(argv, i);
+		// if ((ft_strcmp(">", argv[i]) == 0) || (ft_strcmp(">>", argv[i]) == 0) ||
+		// 	(ft_strcmp(">", argv[i]) == 0) || (ft_strcmp("<", argv[i]) == 0))
+		// 	split_redirectioni_old(argv, i);
 		i++;
 	}
 	return (0);
