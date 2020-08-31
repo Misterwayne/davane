@@ -110,13 +110,32 @@ int   launch_exec(char **args, char *executable, int input, int *output)
     return (0);
 }
 
+int     wait_for_input(t_shell *shell, int input)
+{
+    char    **args_exec;
+    char    *line;
+
+    args_exec[0] = 0;
+    line = 0;
+    while (!(args_exec[0]))
+    {
+        ft_printf("pipe> ");
+        get_next_line(0, &line);
+        args_exec = lsh_split_line(line);
+        free(line);
+    }
+    launch_bin(shell, args_exec, input);
+    return (0);
+}
+
+
 int     launch_bin(t_shell *shell, char **args, int input)
 {
     char    **args_exec;
     char    *executable;
-    char    *line = 0;
-    int     i = 1;
+    int     i = 0;
     int     fd[2];
+    int     fd_file;
 
     while (args[i] != NULL)
     {
@@ -127,23 +146,26 @@ int     launch_bin(t_shell *shell, char **args, int input)
                 create_pipe(fd);
                 input = launch_exec(args_exec, executable, input, fd);
                 if (args[i + 1])
-                    {
-                        launch_bin(shell, &args[i + 1], input);
-                        return (0);
-                    }
+                    return (launch_bin(shell, &args[i + 1], input));
+                else
+                    return (wait_for_input(shell, input));
+            }
+        if (ft_strcmp(">", args[i]) == 0)
+            {
+                if (args[i + 1])
+                    fd[1] = open(args[i + 1], O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
                 else
                     {
-                        args_exec[0] = 0;
-                        while (!(args_exec[0]))
-                        {
-                            ft_printf("pipe> ");
-                            get_next_line(0, &line);
-                            args_exec = lsh_split_line(line);
-                            free(line);
-                        }
-                        launch_bin(shell, args_exec, input);
-                        return (0);
+                        ft_printf("parse error near \'\\n\n");
+                        return 0;
                     }
+                if (input == 0)
+                {
+                    args_exec = split_redirection(args, i);
+                    executable = launch_from_path(shell, args_exec, args_exec[0]);
+                }
+                input = launch_exec(args_exec, executable, input, fd);
+                return (launch_bin(shell, &args[i + 2], input));
             }
         i++;
     }
