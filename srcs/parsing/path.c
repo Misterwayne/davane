@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/21 15:58:07 by mwane            ###   ########.fr       */
+/*   Updated: 2020/09/01 19:05:59 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,26 @@ int     wait_for_input(t_shell *shell, int input)
 }
 
 
+int   open_file(char *redir, char *file)
+{
+    int     fd;
+    char    *line;
+    int     red;
+    int     i;
+
+    if (!(file))
+        {
+            ft_printf("parse error near \'\\n\n");
+            exit(-1);
+        }
+    if (ft_strcmp(redir, ">>") == 0)
+        fd = open(file, O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH); 
+    else
+        fd = open(file, O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    return (fd);
+}
+
+
 int     launch_bin(t_shell *shell, char **args, int input)
 {
     char    **args_exec;
@@ -136,6 +156,9 @@ int     launch_bin(t_shell *shell, char **args, int input)
     int     i = 0;
     int     fd[2];
     int     fd_file;
+    char    buf[5];
+    int     output;
+    int status;
 
     while (args[i] != NULL)
     {
@@ -144,28 +167,44 @@ int     launch_bin(t_shell *shell, char **args, int input)
                 args_exec = split_redirection(args, i);
                 executable = launch_from_path(shell, args_exec, args_exec[0]);
                 create_pipe(fd);
-                input = launch_exec(args_exec, executable, input, fd);
+                output = launch_exec(args_exec, executable, input, fd);
                 if (args[i + 1])
-                    return (launch_bin(shell, &args[i + 1], input));
+                    return (launch_bin(shell, &args[i + 1], output));
                 else
-                    return (wait_for_input(shell, input));
+                    return (wait_for_input(shell, output));
             }
-        if (ft_strcmp(">", args[i]) == 0)
+        if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
             {
-                if (args[i + 1])
-                    fd[1] = open(args[i + 1], O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-                else
+                create_pipe(fd);
+                
+                fd_file = open_file(args[i], args[i + 1]);
+                if (fork() == 0)
                     {
-                        ft_printf("parse error near \'\\n\n");
-                        return 0;
+                        dup2(fd_file, fd[0]);
+                        dup2(fd_file, fd[1]);
+                        if (input == 0)
+                            {
+                                args_exec = split_redirection(args, i);
+                                executable = launch_from_path(shell, args_exec, args_exec[0]);
+                            }
+                        output = launch_exec(args_exec, executable, input, fd);
                     }
-                if (input == 0)
+                else
                 {
-                    args_exec = split_redirection(args, i);
-                    executable = launch_from_path(shell, args_exec, args_exec[0]);
+                        wait(&status);
                 }
-                input = launch_exec(args_exec, executable, input, fd);
-                return (launch_bin(shell, &args[i + 2], input));
+                fd_file = open_file(args[i], args[i + 1]);
+                //fd[1] = open_file(args[i], args[i + 1]);
+                //fd[0] = dup(fd[1]);
+                read(fd_file, buf, 5);
+                ft_printf("CHECKKKK");
+                ft_printf("%s", buf);
+                return (0);
+                // input_copy = dup(input);
+                // if (!(args[i + 2]))
+                //     return (0);
+                // else
+                //     launch_bin(shell, &args[i + 2], input_copy);
             }
         i++;
     }
