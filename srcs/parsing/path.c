@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/01 19:05:59 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/02 20:25:56 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,37 +79,6 @@ int     create_pipe(int *fd)
     return (0);
 }
 
-int   launch_exec(char **args, char *executable, int input, int *output)
-{  
-    pid_t   pid;
-    int     status;
-
-    pid = fork();
-    if (pid < 0)
-    {
-        printf("fork error");
-        exit(1);
-    }
-    if (pid == 0)
-    {
-        if (input != 0)
-            dup2(input, 0);
-        if (output)
-            dup2(output[1], 1);
-        execv(executable, args);
-    }
-    else
-        wait(&status);
-    if (input != 0)
-        close (input);
-    if (output)
-    {
-        close (output[1]);
-        return(output[0]);
-    }
-    return (0);
-}
-
 int     wait_for_input(t_shell *shell, int input)
 {
     char    **args_exec;
@@ -148,6 +117,36 @@ int   open_file(char *redir, char *file)
     return (fd);
 }
 
+int   launch_exec(char **args, char *executable, int input, int *output)
+{  
+    pid_t   pid;
+    int     status;
+
+    pid = fork();
+    if (pid < 0)
+    {
+        printf("fork error");
+        exit(1);
+    }
+    if (pid == 0)
+    {
+        if (input != 0)
+            dup2(input, 0);
+        if (output)
+            dup2(output[1], 1);
+        execv(executable, args);
+    }
+    else
+        wait(&status);
+    if (input != 0)
+        close (input);
+    if (output)
+    {
+        //close (output[1]);
+        return(output[0]);
+    }
+    return (0);
+}
 
 int     launch_bin(t_shell *shell, char **args, int input)
 {
@@ -158,7 +157,7 @@ int     launch_bin(t_shell *shell, char **args, int input)
     int     fd_file;
     char    buf[5];
     int     output;
-    int status;
+    int     status;
 
     while (args[i] != NULL)
     {
@@ -168,6 +167,7 @@ int     launch_bin(t_shell *shell, char **args, int input)
                 executable = launch_from_path(shell, args_exec, args_exec[0]);
                 create_pipe(fd);
                 output = launch_exec(args_exec, executable, input, fd);
+                close(fd[1]);                
                 if (args[i + 1])
                     return (launch_bin(shell, &args[i + 1], output));
                 else
@@ -175,30 +175,42 @@ int     launch_bin(t_shell *shell, char **args, int input)
             }
         if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
             {
+                args_exec = split_redirection(args, i);
+                executable = launch_from_path(shell, args_exec, args_exec[0]);
                 create_pipe(fd);
-                
-                fd_file = open_file(args[i], args[i + 1]);
-                if (fork() == 0)
-                    {
-                        dup2(fd_file, fd[0]);
-                        dup2(fd_file, fd[1]);
-                        if (input == 0)
-                            {
-                                args_exec = split_redirection(args, i);
-                                executable = launch_from_path(shell, args_exec, args_exec[0]);
-                            }
-                        output = launch_exec(args_exec, executable, input, fd);
-                    }
-                else
-                {
-                        wait(&status);
-                }
-                fd_file = open_file(args[i], args[i + 1]);
+                output = launch_exec(args_exec, executable, input, fd);
+                executable = ft_strdup("/bin/cat");
+                args_exec = split_redirection(args, i);
+                args_exec[0] = executable;
+                args_exec[1] = 0;
+                // fd[1] = open_file(args[i], args[i + 1]);
+                // if (!(args[i + 2]))
+                //     launch_exec(args_exec, executable, output, fd);
+                // else
+                //     {
+                //         args[i + 1] = ft_strdup("cat");
+                //         launch_bin(shell, &args[i + 1], output)
+                //     }
+                return (0);
+                //output = launch_exec(args_exec, executable, input, fd);
+                // if (fork() == 0)
+                //     {
+                //         dup2(fd_file, fd[0]);
+                //         dup2(fd_file, fd[1]);
+                //         if (input == 0)
+                //             {
+                //                 args_exec = split_redirection(args, i);
+                //                 executable = launch_from_path(shell, args_exec, args_exec[0]);
+                //             }
+                //         output = launch_exec(args_exec, executable, input, fd);
+                //     }
+                // else
+                //     wait(&status);
                 //fd[1] = open_file(args[i], args[i + 1]);
                 //fd[0] = dup(fd[1]);
-                read(fd_file, buf, 5);
-                ft_printf("CHECKKKK");
-                ft_printf("%s", buf);
+                // read(fd_file, buf, 5);
+                // ft_printf("CHECKKKK");
+                // ft_printf("%s", buf);
                 return (0);
                 // input_copy = dup(input);
                 // if (!(args[i + 2]))
