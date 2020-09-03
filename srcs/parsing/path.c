@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/02 20:25:56 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/03 20:15:35 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,14 +175,26 @@ int     launch_bin(t_shell *shell, char **args, int input)
             }
         if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
             {
+                fd_file = open_file(args[i], args[i + 1]);
                 args_exec = split_redirection(args, i);
                 executable = launch_from_path(shell, args_exec, args_exec[0]);
                 create_pipe(fd);
-                output = launch_exec(args_exec, executable, input, fd);
-                executable = ft_strdup("/bin/cat");
-                args_exec = split_redirection(args, i);
-                args_exec[0] = executable;
-                args_exec[1] = 0;
+                char *args_cat[] = { "/bin/cat", 0, 0};           
+                if (input != 0)
+                    output = launch_exec(args_cat, "/bin/cat", input, fd);
+                output = launch_exec(args_exec, executable, 0, fd);               
+                close (fd[1]);
+                if (args[i + 1])
+                    {
+                        //dup2(fd_file, 0);
+                        //args[i + 1] = ft_strdup("cat");
+                        return (launch_bin(shell, &args[i + 1], output));
+                    }
+                else
+                    return (0);
+                // args_exec = split_redirection(args, i);
+                // args_exec[0] = executable;
+                // args_exec[1] = 0;
                 // fd[1] = open_file(args[i], args[i + 1]);
                 // if (!(args[i + 2]))
                 //     launch_exec(args_exec, executable, output, fd);
@@ -191,7 +203,6 @@ int     launch_bin(t_shell *shell, char **args, int input)
                 //         args[i + 1] = ft_strdup("cat");
                 //         launch_bin(shell, &args[i + 1], output)
                 //     }
-                return (0);
                 //output = launch_exec(args_exec, executable, input, fd);
                 // if (fork() == 0)
                 //     {
@@ -211,7 +222,6 @@ int     launch_bin(t_shell *shell, char **args, int input)
                 // read(fd_file, buf, 5);
                 // ft_printf("CHECKKKK");
                 // ft_printf("%s", buf);
-                return (0);
                 // input_copy = dup(input);
                 // if (!(args[i + 2]))
                 //     return (0);
