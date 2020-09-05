@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 15:59:04 by mwane            ###   ########.fr       */
+/*   Updated: 2020/09/05 18:25:29 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,13 @@ void		lsh_loop(t_shell *shell)
 			if (!(is_a_var(shell, args[0]))) // check if the first argv as one equal and if so add the varible to the chaine list
 			{
 				i = check_commande(shell->cmd, args[0]);		//check if a word in the line correspond to a commande
-				if (i >= 0 && i < 6)
-					launch(shell, i, args);				// if yes, launch that commande based on the index i
-				else if (i == 6)
-					on = 1;
-				else
-					launch_bin(shell, args, 0);
+				// if (i >= 0 && i < 6)
+				// 	launch(shell, i, args);				// if yes, launch that commande based on the index i
+				// else if (i == 6)
+				// 	on = 1;
+				// else
+					//launch_bin(shell, args, 0, 0);
+				parse_functions(shell, line);
 				//ft_printf("Minishell : Commande not found : pid = %d return = %d\n",shell->last_pid,shell->last_return);
 			}
 			free(args);

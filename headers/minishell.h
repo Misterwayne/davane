@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 15:52:01 by mwane            ###   ########.fr       */
+/*   Updated: 2020/09/05 18:25:45 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int				add_var(char *line, t_shell *shell);	// ad variable to the env
 int				load_env(char **env, t_shell *shell);					// init the env struct
 void			print_promt(t_shell *shell);						// print the promt
 char 			*launch_from_path(t_shell *shell,char **args, char *cmd);
-int     		launch_bin(t_shell *shell, char **args, int intput);
+int     		launch_bin(t_shell *shell, char **args, int intput, int *fd_file);
 
 // BUILTIN
 
@@ -127,4 +127,9 @@ int		unset(char **argv, t_shell *shell);			//it needs to pop a variable from the
 int     pwd(char **argv, t_shell *shell);			//this one works too
 int		ft_exit(char **argv, t_shell *shell);		//this will need to  be able to free anything still allocated
 
+
+
+
+// PARSE
+void	parse_functions(t_shell *shell, char *line);
 #endif
