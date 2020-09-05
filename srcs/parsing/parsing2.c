@@ -24,6 +24,7 @@ char	*ft_strndup(char *str, int n)
 typedef struct functions
 {
 	char			*line;
+	char			*symbol;
 	struct functions *next;
 }				t_fun;
 
@@ -52,11 +53,12 @@ t_fun	*add_fun(t_fun *fun, char *data)
 }
 
 
-void	split_line(char *line, char **args)
+void	split_line(char *line)
 {
 	int i;
 	int j;
 	int n;
+	char **args;
 
 	n = 0;
 	i = 0;
@@ -82,7 +84,6 @@ void	parse_functions(t_shell *shell, char *line)
 	int i;
 	i = 0;
 	fun = NULL;
-	char **args;
 
 	split_line(line, args);
 
