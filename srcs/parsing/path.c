@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/05 18:14:22 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/06 17:14:11 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int     wait_for_input(t_shell *shell, int input)
         args_exec = lsh_split_line(line);
         free(line);
     }
-    launch_bin(shell, args_exec, input, 0);
+    launch_bin(shell, args_exec, input);
     return (0);
 }
 
@@ -149,38 +149,57 @@ int   launch_exec(char **args, char *executable, int input, int *output)
     return (0);
 }
 
+char **right_part(char **args)
+{
+    int i;
+    i = 0;
 
-int   find_the_end(char **args)
+    while(args[i])
+    {
+        if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0 || ft_strcmp("|", args[i]) == 0 || ft_strcmp(";", args[i]) == 0)
+            return (split_redirection(args, i));
+        i++;
+    }
+    return (0);
+}
+
+int   file_to_write(char **args)
 {
     int i = 0;
     int fd = 0;
+    int j = 0;
+    char **args_cat;
     
     while (args[i])
     {
-        if (ft_strcmp("|", args[i]) == 0)
-            return (fd);
+        if (ft_strcmp("|", args[i]) == 0 || ft_strcmp("\0", args[i]) == 0)
+            return (0);
         if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
         {
             if (fd != 0)
                 close(fd);
             fd = open_file(args[i], args[i + 1]);
+            //dup2(fd, 1);
+            // args_cat = right_part(&args[i]);
+            // while(args_cat[j])
+            //     printf("%s", args_cat[j++]);
         }
         i++;
     }
-    return (fd);
+    return (0);
 }
 
-
-int     launch_bin(t_shell *shell, char **args, int input, int *fd_file)
+int     launch_bin(t_shell *shell, char **args, int input)
 {
     char    **args_exec;
     char    *executable;
     int     i = 0;
     int     fd[2];
-    //int     fd_file;
+    int     fd_file;
     char    buf[5];
     int     output;
     int     status;
+    int     old_output;
 
     while (args[i] != NULL)
     {
@@ -192,29 +211,23 @@ int     launch_bin(t_shell *shell, char **args, int input, int *fd_file)
                 output = launch_exec(args_exec, executable, input, fd);
                 close(fd[1]);                
                 if (args[i + 1])
-                    return (launch_bin(shell, &args[i + 1], output, 0));
+                    return (launch_bin(shell, &args[i + 1], output));
                 else
                     return (wait_for_input(shell, output));
             }
         if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
             {
-                if (!(fd_file))
-                    {
-                        fd_file = malloc (sizeof(int) * 2);
-                        fd_file[1] = find_the_end(args);
-                    }
+                old_output = dup(1);
+                file_to_write(&args[i]);
                 args_exec = split_redirection(args, i);
-                executable = launch_from_path(shell, args_exec, args_exec[0]);
-                launch_bin(shell, args_exec, 0, fd_file);
-                executable = "bin/cat";
-                args[i + 1] = executable;
-                if (args[i + 2])
-                    launch_bin(shell, &args[i + 2], 0, fd_file);
+                launch_bin(shell, args_exec, 0);
+                close(1);
+                dup2(old_output, 1);
                 return (0);
             }
         i++;
     }
     executable = launch_from_path(shell, args, args[0]);
-    launch_exec(args, executable, input, fd_file);
+    launch_exec(args, executable, input, 0);
     return (0);
 }

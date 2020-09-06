@@ -24,7 +24,8 @@ char	*ft_strndup(char *str, int n)
 typedef struct functions
 {
 	char			*line;
-	char			*symbol;
+	char			*r_symbol;
+	char			*l_symbol;
 	struct functions *next;
 }				t_fun;
 
@@ -53,39 +54,51 @@ t_fun	*add_fun(t_fun *fun, char *data)
 }
 
 
-void	split_line(char *line)
+char		*split_line(char *line, char *str, int *i)
 {
-	int i;
+	char *tmp;
 	int j;
-	int n;
-	char **args;
 
-	n = 0;
-	i = 0;
-	j = 0;
-	while (line[i] != '\0')
+	j = 0;	
+	while (line[*i] != '\0')
 	{
-		if (line[i] == '|' || line[i] == ';')
-			{
-				ft_strndup(&line[j], j - i);
-				return ;
-				// ft_printf("%s, ", args[n]);
-				// args[n + 1] = ft_strdup(&line[i]);
-				j = i + 1;
-			}
-		i++;
+		if (line[*i] == '|')
+			return (ft_strdup("|"));
+		if (line[*i] == ';')
+			return (ft_strdup(";"));
+		if (line[*i] == '<')
+			return (ft_strdup("<"));
+		if (line[*i] == '>' && line[*i + 1] == '>')
+			return (ft_strdup(">>"));
+		if (line[*i] == '>')
+			return (ft_strdup(">"));
+		//tmp[j] = line[*i];
+		j++;
+		(*i)++;
 	}
-
+	return (0);
 }
 
 void	parse_functions(t_shell *shell, char *line)
 {
 	t_fun 	*fun;
+	char *sep;
+	char *str;
 	int i;
+	int j;
+
+	j = 0;
 	i = 0;
 	fun = NULL;
-
-	split_line(line, args);
+	while (line[i] != '\0')
+	{
+		sep = split_line(line, str, &i);
+		if (sep == 0)
+			return ;
+		ft_printf("sep: %s, ", sep);
+		free(sep);
+		i++;
+	}
 
 	//fun = add_fun(fun, line);
 
@@ -95,6 +108,4 @@ void	parse_functions(t_shell *shell, char *line)
 	// 	fun = fun->next;
 	// }
 	// ft_printf("%s", fun->line);
-
-	//launch_bin(shell, args, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/05 18:25:29 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/06 16:38:37 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		lsh_loop(t_shell *shell)
 				// else if (i == 6)
 				// 	on = 1;
 				// else
-					//launch_bin(shell, args, 0, 0);
+				//launch_bin(shell, args, 0);
 				parse_functions(shell, line);
 				//ft_printf("Minishell : Commande not found : pid = %d return = %d\n",shell->last_pid,shell->last_return);
 			}
