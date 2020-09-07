@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/06 16:01:05 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/07 18:27:13 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ we need an array of function for our bulltin.
 */
 
 typedef struct	s_shell t_shell;
+
+typedef struct functions
+{
+	char			*line;
+	char			*r_symbol;
+	char			*l_symbol;
+	struct functions *next;
+	struct functions *prev;
+}				t_fun;
+
 
 typedef struct	s_var								//this is a first in, last out chained list
 {
@@ -132,4 +142,5 @@ int		ft_exit(char **argv, t_shell *shell);		//this will need to  be able to free
 
 // PARSE
 void	parse_functions(t_shell *shell, char *line);
+int     launch_body(t_shell *shell, t_fun *fun, int input);
 #endif

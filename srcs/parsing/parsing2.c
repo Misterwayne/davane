@@ -11,25 +11,14 @@ char	*ft_strndup(char *str, int n)
 	if (!(str_new = malloc((sizeof(char) * (i + 1)))))
 		return (NULL);
 	i = 0;
-	while (str[i] && i <= n)
+	while (str[i] && i < n)
 		{
 			str_new[i] = str[i];
 			i++;
 		}
 	str_new[i] = '\0';
-	return (str);
+	return (str_new);
 }
-
-
-typedef struct functions
-{
-	char			*line;
-	char			*r_symbol;
-	char			*l_symbol;
-	struct functions *next;
-}				t_fun;
-
-
 
 t_fun	*create_fun(char *data)
 {
@@ -37,6 +26,7 @@ t_fun	*create_fun(char *data)
 	new = malloc(sizeof(t_fun));
 	new->line = data;
 	new->next = 0;
+	new->prev = 0;
 	return (new);
 }
 
@@ -50,62 +40,65 @@ t_fun	*add_fun(t_fun *fun, char *data)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = create_fun(data);
+	tmp->next->prev = tmp;
 	return (fun);	
 }
 
 
-char		*split_line(char *line, char *str, int *i)
+char		*sp_symbol(char *line, int *i)
 {
-	char *tmp;
-	int j;
+	char	*str;
 
-	j = 0;	
-	while (line[*i] != '\0')
+	if (line[*i] == '>' && line[*i + 1] == '>')
+		{
+			str = ft_strndup(&line[*i], 2);
+			(*i)++;
+		}
+	else
+		str = ft_strndup(&line[*i], 1);
+	(*i)++;
+	return(str);
+}
+
+char		*sp_line(char *line, int *i)
+{
+	char	*str;
+	int 	j;
+
+	str = 0;
+	j = 0;
+	while (line[*i + j] != '\0')
 	{
-		if (line[*i] == '|')
-			return (ft_strdup("|"));
-		if (line[*i] == ';')
-			return (ft_strdup(";"));
-		if (line[*i] == '<')
-			return (ft_strdup("<"));
-		if (line[*i] == '>' && line[*i + 1] == '>')
-			return (ft_strdup(">>"));
-		if (line[*i] == '>')
-			return (ft_strdup(">"));
-		//tmp[j] = line[*i];
+		if((line[*i + j] == '|') || (line[*i + j] == '>') || (line[*i + j] == '<') || (line[*i + j] == ';'))
+			break ;
 		j++;
-		(*i)++;
 	}
-	return (0);
+	str = ft_strndup(&line[*i], j);
+	(*i) = (*i) + j;
+	return (str);
+}
+
+char		*split_line(char *line, int *i)
+{
+	if ((line[*i] == '|') || (line[*i] == '>') || (line[*i] == '<') || (line[*i] == ';'))
+		return (sp_symbol(line, i));
+	else
+		return (sp_line(line, i));
 }
 
 void	parse_functions(t_shell *shell, char *line)
 {
 	t_fun 	*fun;
-	char *sep;
-	char *str;
-	int i;
-	int j;
+	char	*str;
+	int		i;
 
-	j = 0;
 	i = 0;
 	fun = NULL;
 	while (line[i] != '\0')
 	{
-		sep = split_line(line, str, &i);
-		if (sep == 0)
-			return ;
-		ft_printf("sep: %s, ", sep);
-		free(sep);
-		i++;
+		str = split_line(line, &i);
+		fun = add_fun(fun, str);
+		//printf("%s\n", str);
 	}
-
-	//fun = add_fun(fun, line);
-
-	// while (fun->next)
-	// {
-	// 	ft_printf("%s\ns", fun->line);
-	// 	fun = fun->next;
-	// }
-	// ft_printf("%s", fun->line);
+	launch_body(shell, fun, 0);
 }

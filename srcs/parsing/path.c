@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/06 17:14:11 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/07 18:38:41 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,5 +229,29 @@ int     launch_bin(t_shell *shell, char **args, int input)
     }
     executable = launch_from_path(shell, args, args[0]);
     launch_exec(args, executable, input, 0);
+    return (0);
+}
+
+
+int     launch_body(t_shell *shell, t_fun *fun, int input)
+{
+    char **args;
+    char *executable;
+    
+    while (fun)
+	{
+		if (ft_strcmp(fun->line, ";") == 0)
+        {
+            args = lsh_split_line(fun->prev->line);
+            executable = launch_from_path(shell, args, args[0]);
+            launch_exec(args, executable, 0, 0);
+            //launch_body(shell, fun, 0);
+            //printf("%s\n", fun->line);
+            //printf("%s\n", fun->next->line);
+        }
+        //printf("%s\n", fun->line);
+        //printf("%s\n", fun->line);
+        fun = fun->next;
+	}
     return (0);
 }
