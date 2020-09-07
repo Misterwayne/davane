@@ -15,16 +15,16 @@ int main(int argc, char **argv)
 
 	int status;
 	char *args[] = { "/bin/cat", "file", 0};
-    if(pipe(fd) < 0)
-    {
-        /* Если создать pipe не удалось, печатаем об этом сообщение 
-        и прекращаем работу */
-        printf("Can\'t create pipe\n");
-        exit(-1); 
-    }
+    // if(pipe(fd) < 0)
+    // {
+    //     /* Если создать pipe не удалось, печатаем об этом сообщение 
+    //     и прекращаем работу */
+    //     printf("Can\'t create pipe\n");
+    //     exit(-1); 
+    // }
 	if (fork() == 0)
     {
-    	dup2(fd[1], 1);
+    	//dup2(fd[1], 1);
 		execv(args[0], args); // child: call execv with the path and the args
         exit(0);
 	}
@@ -32,13 +32,13 @@ int main(int argc, char **argv)
         wait(&status);        // parent: wait for the child (not really necessary)
     //close(fd[1]);
     //close(fd[1]);
-    write(fd[1], "privet", 6);
+    // write(fd[1], "privet", 6);
     
-    buf = malloc(10);
-    read(fd[0], buf, 10);
-    printf("%s", buf);
-    close(fd[0]);
-    close(fd[1]);
+    // buf = malloc(10);
+    // read(fd[0], buf, 10);
+    // printf("%s", buf);
+    // close(fd[0]);
+    // close(fd[1]);
 	// char *args1[] = { "/bin/cat", 0};
     // if (fork() == 0)
     // {

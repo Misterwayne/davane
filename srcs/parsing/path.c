@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/07 18:38:41 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:28:34 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ int   launch_exec(char **args, char *executable, int input, int *output)
     }
     if (pid == 0)
     {
-        if (input != 0)
-            dup2(input, 0);
-        if (output)
-            dup2(output[1], 1);
+        //if (input != 0)
+         //   dup2(input, 0);
+        //if (output)
+        //    dup2(output[1], 1);
         execv(executable, args);
     }
     else
@@ -245,12 +245,18 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
             args = lsh_split_line(fun->prev->line);
             executable = launch_from_path(shell, args, args[0]);
             launch_exec(args, executable, 0, 0);
-            //launch_body(shell, fun, 0);
-            //printf("%s\n", fun->line);
-            //printf("%s\n", fun->next->line);
+            ft_printf("%s\n", fun->prev->line);
+            fun = fun->next;
+            if (fun)
+                return (launch_body(shell, fun, 0));
+            return 0;
         }
-        //printf("%s\n", fun->line);
-        //printf("%s\n", fun->line);
+        if (!(fun->next))
+        {
+            args = lsh_split_line(fun->line);
+            executable = launch_from_path(shell, args, args[0]);
+            launch_exec(args, executable, 0, 0);
+        }
         fun = fun->next;
 	}
     return (0);
