@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/07 20:28:34 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/08 18:59:21 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,31 +163,31 @@ char **right_part(char **args)
     return (0);
 }
 
-int   file_to_write(char **args)
-{
-    int i = 0;
-    int fd = 0;
-    int j = 0;
-    char **args_cat;
+// int   file_to_write(char **args)
+// {
+//     int i = 0;
+//     int fd = 0;
+//     int j = 0;
+//     char **args_cat;
     
-    while (args[i])
-    {
-        if (ft_strcmp("|", args[i]) == 0 || ft_strcmp("\0", args[i]) == 0)
-            return (0);
-        if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
-        {
-            if (fd != 0)
-                close(fd);
-            fd = open_file(args[i], args[i + 1]);
-            //dup2(fd, 1);
-            // args_cat = right_part(&args[i]);
-            // while(args_cat[j])
-            //     printf("%s", args_cat[j++]);
-        }
-        i++;
-    }
-    return (0);
-}
+//     while (args[i])
+//     {
+//         if (ft_strcmp("|", args[i]) == 0 || ft_strcmp("\0", args[i]) == 0)
+//             return (0);
+//         if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
+//         {
+//             if (fd != 0)
+//                 close(fd);
+//             fd = open_file(args[i], args[i + 1]);
+//             //dup2(fd, 1);
+//             // args_cat = right_part(&args[i]);
+//             // while(args_cat[j])
+//             //     printf("%s", args_cat[j++]);
+//         }
+//         i++;
+//     }
+//     return (0);
+// }
 
 int     launch_bin(t_shell *shell, char **args, int input)
 {
@@ -215,16 +215,16 @@ int     launch_bin(t_shell *shell, char **args, int input)
                 else
                     return (wait_for_input(shell, output));
             }
-        if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
-            {
-                old_output = dup(1);
-                file_to_write(&args[i]);
-                args_exec = split_redirection(args, i);
-                launch_bin(shell, args_exec, 0);
-                close(1);
-                dup2(old_output, 1);
-                return (0);
-            }
+        // if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
+        //     {
+        //         old_output = dup(1);
+        //         file_to_write(&args[i]);
+        //         args_exec = split_redirection(args, i);
+        //         launch_bin(shell, args_exec, 0);
+        //         close(1);
+        //         dup2(old_output, 1);
+        //         return (0);
+        //     }
         i++;
     }
     executable = launch_from_path(shell, args, args[0]);
@@ -232,25 +232,81 @@ int     launch_bin(t_shell *shell, char **args, int input)
     return (0);
 }
 
+int   file_to_write(t_shell *shell, t_fun *fun)
+{
+    char    **args;
+    int     fd;
+    
+    if (!(fun->next))
+        {
+            ft_printf("sh: syntax error near unexpected token \'\\n\'\n");
+            exit(-1);
+        }
+    // else if (ft_strcmp(fun->next->line, ";") == 0 || ft_strcmp(fun->next->line, "|") == 0)
+    //     {
+    //         ft_printf("sh: syntax error near unexpected token \'%s\' \n", fun->next->line);
+    //         exit(-1);
+    //     }
+    args = lsh_split_line(fun->next->line);
+    fd = open_file(fun->line, args[0]);
+    fun = fun->next;
+    fun->prev = 0;
+    return (fd);
+}
 
 int     launch_body(t_shell *shell, t_fun *fun, int input)
 {
     char **args;
     char *executable;
+    int old_output;
+    int fd_file;
+    t_fun *tmp;
     
     while (fun)
 	{
 		if (ft_strcmp(fun->line, ";") == 0)
         {
-            args = lsh_split_line(fun->prev->line);
-            executable = launch_from_path(shell, args, args[0]);
-            launch_exec(args, executable, 0, 0);
-            ft_printf("%s\n", fun->prev->line);
+            if (fun->prev)
+            {
+                args = lsh_split_line(fun->prev->line);
+                executable = launch_from_path(shell, args, args[0]);
+                launch_exec(args, executable, 0, 0);
+                fun->prev = 0;
+            }
             fun = fun->next;
+            fun->prev = 0;
             if (fun)
                 return (launch_body(shell, fun, 0));
             return 0;
         }
+        if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
+        {
+            fd_file = file_to_write(shell, fun);
+            if (fun->next->next && (ft_strcmp(fun->next->next->line, ">>") == 0  || ft_strcmp(fun->next->next->line, ">") == 0))
+                {
+                    tmp = fun->prev;
+                    fun = fun->next;
+                    fun = fun->next;
+                    fun->prev = tmp;
+                    close(fd_file);
+                    launch_body(shell, fun, 0);
+                }
+            else
+                {
+                    old_output = dup(1);
+                    dup2(fd_file, 1);
+                    args = lsh_split_line(fun->prev->line);
+                    executable = launch_from_path(shell, args, args[0]);
+                    launch_exec(args, executable, 0, 0);
+                    close(1);
+                    dup(old_output);
+                    fun = fun->next;
+                    fun->prev = 0;
+                    launch_body(shell, fun, 0);
+                }
+            return (0);
+        }
+
         if (!(fun->next))
         {
             args = lsh_split_line(fun->line);
