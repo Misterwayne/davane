@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/10 16:25:41 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/10 18:32:41 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,7 @@ int		ft_exit(char **argv, t_shell *shell);		//this will need to  be able to free
 // PARSE
 void	parse_functions(t_shell *shell, char *line);
 int     launch_body(t_shell *shell, t_fun *fun, int input);
+int   launch_exec(t_shell *shell, char **args, int input, int output);
+
+int		ft_pipe(t_shell *shell, t_fun *fun, int input);
 #endif

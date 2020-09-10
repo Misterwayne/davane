@@ -98,7 +98,6 @@ void	parse_functions(t_shell *shell, char *line)
 	{
 		str = split_line(line, &i);
 		fun = add_fun(fun, str);
-		//printf("%s\n", str);
 	}
 	launch_body(shell, fun, 0);
 }
