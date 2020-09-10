@@ -6,18 +6,20 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/08 18:59:21 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/10 16:25:23 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-char     *launch_from_path(t_shell *shell,char **args, char *cmd)
+char     *add_path(t_shell *shell, char **args)
 {
     char **paths;
     char *line;
     int     i;
+    char *cmd;
 
+    cmd = args[0];
     i = 0;
     if (cmd == NULL)
         return (0);
@@ -137,44 +139,6 @@ int   launch_exec(char **args, char *executable, int input, int output)
 
 int     launch_bin(t_shell *shell, char **args, int input)
 {
-    char    **args_exec;
-    char    *executable;
-    int     i = 0;
-    int     fd[2];
-    int     fd_file;
-    char    buf[5];
-    int     output;
-    int     status;
-    int     old_output;
-
-    while (args[i] != NULL)
-    {
-        // if (ft_strcmp("|", args[i]) == 0)
-        //     {
-        //         args_exec = split_redirection(args, i);
-        //         executable = launch_from_path(shell, args_exec, args_exec[0]);
-        //         create_pipe(fd);
-        //         output = launch_exec(args_exec, executable, input, fd);
-        //         close(fd[1]);                
-        //         if (args[i + 1])
-        //             return (launch_bin(shell, &args[i + 1], output));
-        //         else
-        //             return (wait_for_input(shell, output));
-        //     }
-        // if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
-        //     {
-        //         old_output = dup(1);
-        //         file_to_write(&args[i]);
-        //         args_exec = split_redirection(args, i);
-        //         launch_bin(shell, args_exec, 0);
-        //         close(1);
-        //         dup2(old_output, 1);
-        //         return (0);
-        //     }
-        i++;
-    }
-    executable = launch_from_path(shell, args, args[0]);
-    launch_exec(args, executable, input, 0);
     return (0);
 }
 
@@ -217,7 +181,7 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
             if (fun->prev)
             {
                 args = lsh_split_line(fun->prev->line);
-                executable = launch_from_path(shell, args, args[0]);
+                executable = add_path(shell, args);
                 launch_exec(args, executable, 0, 0);
                 fun->prev = 0;
             }
@@ -244,7 +208,7 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
                     old_output = dup(1);
                     dup2(fd_file, 1);
                     args = lsh_split_line(fun->prev->line);
-                    executable = launch_from_path(shell, args, args[0]);
+                    executable = add_path(shell, args);
                     launch_exec(args, executable, 0, 0);
                     close(1);
                     dup(old_output);
@@ -257,7 +221,7 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
         else if (ft_strcmp(fun->line, "|") == 0)
         {
             args = lsh_split_line(fun->prev->line);
-            executable = launch_from_path(shell, args, args[0]);
+            executable = add_path(shell, args);
             create_pipe(fd);
             output = fd[1];
             launch_exec(args, executable, input, output);
@@ -266,7 +230,7 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
         else if (!(fun->next))
         {
             args = lsh_split_line(fun->line);
-            executable = launch_from_path(shell, args, args[0]);
+            executable = add_path(shell, args);
             launch_exec(args, executable, input, 0);
             return (0);
         }
