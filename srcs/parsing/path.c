@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/21 15:58:07 by mwane            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../headers/minishell.h"
 
 char     *launch_from_path(t_shell *shell,char **args, char *cmd)
@@ -118,7 +106,7 @@ int   open_file(char *redir, char *file)
     return (fd);
 }
 
-int   launch_exec(char **args, char *executable, int input, int *output)
+int   launch_exec(char **args, char *executable, int input, int output)
 {  
     pid_t   pid;
     int     status;
@@ -131,63 +119,21 @@ int   launch_exec(char **args, char *executable, int input, int *output)
     }
     if (pid == 0)
     {
-        //if (input != 0)
-         //   dup2(input, 0);
-        //if (output)
-        //    dup2(output[1], 1);
+        if (input != 0)
+           dup2(input, 0);
+        if (output != 0)
+           dup2(output, 1);
         execv(executable, args);
     }
     else
         wait(&status);
     if (input != 0)
         close (input);
-    if (output)
-    {
-        close (output[1]);
-        return(output[0]);
-    }
+    if (output != 0)
+        close (output);
     return (0);
 }
 
-char **right_part(char **args)
-{
-    int i;
-    i = 0;
-
-    while(args[i])
-    {
-        if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0 || ft_strcmp("|", args[i]) == 0 || ft_strcmp(";", args[i]) == 0)
-            return (split_redirection(args, i));
-        i++;
-    }
-    return (0);
-}
-
-// int   file_to_write(char **args)
-// {
-//     int i = 0;
-//     int fd = 0;
-//     int j = 0;
-//     char **args_cat;
-    
-//     while (args[i])
-//     {
-//         if (ft_strcmp("|", args[i]) == 0 || ft_strcmp("\0", args[i]) == 0)
-//             return (0);
-//         if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
-//         {
-//             if (fd != 0)
-//                 close(fd);
-//             fd = open_file(args[i], args[i + 1]);
-//             //dup2(fd, 1);
-//             // args_cat = right_part(&args[i]);
-//             // while(args_cat[j])
-//             //     printf("%s", args_cat[j++]);
-//         }
-//         i++;
-//     }
-//     return (0);
-// }
 
 int     launch_bin(t_shell *shell, char **args, int input)
 {
@@ -203,18 +149,18 @@ int     launch_bin(t_shell *shell, char **args, int input)
 
     while (args[i] != NULL)
     {
-        if (ft_strcmp("|", args[i]) == 0)
-            {
-                args_exec = split_redirection(args, i);
-                executable = launch_from_path(shell, args_exec, args_exec[0]);
-                create_pipe(fd);
-                output = launch_exec(args_exec, executable, input, fd);
-                close(fd[1]);                
-                if (args[i + 1])
-                    return (launch_bin(shell, &args[i + 1], output));
-                else
-                    return (wait_for_input(shell, output));
-            }
+        // if (ft_strcmp("|", args[i]) == 0)
+        //     {
+        //         args_exec = split_redirection(args, i);
+        //         executable = launch_from_path(shell, args_exec, args_exec[0]);
+        //         create_pipe(fd);
+        //         output = launch_exec(args_exec, executable, input, fd);
+        //         close(fd[1]);                
+        //         if (args[i + 1])
+        //             return (launch_bin(shell, &args[i + 1], output));
+        //         else
+        //             return (wait_for_input(shell, output));
+        //     }
         // if (ft_strcmp(">", args[i]) == 0 || ft_strcmp(">>", args[i]) == 0)
         //     {
         //         old_output = dup(1);
@@ -261,6 +207,8 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
     int old_output;
     int fd_file;
     t_fun *tmp;
+    int fd[2];
+    int output;
     
     while (fun)
 	{
@@ -279,7 +227,7 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
                 return (launch_body(shell, fun, 0));
             return 0;
         }
-        if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
+        else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
         {
             fd_file = file_to_write(shell, fun);
             if (fun->next->next && (ft_strcmp(fun->next->next->line, ">>") == 0  || ft_strcmp(fun->next->next->line, ">") == 0))
@@ -306,12 +254,21 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
                 }
             return (0);
         }
-
-        if (!(fun->next))
+        else if (ft_strcmp(fun->line, "|") == 0)
+        {
+            args = lsh_split_line(fun->prev->line);
+            executable = launch_from_path(shell, args, args[0]);
+            create_pipe(fd);
+            output = fd[1];
+            launch_exec(args, executable, input, output);
+            input = fd[0];
+        }
+        else if (!(fun->next))
         {
             args = lsh_split_line(fun->line);
             executable = launch_from_path(shell, args, args[0]);
-            launch_exec(args, executable, 0, 0);
+            launch_exec(args, executable, input, 0);
+            return (0);
         }
         fun = fun->next;
 	}
