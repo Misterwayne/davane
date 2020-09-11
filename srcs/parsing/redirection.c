@@ -51,6 +51,8 @@ void	ft_redirection(t_shell *shell, t_fun *fun)
 	
 	fd = file_to_write(shell, fun);
 	ft_printf("%s", fun->line);
+	// str = strcat(fun->prev, fun->next);
+
 	// if (fun->next->next && (ft_strcmp(fun->next->next->line, ">>") == 0  || ft_strcmp(fun->next->next->line, ">") == 0))
 	// 	{
 	// 		tmp = fun->prev;
