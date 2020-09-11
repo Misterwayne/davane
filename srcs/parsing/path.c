@@ -99,6 +99,7 @@ int     launch_bin(t_shell *shell, char **args, int input)
 
 
 int	ft_redirection(t_shell *shell, t_fun *fun);
+int ft_back_redirection(t_shell *shell, t_fun *fun);
 
 int     launch_body(t_shell *shell, t_fun *fun, int input)
 {
@@ -127,6 +128,11 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
                 output = ft_redirection(shell, fun);
                 //ft_printf("%s", fun->next->line);
             }
+        else if (ft_strcmp(fun->line, "<") == 0)
+        {
+            input = ft_back_redirection(shell, fun);
+        }
+
         if (fun->next)
             fun = fun->next;    
         else
