@@ -104,11 +104,6 @@ int ft_back_redirection(t_shell *shell, t_fun *fun);
 int     launch_body(t_shell *shell, t_fun *fun, int input)
 {
     char **args;
-    char *executable;
-    int old_output;
-    int fd_file;
-    t_fun *tmp;
-    int fd[2];
     int output = 0;
     
     while (fun)
@@ -124,15 +119,9 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
         else if (ft_strcmp(fun->line, "|") == 0)
             input = ft_pipe(shell, fun, input);
         else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
-            {
-                output = ft_redirection(shell, fun);
-                //ft_printf("%s", fun->next->line);
-            }
+            output = ft_redirection(shell, fun);
         else if (ft_strcmp(fun->line, "<") == 0)
-        {
             input = ft_back_redirection(shell, fun);
-        }
-
         if (fun->next)
             fun = fun->next;    
         else
