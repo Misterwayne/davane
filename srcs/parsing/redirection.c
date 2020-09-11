@@ -42,7 +42,7 @@ int   file_to_write(t_shell *shell, t_fun *fun)
     return (fd);
 }
 
-void	ft_redirection(t_shell *shell, t_fun *fun)
+int	ft_redirection(t_shell *shell, t_fun *fun)
 {
 	int 	fd;
 	char 	**args;
@@ -50,28 +50,12 @@ void	ft_redirection(t_shell *shell, t_fun *fun)
 	char	*str;
 	
 	fd = file_to_write(shell, fun);
-	ft_printf("%s", fun->line);
-	// str = strcat(fun->prev, fun->next);
-
-	// if (fun->next->next && (ft_strcmp(fun->next->next->line, ">>") == 0  || ft_strcmp(fun->next->next->line, ">") == 0))
-	// 	{
-	// 		tmp = fun->prev;
-	// 		fun = fun->next;
-	// 		fun = fun->next;
-	// 		fun->prev = tmp;
-	// 		close(fd);
-	// 		launch_body(shell, fun, 0);
-	// 	}
-	// else
-	// 	{
-	// 		save_output = dup(1);
-	// 		dup2(fd, 1);
-	// 		args = lsh_split_line(fun->prev->line);
-	// 		launch_exec(shell, args, 0, 0);
-	// 		close(1);
-	// 		dup(save_output);
-	// 		fun = fun->next;
-	// 		fun->prev = 0;
-	// 		launch_body(shell, fun, 0);
-	// 	}
+	str = strcat(fun->prev->line, fun->next->line);
+	fun->next->line = fun->prev->line;
+	return (fd);
+	// save_output = dup(1);
+	// dup2(fd, 1);
+	// close(1);
+	// dup(save_output);
+	// return (0);
 }

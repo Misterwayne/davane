@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/11 14:24:18 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/11 16:43:55 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int     launch_bin(t_shell *shell, char **args, int input)
 }
 
 
-void	ft_redirection(t_shell *shell, t_fun *fun);
+
+int	ft_redirection(t_shell *shell, t_fun *fun);
 
 int     launch_body(t_shell *shell, t_fun *fun, int input)
 {
@@ -107,28 +108,31 @@ int     launch_body(t_shell *shell, t_fun *fun, int input)
     int fd_file;
     t_fun *tmp;
     int fd[2];
-    int output;
+    int output = 0;
     
     while (fun)
 	{
-		if (ft_strcmp(fun->line, ";") == 0)
+        if (ft_strcmp(fun->line, ";") == 0)
         {
             if (fun->prev)
             {
                 args = lsh_split_line(fun->prev->line);
-                launch_exec(shell, args, 0, 0);
+                launch_exec(shell, args, 0, output);
             }
         }
         else if (ft_strcmp(fun->line, "|") == 0)
             input = ft_pipe(shell, fun, input);
         else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
-            ft_redirection(shell, fun);
+            {
+                output = ft_redirection(shell, fun);
+                //ft_printf("%s", fun->next->line);
+            }
         if (fun->next)
-            fun = fun->next;
+            fun = fun->next;    
         else
             {
                 args = lsh_split_line(fun->line);
-                launch_exec(shell, args, input, 0);
+                launch_exec(shell, args, input, output);
                 return (0);
             }
 	}

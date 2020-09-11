@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/10 18:32:41 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/11 16:41:02 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,4 +146,5 @@ int     launch_body(t_shell *shell, t_fun *fun, int input);
 int   launch_exec(t_shell *shell, char **args, int input, int output);
 
 int		ft_pipe(t_shell *shell, t_fun *fun, int input);
+
 #endif
