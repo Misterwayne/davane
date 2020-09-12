@@ -14,7 +14,7 @@ int     wait_for_input(t_shell *shell, int input)
         args_exec = lsh_split_line(line);
         free(line);
     }
-    launch_bin(shell, args_exec, input);
+    //launch_bin(shell, args_exec, input);
     return (0);
 }
 
@@ -22,7 +22,7 @@ int     create_pipe(int *fd)
 {
     if(pipe(fd) < 0)
     {
-        printf("Can\'t create pipe\n");
+        ft_printf("Can\'t create pipe\n");
         exit(-1); 
     }
     return (0);
@@ -30,14 +30,17 @@ int     create_pipe(int *fd)
 
 int		ft_pipe(t_shell *shell, t_fun *fun, int input)
 {
-	char	**args;
 	int		fd[2];
 	int		output;
 	
-	args = lsh_split_line(fun->prev->line);
-	create_pipe(fd);
+	if (!(fun->prev))
+    {
+        write(2, "syntax error near unexpected token `|\'\n", ft_strlen("syntax error near unexpected token `|\'\n"));
+        exit(-1);
+    }
+    create_pipe(fd);
 	output = fd[1];
-	launch_exec(shell, args, input, output);
+    launch_exec(shell, fun->prev->argv, input, output);
 	input = fd[0];
 	return (input);
 }

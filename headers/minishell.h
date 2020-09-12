@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/11 16:41:02 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/12 18:48:17 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct	s_shell t_shell;
 typedef struct functions
 {
 	char			*line;
+	char			*cmd;
+	char			**argv;
 	char			*r_symbol;
 	char			*l_symbol;
 	struct functions *next;
@@ -125,7 +127,6 @@ int				add_var(char *line, t_shell *shell);	// ad variable to the env
 int				load_env(char **env, t_shell *shell);					// init the env struct
 void			print_promt(t_shell *shell);						// print the promt
 char 			*add_path(t_shell *shell,char **args);
-int     		launch_bin(t_shell *shell, char **args, int intput);
 
 // BUILTIN
 
@@ -138,13 +139,14 @@ int     pwd(char **argv, t_shell *shell);			//this one works too
 int		ft_exit(char **argv, t_shell *shell);		//this will need to  be able to free anything still allocated
 
 
-
-
 // PARSE
+int		is_special_symbol(char *str);
 void	parse_functions(t_shell *shell, char *line);
-int     launch_body(t_shell *shell, t_fun *fun, int input);
-int   launch_exec(t_shell *shell, char **args, int input, int output);
-
+int     launch_body(t_shell *shell, t_fun *fun);
+int   	launch_exec(t_shell *shell, char **args, int input, int output);
+void	semicolon(t_shell *shell, t_fun *fun, int input, int output);
 int		ft_pipe(t_shell *shell, t_fun *fun, int input);
+int     ft_redirection(t_shell *shell, t_fun *fun);
+int     ft_back_redirection(t_shell *shell, t_fun *fun);
 
 #endif

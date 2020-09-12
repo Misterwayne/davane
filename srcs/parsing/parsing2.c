@@ -1,5 +1,15 @@
 #include "../../headers/minishell.h"
 
+
+int		is_special_symbol(char *str)
+{
+	if (ft_strcmp(str, ";") == 0 || ft_strcmp(str, ">") == 0 ||
+	ft_strcmp(str, ">>") == 0 || ft_strcmp(str, "<") == 0 || ft_strcmp(str, "|") == 0)
+		return (1);
+	return 0;
+}
+
+
 char	*ft_strndup(char *str, int n)
 {
 	char	*str_new;
@@ -24,7 +34,7 @@ t_fun	*create_fun(char *data)
 {
 	t_fun	*new;
 	new = malloc(sizeof(t_fun));
-	new->line = data;
+	new->line = data; 
 	new->next = 0;
 	new->prev = 0;
 	return (new);
@@ -41,11 +51,11 @@ t_fun	*add_fun(t_fun *fun, char *data)
 		tmp = tmp->next;
 	tmp->next = create_fun(data);
 	tmp->next->prev = tmp;
-	return (fun);	
+	return (fun);
 }
 
 
-char		*sp_symbol(char *line, int *i)
+char		*copy_symbol(char *line, int *i)
 {
 	char	*str;
 
@@ -60,7 +70,7 @@ char		*sp_symbol(char *line, int *i)
 	return(str);
 }
 
-char		*sp_line(char *line, int *i)
+char		*copy_line(char *line, int *i)
 {
 	char	*str;
 	int 	j;
@@ -78,13 +88,36 @@ char		*sp_line(char *line, int *i)
 	return (str);
 }
 
-char		*split_line(char *line, int *i)
+char		*define_split_type(char *line, int *i)
 {
 	if ((line[*i] == '|') || (line[*i] == '>') || (line[*i] == '<') || (line[*i] == ';'))
-		return (sp_symbol(line, i));
+		return (copy_symbol(line, i));
 	else
-		return (sp_line(line, i));
+		return (copy_line(line, i));
 }
+
+
+
+void	split_on_arguments(t_fun *fun)
+{
+	int i;
+
+	while(fun)
+	{
+		if (!(is_special_symbol(fun->line)))
+			{
+				i = 0;
+				fun->argv = ft_split(fun->line, ' ');
+				// while (fun->argv[i])
+				// 	ft_printf("%s", fun->argv[i++]);
+				// ft_printf("\n");
+			}
+		if (!(fun->next))
+			return ;
+		fun = fun->next;
+	}
+}
+
 
 void	parse_functions(t_shell *shell, char *line)
 {
@@ -96,8 +129,9 @@ void	parse_functions(t_shell *shell, char *line)
 	fun = NULL;
 	while (line[i] != '\0')
 	{
-		str = split_line(line, &i);
+		str = define_split_type(line, &i);
 		fun = add_fun(fun, str);
 	}
-	launch_body(shell, fun, 0);
+	split_on_arguments(fun);
+	launch_body(shell, fun);
 }

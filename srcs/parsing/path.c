@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/11 16:43:55 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/12 18:46:36 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,46 +90,24 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
     return (0);
 }
 
-
-int     launch_bin(t_shell *shell, char **args, int input)
+int     launch_body(t_shell *shell, t_fun *fun)
 {
-    return (0);
-}
-
-
-
-int	ft_redirection(t_shell *shell, t_fun *fun);
-int ft_back_redirection(t_shell *shell, t_fun *fun);
-
-int     launch_body(t_shell *shell, t_fun *fun, int input)
-{
-    char **args;
     int output = 0;
+    int input = 0;
     
     while (fun)
 	{
         if (ft_strcmp(fun->line, ";") == 0)
-        {
-            if (fun->prev)
-            {
-                args = lsh_split_line(fun->prev->line);
-                launch_exec(shell, args, 0, output);
-            }
-        }
+            semicolon(shell, fun, input, output);
         else if (ft_strcmp(fun->line, "|") == 0)
             input = ft_pipe(shell, fun, input);
         else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
             output = ft_redirection(shell, fun);
         else if (ft_strcmp(fun->line, "<") == 0)
             input = ft_back_redirection(shell, fun);
-        if (fun->next)
-            fun = fun->next;    
-        else
-            {
-                args = lsh_split_line(fun->line);
-                launch_exec(shell, args, input, output);
-                return (0);
-            }
+        if (!(fun->next))
+            return (launch_exec(shell, fun->argv, input, output));
+        fun = fun->next;
 	}
     return (0);
 }
