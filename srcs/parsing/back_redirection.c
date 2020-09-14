@@ -3,7 +3,7 @@
 
 char    **cat_double_array(char **argv1, char **argv2);
 
-int ft_back_redirection(t_shell *shell, t_fun *fun)
+int     ft_back_redirection(t_shell *shell, t_fun *fun)
 {
     int     fd;
     

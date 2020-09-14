@@ -3,13 +3,16 @@
 int     array_len(char **argv)
 {
     int i;
+    
     i = 0;
+    if (!(argv))
+        return (0);
     while (argv[i])
         i++;
     return (i);
 }
 
-char    **cat_double_array(char **argv1, char **argv2)
+char **cat_double_array(char **argv1, char **argv2)
 {
     char **new;
     int i;
@@ -69,6 +72,9 @@ int	ft_redirection(t_shell *shell, t_fun *fun)
         exit(-1);
     }
     fd = open_file(fun->line, fun->next->argv[0]);
-    fun->next->argv = cat_double_array(fun->prev->argv, fun->next->argv + 1);
+    if (!(fun->prev))
+        fun->next->argv = cat_double_array(0, fun->next->argv + 1);
+    else
+        fun->next->argv = cat_double_array(fun->prev->argv, fun->next->argv + 1);
     return (fd);
 }

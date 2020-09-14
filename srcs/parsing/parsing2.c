@@ -35,6 +35,7 @@ t_fun	*create_fun(char *data)
 	t_fun	*new;
 	new = malloc(sizeof(t_fun));
 	new->line = data; 
+	new->argv = 0;
 	new->next = 0;
 	new->prev = 0;
 	return (new);
@@ -53,7 +54,6 @@ t_fun	*add_fun(t_fun *fun, char *data)
 	tmp->next->prev = tmp;
 	return (fun);
 }
-
 
 char		*copy_symbol(char *line, int *i)
 {
