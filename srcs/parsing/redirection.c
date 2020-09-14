@@ -35,7 +35,6 @@ char    **cat_double_array(char **argv1, char **argv2)
     return (new);
 }
 
-
 int   open_file(char *symbol, char *file)
 {
     int     fd;
