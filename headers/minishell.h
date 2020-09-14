@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/12 18:48:17 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/14 17:08:34 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "header.h"
+#include <sys/errno.h>
 
 
 /*
