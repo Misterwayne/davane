@@ -7,6 +7,8 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
     int     status;
     char *executable;
 
+	if (!(args))
+		return 0;
     executable = add_path(shell, args);
 	pid = fork();
     if (pid < 0)

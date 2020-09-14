@@ -22,14 +22,21 @@ char **cat_double_array(char **argv1, char **argv2)
     i1 = array_len(argv1);
     i2 = array_len(argv2);
     new = malloc(sizeof(char *) * (i1 + i2 + 1));
+    if (i1 + i2 == 0)
+        {
+            new[0] = 0;
+            return (new);
+        }
     i = 0;
-    while (argv1[i])
+    while (i < i1)
     {
         new[i] = argv1[i];
         i++;
     }
+    if (i2 == 0)
+        new[i] = 0;
     i = 0;
-    while (argv2[i])
+    while (i < i2)
     {
         new[i1 + i] = argv2[i];
         i++;
