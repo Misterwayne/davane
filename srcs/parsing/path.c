@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/30 12:07:41 by truepath         ###   ########.fr       */
+/*   Updated: 2020/09/30 20:12:13 by mwane            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ char     *add_path(t_shell *shell, char **args)
             free(paths);
             return(cmd);
         }
-        free(paths[i]);
         free(line);
         free(cmd);
         i++;
     }
+    free_2d_array(paths);
     free(paths);
     return (0);
 }
