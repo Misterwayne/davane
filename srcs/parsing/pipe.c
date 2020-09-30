@@ -40,7 +40,7 @@ int		ft_pipe(t_shell *shell, t_fun *fun, int input)
     }
     create_pipe(fd);
 	output = fd[1];
-    launch_exec(shell, fun->prev->argv, input, output);
 	input = fd[0];
+    launch_exec(shell, fun->prev->argv, input, output);
 	return (input);
 }

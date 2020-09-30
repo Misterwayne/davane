@@ -10,7 +10,7 @@ char	**ft_split_env(char *s)
 	int i;
 
 	i = 0;
-	s_copy = ft_strdup((const char *)s);
+	s_copy = ft_strdup(s);
 	split = malloc(sizeof(char *)* 2);
 	while (s_copy[i] != '\0')
 	{
@@ -19,12 +19,13 @@ char	**ft_split_env(char *s)
 			s_copy[i] = '\0';
 			split[0] = ft_strdup((const char *)s_copy);
 			split[1] = ft_strdup((const char *)&(s_copy[i + 1]));
+			free(s_copy);
 			return (split);
 		}
 		i++;
 	}
 	free (s_copy);
-	return(0);
+	return(split);
 }
 
 t_env	*ft_create_elem(char *data)
@@ -32,17 +33,21 @@ t_env	*ft_create_elem(char *data)
 	t_env	*elem;
 	int 	i;
 	char	**split;
+	char	*s_copy;
 
 	elem = malloc(sizeof(t_env));
 	split = ft_split_env(data);
 	elem->key = split[0];
-	elem->value = split[1];
+	elem->value = ft_strtrim(split[1], "\"\' ");
 	elem->prev = NULL;
 	elem->next = NULL;
+	free(split[0]);
+	free(split[1]);
+	free(split);
 	return(elem);
 }
 
-t_env	*put_to_the_end(t_env *list, char *data)
+t_env	*put_to_the_end(t_env *list, char *data, t_shell *shell)
 {
 	t_env	*tmp;
 	t_env	*beginin;
@@ -74,7 +79,7 @@ int		load_env(char **env, t_shell *shell)
 	begin_list = NULL;
 	while(env[i])
 	{
-		begin_list = put_to_the_end(begin_list, env[i]);
+		begin_list = put_to_the_end(begin_list, env[i], shell);
 		i++;
 	}
 	i = 0;

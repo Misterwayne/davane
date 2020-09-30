@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/14 17:08:34 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:21:06 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,14 @@ typedef struct functions
 	struct functions *prev;
 }				t_fun;
 
-
-typedef struct	s_var								//this is a first in, last out chained list
-{
-	char 				*key;						//the key to the var
-	char				*value;						//the value of the var						
-	struct s_var		*next;
-	struct s_var		*prev;
-	struct s_var		*first;
-}				t_var;
-
 typedef struct	s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*prev;
 	struct s_env	*next;
+	int				flag;
 }					t_env;
-
 
 typedef struct 		s_local
 {
@@ -73,7 +63,6 @@ typedef struct 		s_local
 	char			*value;
 	struct s_local	*prev;
 }					t_local;
-
 
 typedef struct  s_cmd
 {
@@ -87,14 +76,13 @@ typedef struct	s_shell
 {
 	t_cmd		*cmd;
 	t_env		*env;
-	t_var		*var;
 	t_local		*local;
+	char		*line;
 	char		**enviro;
 	char		*current_pwd;
 	char		*usr;
 	int			last_pid;
 	int			last_return;
-	int			var_flags;
 }				t_shell;
 
 
@@ -105,17 +93,14 @@ char			**ft_split(char const *s, char c);
 char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
-int     		check_var(char *line, t_var *var, t_env *env);
-char     		*check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
+void     		check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
 int         	is_a_var(t_shell *shell, char *line);		//check if line contains one '=', if so, it becomes a variable declaration
+char			*ft_strndup(char *str, int n);
+void			free_struct(t_fun *fun);
+
 
 // CHAINED LIST FUNCTION
 
-t_var        	*new_node(char *line);				//creat a new node
-t_var        	*new_var(t_var *var, char *line);	//add a node to the list
-void         	print_chainedlist(t_var *var);		// print the chained list
-int     	 	is_in_list(t_var *var, char *line); //check if line is a key in the chained list
-void    	 	replace_var(t_var *var, char* line);//replace the value of a node by linne
 
 
 
@@ -149,5 +134,6 @@ void	semicolon(t_shell *shell, t_fun *fun, int input, int output);
 int		ft_pipe(t_shell *shell, t_fun *fun, int input);
 int     ft_redirection(t_shell *shell, t_fun *fun);
 int     ft_back_redirection(t_shell *shell, t_fun *fun);
+void    free_2d_array(char **arr);
 
 #endif

@@ -6,7 +6,7 @@ int		is_special_symbol(char *str)
 	if (ft_strcmp(str, ";") == 0 || ft_strcmp(str, ">") == 0 ||
 	ft_strcmp(str, ">>") == 0 || ft_strcmp(str, "<") == 0 || ft_strcmp(str, "|") == 0)
 		return (1);
-	return 0;
+	return (0);
 }
 
 
@@ -22,10 +22,10 @@ char	*ft_strndup(char *str, int n)
 		return (NULL);
 	i = 0;
 	while (str[i] && i < n)
-		{
-			str_new[i] = str[i];
-			i++;
-		}
+	{
+		str_new[i] = str[i];
+		i++;
+	}
 	str_new[i] = '\0';
 	return (str_new);
 }
@@ -60,10 +60,10 @@ char		*copy_symbol(char *line, int *i)
 	char	*str;
 
 	if (line[*i] == '>' && line[*i + 1] == '>')
-		{
-			str = ft_strndup(&line[*i], 2);
-			(*i)++;
-		}
+	{
+		str = ft_strndup(&line[*i], 2);
+		(*i)++;
+	}
 	else
 		str = ft_strndup(&line[*i], 1);
 	(*i)++;
@@ -98,20 +98,18 @@ char		*define_split_type(char *line, int *i)
 
 
 
-void	split_on_arguments(t_fun *fun)
+void	split_on_arguments(t_fun *fun, t_shell *shell)
 {
 	int i;
 
 	while(fun)
 	{
 		if (!(is_special_symbol(fun->line)))
-			{
-				i = 0;
-				fun->argv = ft_split(fun->line, ' ');
-				// while (fun->argv[i])
-				// 	ft_printf("%s", fun->argv[i++]);
-				// ft_printf("\n");
-			}
+		{
+			i = 0;
+			fun->argv = ft_split(fun->line, ' ');
+			check_v(shell, fun->argv);
+		}
 		if (!(fun->next))
 			return ;
 		fun = fun->next;
@@ -127,11 +125,12 @@ void	parse_functions(t_shell *shell, char *line)
 
 	i = 0;
 	fun = NULL;
+	shell->line = line;
 	while (line[i] != '\0')
 	{
 		str = define_split_type(line, &i);
 		fun = add_fun(fun, str);
 	}
-	split_on_arguments(fun);
+	split_on_arguments(fun, shell);
 	launch_body(shell, fun);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/12 18:38:51 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:57:06 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,7 @@ void		lsh_loop(t_shell *shell)
 		red = get_next_line(0, &line);
 		if (line[0] != '\0')
 		{
-		// premier parsing
-			args = lsh_split_line(line);	//split the line by white space
-			//check_v(shell, args);			// this will check for '$' and replace the key by its value
-			if (!(is_a_var(shell, args[0]))) // check if the first argv as one equal and if so add the varible to the chaine list
-			{
-				i = check_commande(shell->cmd, args[0]);		//check if a word in the line correspond to a commande
-				// if (i >= 0 && i < 6)
-				// 	launch(shell, i, args);				// if yes, launch that commande based on the index i
-				// else if (i == 6)
-				// 	on = 1;
-				// else
-				//launch_bin(shell, args, 0);
-				parse_functions(shell, line);
-				//ft_printf("Minishell : Commande not found : pid = %d return = %d\n",shell->last_pid,shell->last_return);
-			}
-			free(args);
+			parse_functions(shell, line);
 		}
 		free(line);
 	}
@@ -93,6 +78,7 @@ void	get_pwd(t_shell *shell)
 	while (path[j] != '/')
 		j--;
 	shell->current_pwd = (path + (j + 1));
+	free(path);
 }
 
 void	get_usr(t_shell *shell, char **env)
@@ -146,16 +132,13 @@ int		main(int argc, char **argv, char **env)
 	-"ctrl -C" "ctrl -D" "ctrl -\"
 	*/
 	t_env envi; 	// chained list for environnement variable
-	t_var *var;		// chained list struct for the variables
 	t_cmd cmd; 		// contient la liste des commandes
 	t_shell shell;	// global struct with all the other in it
-
-	var = new_node("0=0");		// init the chained list, the element "0=0" will always be the last;
-	cmd.cmd_lst = malloc(sizeof(char*) * 20);
+	
+	cmd.cmd_lst = malloc(sizeof(char*) * 7);
 	load_env(env, &shell);
 	load_cmd(&cmd);
 	shell.cmd = &cmd;
-	shell.var = var;
 	shell.enviro = env;
 	get_pwd(&shell);
 	get_usr(&shell, env);

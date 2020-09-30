@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 00:12:02 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 14:40:42 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/09/23 13:10:11 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int     export(char **argv, t_shell *shell)
     if (!(argv[1]))
         display_var(argv, shell->env);
     else
-        add_variable(shell->env, argv[1]);
+        add_variable(shell->env, (shell->line + 7));
     return (0);
 }
