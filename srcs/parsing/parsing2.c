@@ -100,15 +100,17 @@ char		*define_split_type(char *line, int *i)
 
 void	split_on_arguments(t_fun *fun, t_shell *shell)
 {
-	int i;
+	int 	i;
+	char	**argv;
 
 	while(fun)
 	{
 		if (!(is_special_symbol(fun->line)))
 		{
 			i = 0;
-			fun->argv = ft_split(fun->line, ' ');
-			check_v(shell, fun->argv);
+			argv = ft_split(fun->line,' ');
+			check_v(shell, argv);
+			fun->argv = argv;
 		}
 		if (!(fun->next))
 			return ;

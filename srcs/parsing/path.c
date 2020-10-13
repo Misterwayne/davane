@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:01:32 by mwane             #+#    #+#             */
-/*   Updated: 2020/09/30 12:07:41 by truepath         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:09:31 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    free_2d_array(char **arr)
     i = 0;
     while (arr[i])
     {
-        free(arr[i]);
+        // free(arr[i]);
         i++;
     }
 }
@@ -48,16 +48,16 @@ char     *add_path(t_shell *shell, char **args)
         cmd = ft_strjoin(line, args[0]);
         if (open(cmd, O_RDONLY) != -1)
         {
-            free(line);
-            free_2d_array(paths + i);
-            free(paths);
+            // free(line);
+            // free_2d_array(paths + i);
+            // free(paths);
             return(cmd);
         }
-        free(paths[i]);
-        free(line);
-        free(cmd);
+        // free(paths[i]);
+        // free(line);
+        // free(cmd);
         i++;
     }
-    free(paths);
+    // free(paths);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/30 12:16:42 by truepath         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:07:52 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ int 	change_env_vars(char **args, t_env *env, int i, int y)
             {
                 tmp = ft_strndup(args[i], y);
                 new_line = ft_strjoin(tmp, env->value);
-                free(args[i]);
-                free(tmp);
+                // free(args[i]);
+                // free(tmp);
                 args[i] = new_line;
-                free(new_line);
+                // free(new_line);
                 return (1);
             }
             else
             {
-                free(args[i]);
+                // free(args[i]);
                 args[i] = env->value;
                 return (1);
             }
         }
         env = env->next;
     }
-    free(args[i]);
+    // free(args[i]);
     args[i] = "";
     return (0);
 }
@@ -98,13 +98,13 @@ void     check_v(t_shell *shell, char **args)// this function will check if $str
             {
                 if (args[i][y + 1] == '?')
                 {
-                    free(args[i]);
+                    // free(args[i]);
                     args[i] = ft_itoa(shell->last_return);
                     return ; 
                 }
                 if (args[i][y + 1] == '$')
                 {
-                    free(args[i]);
+                    // free(args[i]);
                     args[i] = ft_itoa(shell->last_pid);
                     return ;
                 }

@@ -3,10 +3,10 @@
 
 void	free_struct(t_fun *fun)
 {
-	if (fun->argv)
-		free_2d_array(fun->argv);
-	if (fun->line)
-		free(fun->line);
+	if (fun->argv);
+		// free_2d_array(fun->argv);
+	if (fun->line);
+		// free(fun->line);
 }
 
 int   launch_exec(t_shell *shell, char **args, int input, int output)//probleme when a built-in is called with a redirection (stdin is stuck on 0)
@@ -25,9 +25,9 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)//probleme 
 	if (i == -1 && executable == 0)
 	{
 		ft_printf("minishell: %s: command not found\n", args[0]);
-		free(executable);
-		free_2d_array(args);
-		free(args);
+		// free(executable);
+		// free_2d_array(args);
+		// free(args);
 		return (0);
 	}
 	pid = fork();
@@ -53,9 +53,9 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)//probleme 
 		close (input);
 	if (output != 0)
 		close (output);
-	free(executable);
-	free_2d_array(args);
-	free(args);
+	// free(executable);
+	// free_2d_array(args);
+	// free(args);
 	return (0);
 }
 

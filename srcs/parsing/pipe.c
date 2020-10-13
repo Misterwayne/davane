@@ -12,7 +12,7 @@ int     wait_for_input(t_shell *shell, int input)
         ft_printf("pipe> ");
         get_next_line(0, &line);
         args_exec = lsh_split_line(line);
-        free(line);
+        // free(line);
     }
     //launch_bin(shell, args_exec, input);
     return (0);

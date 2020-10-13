@@ -19,12 +19,12 @@ char	**ft_split_env(char *s)
 			s_copy[i] = '\0';
 			split[0] = ft_strdup((const char *)s_copy);
 			split[1] = ft_strdup((const char *)&(s_copy[i + 1]));
-			free(s_copy);
+			// free(s_copy);
 			return (split);
 		}
 		i++;
 	}
-	free (s_copy);
+	// free (s_copy);
 	return(split);
 }
 
@@ -38,12 +38,12 @@ t_env	*ft_create_elem(char *data)
 	elem = malloc(sizeof(t_env));
 	split = ft_split_env(data);
 	elem->key = split[0];
-	elem->value = ft_strtrim(split[1], "\"\' ");
+	elem->value = ft_strtrim(split[1], "\"");
 	elem->prev = NULL;
 	elem->next = NULL;
-	free(split[0]);
-	free(split[1]);
-	free(split);
+	// free(split[0]);
+	// free(split[1]);
+	// free(split);
 	return(elem);
 }
 

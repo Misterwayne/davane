@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 13:28:22 by mwane             #+#    #+#             */
-/*   Updated: 2020/08/21 14:07:26 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:10:14 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ t_env	*search_for_var(char **argv, t_env *env)
 		if (ft_strcmp(argv[1], tmp->key) == 0)
 		{
 			next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
+			// free(tmp->key);
+			// free(tmp->value);
+			// free(tmp);
 			if (prev == 0)
 				env = next;
 			else

@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/30 11:57:06 by truepath         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:09:03 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void		lsh_loop(t_shell *shell)
 		{
 			parse_functions(shell, line);
 		}
-		free(line);
+		// free(line);
 	}
-	free(line);
+	// free(line);
 }
 
 void	get_pwd(t_shell *shell)
@@ -78,7 +78,7 @@ void	get_pwd(t_shell *shell)
 	while (path[j] != '/')
 		j--;
 	shell->current_pwd = (path + (j + 1));
-	free(path);
+	// free(path);
 }
 
 void	get_usr(t_shell *shell, char **env)

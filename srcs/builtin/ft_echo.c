@@ -6,7 +6,7 @@
 /*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/30 10:00:21 by truepath         ###   ########.fr       */
+/*   Updated: 2020/10/13 21:01:30 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	print_arguments(char **argv, t_shell *shell)
 	i = 1;
 	while (argv[i] != NULL)
 	{
+		if (i != 1)
+			write(1, " ", 1);
 		var = call_set();
-		ft_printf("%s ", argv[i]);
+		ft_printf("%s ", ft_strtrim(argv[i], " "));
 		i++;
 	}
 	ft_printf("\n");
