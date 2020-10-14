@@ -46,7 +46,7 @@ void	split_line(t_fun *fun)
 		i++;
 	}
 	str_new[j] = str[i];
-	ft_printf("%s", str_new);
+	//ft_printf("%s", str_new);
 	fun->argv = ft_split(str_new, ' ');
 }
 
@@ -54,12 +54,16 @@ void	split_on_arguments(t_fun *fun)
 {
 	int i;
 
+	i = 0;
 	while(fun)
 	{
 		split_line(fun);
-		//ft_printf("%s", fun->argv[0]);
+		while (fun->argv[i])
+			ft_printf("%s ", fun->argv[i++]);
 		if (!(fun->next))
 			return ;
 		fun = fun->next;
+		ft_printf("\nline\n");
+		i = 0;
 	}
 }
