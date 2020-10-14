@@ -1,26 +1,7 @@
 #include "../../headers/minishell.h"
 char	*ft_strndup(char *str, int n);
 void	print_data(t_fun *fun);
-
-void	split_on_arguments(t_fun *fun)
-{
-	int i;
-
-	while(fun)
-	{
-		if (!(is_special_symbol(fun->line)))
-			{
-				i = 0;
-				fun->argv = ft_split(fun->line, ' ');
-				// while (fun->argv[i])
-				// 	ft_printf("%s", fun->argv[i++]);
-				// ft_printf("\n");
-			}
-		if (!(fun->next))
-			return ;
-		fun = fun->next;
-	}
-}
+void	split_on_arguments(t_fun *fun);
 
 int		is_special_symbol(char *str)
 {
@@ -97,13 +78,13 @@ t_fun	*separator(char *str, t_fun *fun)
 	while (str[i])
 	{
 		if (str[i] == '"')
-			i = i + skip_quotes(&str[i]);
-		if (is_special_symbol(&str[i]))
+			i = i + skip_quotes(str + i);
+		if (is_special_symbol(str + i))
 			{
 				//ft_printf("special line: %s\n", ft_strndup(str, i));
-				symbol = copy_symbol(&str[i]);
+				symbol = copy_symbol(str + i);
 				fun = add_fun(fun, ft_strndup(str, i), symbol);
-				fun = separator(&(str[i + ft_strlen(symbol)]), fun);
+				fun = separator(str + i + ft_strlen(symbol), fun);
 				return (fun);
 			}
 		i++;
@@ -120,11 +101,8 @@ void	parse_functions(t_shell *shell, char *line)
 	int		i;
 
 	fun = NULL;
-	str = ft_strdup(line);
-	fun = separator(str, fun);
-	print_data(fun);
-
-
-	// split_on_arguments(fun);
+	fun = separator(line, fun);
+	//print_data(fun);
+	split_on_arguments(fun);
 	// launch_body(shell, fun);
 }
