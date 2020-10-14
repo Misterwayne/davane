@@ -1,102 +1,6 @@
 #include "../../headers/minishell.h"
-
-
-int		is_special_symbol(char *str)
-{
-	if (ft_strcmp(str, ";") == 0 || ft_strcmp(str, ">") == 0 ||
-	ft_strcmp(str, ">>") == 0 || ft_strcmp(str, "<") == 0 || ft_strcmp(str, "|") == 0)
-		return (1);
-	return 0;
-}
-
-
-char	*ft_strndup(char *str, int n)
-{
-	char	*str_new;
-	int		i;
-
-	i = ft_strlen(str);
-	if (i > n)
-		i = n; 
-	if (!(str_new = malloc((sizeof(char) * (i + 1)))))
-		return (NULL);
-	i = 0;
-	while (str[i] && i < n)
-		{
-			str_new[i] = str[i];
-			i++;
-		}
-	str_new[i] = '\0';
-	return (str_new);
-}
-
-t_fun	*create_fun(char *data)
-{
-	t_fun	*new;
-	new = malloc(sizeof(t_fun));
-	new->line = data; 
-	new->argv = 0;
-	new->next = 0;
-	new->prev = 0;
-	return (new);
-}
-
-t_fun	*add_fun(t_fun *fun, char *data)
-{
-	t_fun *tmp;
-
-	tmp = fun;
-	if(!(fun)) 
-		return (create_fun(data));
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = create_fun(data);
-	tmp->next->prev = tmp;
-	return (fun);
-}
-
-char		*copy_symbol(char *line, int *i)
-{
-	char	*str;
-
-	if (line[*i] == '>' && line[*i + 1] == '>')
-		{
-			str = ft_strndup(&line[*i], 2);
-			(*i)++;
-		}
-	else
-		str = ft_strndup(&line[*i], 1);
-	(*i)++;
-	return(str);
-}
-
-char		*copy_line(char *line, int *i)
-{
-	char	*str;
-	int 	j;
-
-	str = 0;
-	j = 0;
-	while (line[*i + j] != '\0')
-	{
-		if((line[*i + j] == '|') || (line[*i + j] == '>') || (line[*i + j] == '<') || (line[*i + j] == ';'))
-			break ;
-		j++;
-	}
-	str = ft_strndup(&line[*i], j);
-	(*i) = (*i) + j;
-	return (str);
-}
-
-char		*define_split_type(char *line, int *i)
-{
-	if ((line[*i] == '|') || (line[*i] == '>') || (line[*i] == '<') || (line[*i] == ';'))
-		return (copy_symbol(line, i));
-	else
-		return (copy_line(line, i));
-}
-
-
+char	*ft_strndup(char *str, int n);
+void	print_data(t_fun *fun);
 
 void	split_on_arguments(t_fun *fun)
 {
@@ -118,6 +22,96 @@ void	split_on_arguments(t_fun *fun)
 	}
 }
 
+int		is_special_symbol(char *str)
+{
+	if (*str == ';' || *str == '>' || *str == '<' || *str == '|')
+		return (1);
+	return 0;
+}
+
+int		skip_quotes(char *str)
+{
+	int i;
+	
+	i = 1;
+	while (str[i] != '\0')
+		{
+			if (str[i] == '"')
+				return (i);
+			i++;
+		}
+	ft_printf(">");
+	exit(0);
+	return (i);
+}
+
+char		*copy_symbol(char *str)
+{
+	char	*symbol;
+
+	if (*str == '>' && *(str + 1) == '>')
+		{
+			symbol = ft_strndup(&*str, 2);
+			return(symbol);
+		}
+	symbol = ft_strndup(&*str, 1);
+	return(symbol);
+}
+
+t_fun	*create_fun(char *data, char *r_symbol)
+{
+	t_fun	*new;
+
+	new = malloc(sizeof(t_fun));
+	new->line = data;
+	new->r_symbol = r_symbol; 
+	new->l_symbol = 0;
+	new->argv = 0;
+	new->next = 0;
+	new->prev = 0;
+	return (new);
+}
+
+t_fun	*add_fun(t_fun *fun, char *data, char *r_symbol)
+{
+	t_fun *tmp;
+
+	tmp = fun;
+	if(!(fun)) 
+		return (create_fun(data, r_symbol));
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = create_fun(data, r_symbol);
+	tmp->next->prev = tmp;
+	return (fun);
+}
+
+t_fun	*separator(char *str, t_fun *fun)
+{
+	int	i;
+	char *symbol;
+
+	i = 0;
+	if (*str == '\0')
+		return (fun);
+	while (str[i])
+	{
+		if (str[i] == '"')
+			i = i + skip_quotes(&str[i]);
+		if (is_special_symbol(&str[i]))
+			{
+				//ft_printf("special line: %s\n", ft_strndup(str, i));
+				symbol = copy_symbol(&str[i]);
+				fun = add_fun(fun, ft_strndup(str, i), symbol);
+				fun = separator(&(str[i + ft_strlen(symbol)]), fun);
+				return (fun);
+			}
+		i++;
+	}
+	//ft_printf(" simple line: %s\n", str);
+	fun = add_fun(fun, ft_strdup(str), 0);
+	return (fun);
+}
 
 void	parse_functions(t_shell *shell, char *line)
 {
@@ -125,13 +119,12 @@ void	parse_functions(t_shell *shell, char *line)
 	char	*str;
 	int		i;
 
-	i = 0;
 	fun = NULL;
-	while (line[i] != '\0')
-	{
-		str = define_split_type(line, &i);
-		fun = add_fun(fun, str);
-	}
-	split_on_arguments(fun);
-	launch_body(shell, fun);
+	str = ft_strdup(line);
+	fun = separator(str, fun);
+	print_data(fun);
+
+
+	// split_on_arguments(fun);
+	// launch_body(shell, fun);
 }
