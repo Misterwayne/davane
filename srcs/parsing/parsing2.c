@@ -81,8 +81,6 @@ void	parse_functions(t_shell *shell, char *line)
 			exit(0);
 		}
 	line = delete_spaces(line);
-	line = replace_line(shell->env, line);
-	ft_printf("SECOND_TIME%s\n", line);
 	fun = NULL;
 	fun = separator(line, fun);
 	
@@ -93,15 +91,17 @@ void	parse_functions(t_shell *shell, char *line)
 	{
 		i = 0;
 		//ft_printf("%s\n", fun->line);
+		fun->line = replace_line(shell->env, fun->line);
+		ft_printf("%s;\n", fun->line);
 		fun->argv = ft_split(fun->line, ' ');
 		check_v(shell, fun->argv);
-		while (fun->argv[i])
-			ft_printf("%s\n", fun->argv[i++]);
+		// while (fun->argv[i])
+		// 	ft_printf("%s\n", fun->argv[i++]);
 		//delete_endspaces(fun->line);
 		if (!(fun->next))
-			return ;
+			break ;
 		fun = fun->next;
 	}
-	// print_data(fun);
+	//print_data(fun);
 	// launch_body(shell, fun);
 }

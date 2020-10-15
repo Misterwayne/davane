@@ -37,20 +37,25 @@ int     launch_body(t_shell *shell, t_fun *fun)
 {
     int output = 0;
     int input = 0;
-    
+
     while (fun)
 	{
-        if (ft_strcmp(fun->line, ";") == 0)
-            semicolon(shell, fun, input, output);
-        else if (ft_strcmp(fun->line, "|") == 0)
-            input = ft_pipe(shell, fun, input);
-        else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
-            output = ft_redirection(shell, fun);
-        else if (ft_strcmp(fun->line, "<") == 0)
-            input = ft_back_redirection(shell, fun);
-        if (!(fun->next))
-            return (launch_exec(shell, fun->argv, input, output));
-        fun = fun->next;
+        if (fun->r_symbol)
+            if (ft_strcmp(fun->r_symbol, ";") == 0)
+                semicolon(shell, fun, input, output);
+        // else if (ft_strcmp(fun->line, "|") == 0)
+        //     input = ft_pipe(shell, fun, input);
+        // else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
+        //     output = ft_redirection(shell, fun);
+        // else if (ft_strcmp(fun->line, "<") == 0)
+        //     input = ft_back_redirection(shell, fun);
+        // if (!(fun->next))
+        //     return (launch_exec(shell, fun->argv, input, output));
+        if (fun->next)
+            fun = fun->next;
+        else
+            break;
+        
 	}
     return (0);
 }
