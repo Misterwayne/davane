@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/05 17:46:39 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/15 16:59:50 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	change_env_vars(char **args, t_env *env, int i)
     args[i] = "";
 }
 
-char     *check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
+void    check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
 {
     int i; 
     
@@ -92,18 +92,17 @@ char     *check_v(t_shell *shell, char **args)// this function will check if $st
             {
                     free(args[i]);
                     args[i] = ft_itoa(shell->last_return);
-                    return 0; 
+                    return ; 
             }
             if (args[i][1] == '$')
             {
                     free(args[i]);
                     args[i] = ft_itoa(shell->last_pid);
-                    return 0;
+                    return ;
             }
             change_local_vars(args, shell->var, i);
             change_env_vars(args, shell->env, i);
         }
         i++;
     }
-    return ("");
 }

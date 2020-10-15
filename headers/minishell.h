@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/09/14 17:08:34 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:00:15 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
 int     		check_var(char *line, t_var *var, t_env *env);
-char     		*check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
+void     		check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
 int         	is_a_var(t_shell *shell, char *line);		//check if line contains one '=', if so, it becomes a variable declaration
 
 // CHAINED LIST FUNCTION
