@@ -33,7 +33,7 @@ int		is_even_quotes(char *line)
 	return (1);
 }
 
-void	delete_spaces(char *line)
+char	*delete_spaces(char *line)
 {
 	char *str;
 	char *str_new;
@@ -71,7 +71,7 @@ void	delete_spaces(char *line)
 		j++;
 	}
 	str_new[j] = str[i];
-	line = str_new;
+	return (str_new);
 	//ft_printf("%s", str_new);
 }
 

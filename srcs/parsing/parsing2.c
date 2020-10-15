@@ -3,7 +3,7 @@ char	*ft_strndup(char *str, int n);
 void	print_data(t_fun *fun);
 void	split_on_arguments(t_fun *fun);
 t_fun	*add_fun(t_fun *fun, char *data, char *r_symbol);
-void	delete_spaces(char *line);
+char	*delete_spaces(char *line);
 int	is_even_quotes(char *line);
 
 
@@ -80,11 +80,10 @@ void	parse_functions(t_shell *shell, char *line)
 			ft_printf(">\n");
 			exit(0);
 		}
-	delete_spaces(line);
-	ft_printf("%s", line);
+	line = delete_spaces(line);
 	fun = NULL;
 	fun = separator(line, fun);
 	split_on_arguments(fun);
-	// print_data(fun);
+	print_data(fun);
 	// launch_body(shell, fun);
 }
