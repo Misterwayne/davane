@@ -5,11 +5,17 @@
 void print_data(t_fun *fun)
 {
 	t_fun *tmp;
-
+	int n;
+	
+	n = 1;
 	tmp = fun;
 	while (tmp)
 	{
-		ft_printf("%s ", tmp->line);
+		ft_printf("%d:", n++);
+		if (tmp->line[0] == '\0')
+			ft_printf("emply line");
+		else
+			ft_printf("%s", tmp->line);
 		ft_printf("(%s)\n", tmp->r_symbol);
 		if (!(tmp->next))
 			return ;

@@ -29,41 +29,47 @@ void	split_line(t_fun *fun)
 	i = i + skip_white_spaces(str + i);
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ')
+		if (str[i] == '"')
+		{
+			str_new[j++] = str[i++];
+			while (str[i] != '\0')
 			{
-				if (str[i + 1] == ' ')
-					{
-						i = i + skip_white_spaces(str + i);
-						//ft_printf("%c, ", str[i]);
-						str_new[j] = ' ';
-						if (str[i] != '\0')
-							j++;
-						continue;
-					}
+				str_new[j++] = str[i++];
+				if (str[i] == '"')
+					break;
 			}
+			if (str[i] == '\0')
+				break;
+		}
 		str_new[j] = str[i];
-		j++;
 		i++;
+		if (str_new[j] == ' ')
+		{
+			i = i + skip_white_spaces(str + i);
+			if (str[i] == '\0')
+				break;
+		}
+		j++;
 	}
 	str_new[j] = str[i];
+	free(fun->line);
+	fun->line = str_new;
 	//ft_printf("%s", str_new);
-	fun->argv = ft_split(str_new, ' ');
+	//fun->argv = ft_split(str_new, ' ');
 }
 
 void	split_on_arguments(t_fun *fun)
 {
 	int i;
 
-	i = 0;
 	while(fun)
 	{
 		split_line(fun);
-		while (fun->argv[i])
-			ft_printf("%s ", fun->argv[i++]);
+		// i = 0;
+		// while (fun->argv[i])
+		// 	ft_printf("%s ", fun->argv[i++]);
 		if (!(fun->next))
 			return ;
 		fun = fun->next;
-		ft_printf("\nline\n");
-		i = 0;
 	}
 }
