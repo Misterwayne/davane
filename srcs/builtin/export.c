@@ -55,6 +55,8 @@ int     export(char **argv, t_shell *shell)
 {
     if (!(argv[1]))
         display_var(argv, shell->env);
+    else if (ft_isdigit(argv[1][0]) == 1)
+        ft_printf("Minishell: %s: '%s': not a valid identifier\n", argv[0], argv[1]);
     else
         add_variable(shell->env, (shell->line + 7));
     return (0);

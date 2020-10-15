@@ -102,13 +102,18 @@ void	split_on_arguments(t_fun *fun, t_shell *shell)
 {
 	int 	i;
 	char	**argv;
+	char	*tmp;
 
 	while(fun)
 	{
 		if (!(is_special_symbol(fun->line)))
 		{
 			i = 0;
-			argv = ft_split(fun->line,' ');
+			if (as_dollar_inside(fun->line))
+				tmp = replace_line(shell->env, fun->line);
+			else
+				tmp = fun->line;
+			argv = ft_split(tmp, ' ');
 			check_v(shell, argv);
 			fun->argv = argv;
 		}

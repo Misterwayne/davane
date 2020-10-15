@@ -27,7 +27,7 @@ void	print_arguments(char **argv, t_shell *shell)
 		if (i != 1)
 			write(1, " ", 1);
 		var = call_set();
-		ft_printf("%s ", ft_strtrim(argv[i], " "));
+		ft_printf("%s", ft_strtrim(argv[i], " "));
 		i++;
 	}
 	ft_printf("\n");

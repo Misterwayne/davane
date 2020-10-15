@@ -12,6 +12,8 @@
 
 #include "../../headers/minishell.h"
 
+char        *fusion(char **args);
+
 void    load_cmd(t_cmd *cmd)
 {
     // initialize the array function and the list of commandes
@@ -55,9 +57,11 @@ int 	change_env_vars(char **args, t_env *env, int i, int y)
 {
     char *new_line;
     char *tmp;
+
     while (env)
     {
-        if (ft_strncmp(env->key, (args[i] + y + 1), ft_strlen(env->key)) == 0)
+        
+        if (ft_strcmp(env->key, (args[i] + y + 1)) == 0)
         {
             if (y > 0)
             {
@@ -85,8 +89,9 @@ int 	change_env_vars(char **args, t_env *env, int i, int y)
 
 void     check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
 {
-    int i;
-    int y;
+    int     i;
+    int     y;
+    char    *tmp;
     
     i = 0;
     y = 0;
@@ -96,6 +101,7 @@ void     check_v(t_shell *shell, char **args)// this function will check if $str
         {
             if (args[i][y] == '$')
             {
+                
                 if (args[i][y + 1] == '?')
                 {
                     // free(args[i]);
@@ -108,7 +114,8 @@ void     check_v(t_shell *shell, char **args)// this function will check if $str
                     args[i] = ft_itoa(shell->last_pid);
                     return ;
                 }
-                change_env_vars(args, shell->env, i, y);
+                else
+                    change_env_vars(args, shell->env, i, y);
             }
             y++;
         }
@@ -116,4 +123,79 @@ void     check_v(t_shell *shell, char **args)// this function will check if $str
         y = 0;
     }
     return ;
+}
+
+char        *replace_line(t_env *env, char *line)
+{
+    int     i;
+    int     flags;
+    char    *result;
+    char    **tmp;
+    void    *save;
+
+
+    tmp = ft_split_custom(line, '$');
+    i = 0;
+    save = env;
+    while (tmp[i])
+    {
+        ft_printf("pre change : %s\n",tmp[i]);
+        env = save;
+        flags = 0;
+        if (tmp[i][0] == '$')
+        {
+            while (env)
+            {
+                if (ft_strcmp(env->key, (tmp[i] + 1)) == 0)
+                {
+                    ft_printf("%s = %s\n",env->key, tmp[i]);
+                    tmp[i] = env->value;
+                    flags = 1;
+                    break;
+                }
+                else 
+                    env = env->next;
+            }
+            if (flags == 0)
+                tmp[i] = ft_strdup(" ");
+        }
+        ft_printf("%s with flags %d\n",tmp[i],flags);
+        i++;
+    }
+    i = 0;
+    result = fusion(tmp);
+    while(tmp[i])
+        ft_printf("post change : %s\n",tmp[i++]);
+    ft_printf("result : %s\n", result);
+    return (result);
+}
+
+char        *fusion(char **args)
+{
+    int     i;
+    char    *result;
+
+    result = "";
+    i = 0;
+    while (args[i])
+    {
+        result = ft_strjoin(result, args[i]);
+        ft_printf("%s\n",result);
+        i++;
+    }
+    return (result);
+}
+
+int     as_dollar_inside(char *line)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] == '$')
+            return (1);
+        i++;
+    }
+    return (0);
 }

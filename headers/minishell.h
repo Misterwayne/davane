@@ -135,5 +135,8 @@ int		ft_pipe(t_shell *shell, t_fun *fun, int input);
 int     ft_redirection(t_shell *shell, t_fun *fun);
 int     ft_back_redirection(t_shell *shell, t_fun *fun);
 void    free_2d_array(char **arr);
+char    *replace_line(t_env *env, char *line);
+int     as_dollar_inside(char *line);
+char	**ft_split_custom(char const *s, char c);
 
 #endif
