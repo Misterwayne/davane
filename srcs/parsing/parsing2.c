@@ -92,7 +92,6 @@ void	parse_functions(t_shell *shell, char *line)
 		i = 0;
 		//ft_printf("%s\n", fun->line);
 		fun->line = replace_line(shell->env, fun->line);
-		ft_printf("%s;\n", fun->line);
 		fun->argv = ft_split(fun->line, ' ');
 		check_v(shell, fun->argv);
 		// while (fun->argv[i])
@@ -103,5 +102,5 @@ void	parse_functions(t_shell *shell, char *line)
 		fun = fun->next;
 	}
 	//print_data(fun);
-	// launch_body(shell, fun);
+	launch_body(shell, fun);
 }
