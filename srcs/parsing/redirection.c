@@ -68,7 +68,7 @@ int	ft_redirection(t_shell *shell, t_fun *fun)
 	int		save_output;
 	char	*str;
 	
-	if (!(fun->next))
+    if (!(fun->next))
         ft_printf("sh:  syntax error near unexpected token `newline\'\n");
     else if (fun->next->line[0] == '\0')
         ft_printf("sh:  syntax error near unexpected token `newline\'\n");

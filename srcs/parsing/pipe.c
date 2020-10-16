@@ -33,14 +33,14 @@ int		ft_pipe(t_shell *shell, t_fun *fun, int input)
 	int		fd[2];
 	int		output;
 	
-	if (!(fun->prev))
+	if (fun->line[0] == '\0')
     {
         write(2, "syntax error near unexpected token `|\'\n", ft_strlen("syntax error near unexpected token `|\'\n"));
         exit(-1);
     }
     create_pipe(fd);
 	output = fd[1];
-    launch_exec(shell, fun->prev->argv, input, output);
+    launch_exec(shell, fun->argv, input, output);
 	input = fd[0];
 	return (input);
 }
