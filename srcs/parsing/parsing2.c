@@ -1,11 +1,11 @@
 #include "../../headers/minishell.h"
 char	*ft_strndup(char *str, int n);
 void	print_data(t_fun *fun);
-void	split_on_arguments(t_fun *fun);
+void	split_on_arguments(t_shell *shell, t_fun *fun);
 t_fun	*add_fun(t_fun *fun, char *data, char *r_symbol);
 char	*delete_spaces(char *line);
 int		is_even_quotes(char *line);
-char    *replace_line(t_env *env, char *line);
+//char    *replace_line(t_env *env, char *line);
 
 int		is_special_symbol(char *str)
 {
@@ -80,27 +80,9 @@ void	parse_functions(t_shell *shell, char *line)
 			ft_printf(">\n");
 			exit(0);
 		}
-	line = delete_spaces(line);
 	fun = NULL;
 	fun = separator(line, fun);
-	
-	//split_on_arguments(fun);
-	
-
-	while(fun)
-	{
-		i = 0;
-		//ft_printf("%s\n", fun->line);
-		fun->line = replace_line(shell->env, fun->line);
-		fun->argv = ft_split(fun->line, ' ');
-		check_v(shell, fun->argv);
-		// while (fun->argv[i])
-		// 	ft_printf("%s\n", fun->argv[i++]);
-		//delete_endspaces(fun->line);
-		if (!(fun->next))
-			break ;
-		fun = fun->next;
-	}
+	split_on_arguments(shell, fun);
 	//print_data(fun);
 	launch_body(shell, fun);
 }

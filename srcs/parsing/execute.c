@@ -46,8 +46,8 @@ int     launch_body(t_shell *shell, t_fun *fun)
             semicolon(shell, fun, input, output);
         // else if (ft_strcmp(fun->line, "|") == 0)
         //     input = ft_pipe(shell, fun, input);
-        // else if (ft_strcmp(fun->line, ">") == 0 || ft_strcmp(fun->line, ">>") == 0)
-        //     output = ft_redirection(shell, fun);
+        else if (ft_strcmp(fun->r_symbol, ">") == 0 || ft_strcmp(fun->r_symbol, ">>") == 0)
+            output = ft_redirection(shell, fun);
         // else if (ft_strcmp(fun->line, "<") == 0)
         //     input = ft_back_redirection(shell, fun);
         if (!(fun->next))

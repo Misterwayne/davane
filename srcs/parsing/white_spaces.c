@@ -1,4 +1,5 @@
 #include "../../headers/minishell.h"
+char    *replace_line(t_env *env, char *line);
 
 int		skip_white_spaces(char *str)
 {
@@ -72,53 +73,24 @@ char	*delete_spaces(char *line)
 	}
 	str_new[j] = str[i];
 	return (str_new);
-	//ft_printf("%s", str_new);
 }
 
-
-void	delete_endspaces(char *line)
-{
-	char *str;
-	char *str_new;
-		
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	str = line;
-	i = i + skip_white_spaces(str + i);
-	str_new = malloc(ft_strlen(str) - i + 1);
-	while (str[i] != '\0')
-	{
-		str_new[j++] = str[i++];
-		i++;
-		if (str_new[j] == ' ')
-		{
-			i = i + skip_white_spaces(str + i);
-			if (str[i] == '\0')
-				break;
-		}
-		j++;
-	}
-	str_new[j] = str[i];
-	free(line);
-	line = str_new;
-}
-
-void	split_on_arguments(t_fun *fun)
+void	split_on_arguments(t_shell *shell, t_fun *fun)
 {
 	int i;
 
 	while(fun)
 	{
-		// i = 0;
+		i = 0;
+		//ft_printf("%s\n", fun->line);
+		fun->line = delete_spaces(fun->line);
+		//fun->line = replace_line(shell->env, fun->line);
 		fun->argv = ft_split(fun->line, ' ');
+		//check_v(shell, fun->argv);
 		// while (fun->argv[i])
-		// 	ft_printf("%s ", fun->argv[i++]);
-		delete_endspaces(fun->line);
+		// 	ft_printf("%s\n", fun->argv[i++]);
 		if (!(fun->next))
-			return ;
+			break ;
 		fun = fun->next;
 	}
 }
