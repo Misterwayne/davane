@@ -14,16 +14,16 @@ t_lines	*create_fun(char *data, char *r_symbol)
 	return (new);
 }
 
-t_lines	*add_fun(t_lines *fun, char *data, char *r_symbol)
+t_lines	*add_fun(t_lines *lst_lines, char *data, char *r_symbol)
 {
 	t_lines *tmp;
 
-	if(!(fun)) 
+	if(!(lst_lines)) 
 		return (create_fun(data, r_symbol));
-	tmp = fun;
+	tmp = lst_lines;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = create_fun(data, r_symbol);
 	tmp->next->prev = tmp;
-	return (fun);
+	return (lst_lines);
 }
