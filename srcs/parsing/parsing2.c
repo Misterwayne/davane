@@ -71,10 +71,9 @@ t_lines	*separator(char *str, t_lines *lst_lines)
 void	parse_functions(t_shell *shell, char *line)
 {
 	t_lines 	*lst_lines;
-	int		i;
 
-	line = quotes(line);
 	lst_lines = NULL;
+	line = quotes(line);
 	lst_lines = separator(line, lst_lines);
 	split_on_arguments(shell, lst_lines);
 	//print_data(lst_lines);

@@ -2,13 +2,13 @@
 #include "../../headers/minishell.h"
 
 
-void print_data(t_lines *fun)
+void print_data(t_lines *lst_lines)
 {
 	t_lines *tmp;
 	int n;
 	
 	n = 1;
-	tmp = fun;
+	tmp = lst_lines;
 	while (tmp)
 	{
 		ft_printf("%d:", n++);
