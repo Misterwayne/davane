@@ -35,8 +35,11 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
 
 int     launch_body(t_shell *shell, t_lines *lst_lines)
 {
-    int output = 0;
-    int input = 0;
+    int     output;
+    int     input;
+    
+    input = 0;
+    output = 0;
 
     while (lst_lines)
 	{
