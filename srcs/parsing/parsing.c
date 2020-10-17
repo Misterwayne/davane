@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/15 17:20:19 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/17 13:47:28 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,6 @@ int     check_commande(t_cmd *cmd, char *line)
     return (ERROR);
 }
 
-void	change_local_vars(char **args, t_var *var, int i)
-{
-    while (var->key[0] != '0')
-    {
-        if (ft_strcmp(var->key, (args[i] + 1)) == 0)
-        {
-            free(args[i]);
-            args[i] = var->value;
-            return ;
-        }
-        var = var->prev;
-    }
-}
 
 void	change_env_vars(char **args, t_env *env, int i)
 {
@@ -100,7 +87,6 @@ void    check_v(t_shell *shell, char **args)// this function will check if $str 
                     args[i] = ft_itoa(shell->last_pid);
                     return ;
             }
-            change_local_vars(args, shell->var, i);
             change_env_vars(args, shell->env, i);
         }
         i++;

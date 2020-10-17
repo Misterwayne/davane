@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/15 17:00:15 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/17 13:50:46 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,6 @@ typedef struct functions
 	struct functions *prev;
 }				t_fun;
 
-
-typedef struct	s_var								//this is a first in, last out chained list
-{
-	char 				*key;						//the key to the var
-	char				*value;						//the value of the var						
-	struct s_var		*next;
-	struct s_var		*prev;
-	struct s_var		*first;
-}				t_var;
-
 typedef struct	s_env
 {
 	char			*key;
@@ -87,7 +77,6 @@ typedef struct	s_shell
 {
 	t_cmd		*cmd;
 	t_env		*env;
-	t_var		*var;
 	t_local		*local;
 	char		**enviro;
 	char		*current_pwd;
@@ -105,17 +94,9 @@ char			**ft_split(char const *s, char c);
 char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
-int     		check_var(char *line, t_var *var, t_env *env);
 void     		check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
-int         	is_a_var(t_shell *shell, char *line);		//check if line contains one '=', if so, it becomes a variable declaration
 
-// CHAINED LIST FUNCTION
 
-t_var        	*new_node(char *line);				//creat a new node
-t_var        	*new_var(t_var *var, char *line);	//add a node to the list
-void         	print_chainedlist(t_var *var);		// print the chained list
-int     	 	is_in_list(t_var *var, char *line); //check if line is a key in the chained list
-void    	 	replace_var(t_var *var, char* line);//replace the value of a node by linne
 
 
 

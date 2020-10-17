@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:27:13 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/15 16:48:54 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/17 13:51:32 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char        *replace_line(t_env *env, char *line)
     save = env;
     while (tmp[i])
     {
-        ft_printf("pre change : %s\n",tmp[i]);
+        // ft_printf("pre change : %s\n",tmp[i]);
         env = save;
         flags = 0;
         if (tmp[i][0] == '$')
@@ -38,7 +38,7 @@ char        *replace_line(t_env *env, char *line)
             {
                 if (ft_strcmp(env->key, (tmp[i] + 1)) == 0)
                 {
-                    ft_printf("%s = %s\n",env->key, tmp[i]);
+                    // ft_printf("%s = %s\n",env->key, tmp[i]);
                     tmp[i] = env->value;
                     flags = 1;
                     break;
@@ -49,14 +49,14 @@ char        *replace_line(t_env *env, char *line)
             if (flags == 0)
                 tmp[i] = ft_strdup(" ");
         }
-        ft_printf("%s with flags %d\n",tmp[i],flags);
+        // ft_printf("%s with flags %d\n",tmp[i],flags);
         i++;
     }
     i = 0;
     result = fusion(tmp);
-    while(tmp[i])
-        ft_printf("post change : %s\n",tmp[i++]);
-    ft_printf("result : %s\n", result);
+    // while(tmp[i])
+    //     ft_printf("post change : %s\n",tmp[i++]);
+    // ft_printf("result : %s\n", result);
     return (result);
 }
 
@@ -70,7 +70,7 @@ char        *fusion(char **args)
     while (args[i])
     {
         result = ft_strjoin(result, args[i]);
-        ft_printf("%s\n",result);
+        // ft_printf("%s\n",result);
         i++;
     }
     return (result);

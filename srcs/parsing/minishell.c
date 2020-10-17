@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/17 13:27:19 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/17 13:44:18 by truepath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,14 @@ void		lsh_loop(t_shell *shell)
 
 int		main(int argc, char **argv, char **env)
 {
-	t_env envi; 	// chained list for environnement variable
-	t_var *var;		// chained list struct for the variables
+	t_env envi; 	// chained list for environnement variable	// chained list struct for the variables
 	t_cmd cmd; 		// contient la liste des commandes
 	t_shell shell;	// global struct with all the other in it
-
-	var = new_node("0=0");		// init the chained list, the element "0=0" will always be the last;
+		// init the chained list, the element "0=0" will always be the last;
 	cmd.cmd_lst = malloc(sizeof(char*) * 20);
 	load_env(env, &shell);
 	load_cmd(&cmd);
 	shell.cmd = &cmd;
-	shell.var = var;
 	shell.enviro = env;
 	get_pwd(&shell);
 	get_usr(&shell, env);
