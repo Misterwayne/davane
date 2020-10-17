@@ -50,8 +50,6 @@ int     launch_body(t_shell *shell, t_fun *fun)
             output = ft_redirection(shell, fun);
         else if (ft_strcmp(fun->r_symbol, "<") == 0)
             input = ft_back_redirection(shell, fun);
-        if (!(fun->next))
-            break;
         fun = fun->next;
 	}
     return (0);
