@@ -4,6 +4,7 @@ void	print_data(t_lines *fun);
 void	lines_preprocessing(t_shell *shell, t_lines *fun);
 t_lines	*add_lst_lines(t_lines *fun, char *data, char *r_symbol);
 char	*quotes(char *line);
+void	error_check(t_lines *lst_lines);
 
 int			is_special_symbol(char *str)
 {
@@ -72,6 +73,7 @@ void		parse_functions(t_shell *shell, char *line)
 	line = quotes(line);
 	lst_lines = separator(line, lst_lines);
 	lines_preprocessing(shell, lst_lines);
+	error_check(lst_lines);
 	//print_data(lst_lines);
-	launch_body(shell, lst_lines);
+	//launch_body(shell, lst_lines);
 }
