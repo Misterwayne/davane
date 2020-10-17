@@ -1,10 +1,10 @@
 #include "../../headers/minishell.h"
 
-t_fun	*create_fun(char *data, char *r_symbol)
+t_lines	*create_fun(char *data, char *r_symbol)
 {
-	t_fun	*new;
+	t_lines	*new;
 
-	new = malloc(sizeof(t_fun));
+	new = malloc(sizeof(t_lines));
 	new->line = data;
 	new->r_symbol = r_symbol; 
 	new->l_symbol = 0;
@@ -14,13 +14,13 @@ t_fun	*create_fun(char *data, char *r_symbol)
 	return (new);
 }
 
-t_fun	*add_fun(t_fun *fun, char *data, char *r_symbol)
+t_lines	*add_fun(t_lines *fun, char *data, char *r_symbol)
 {
-	t_fun *tmp;
+	t_lines *tmp;
 
-	tmp = fun;
 	if(!(fun)) 
 		return (create_fun(data, r_symbol));
+	tmp = fun;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = create_fun(data, r_symbol);

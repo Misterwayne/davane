@@ -2,9 +2,9 @@
 #include "../../headers/minishell.h"
 
 
-void print_data(t_fun *fun)
+void print_data(t_lines *fun)
 {
-	t_fun *tmp;
+	t_lines *tmp;
 	int n;
 	
 	n = 1;

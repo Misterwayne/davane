@@ -1,23 +1,5 @@
 #include "../../headers/minishell.h"
 
-int     wait_for_input(t_shell *shell, int input)
-{
-    char    **args_exec;
-    char    *line;
-
-    args_exec[0] = 0;
-    line = 0;
-    while (!(args_exec[0]))
-    {
-        ft_printf("pipe> ");
-        get_next_line(0, &line);
-        args_exec = lsh_split_line(line);
-        free(line);
-    }
-    //launch_bin(shell, args_exec, input);
-    return (0);
-}
-
 int     create_pipe(int *fd)
 {
     if(pipe(fd) < 0)
@@ -28,7 +10,7 @@ int     create_pipe(int *fd)
     return (0);
 }
 
-int		ft_pipe(t_shell *shell, t_fun *fun, int input)
+int		ft_pipe(t_shell *shell, t_lines *fun, int input)
 {
 	int		fd[2];
 	int		output;

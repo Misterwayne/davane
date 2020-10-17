@@ -15,25 +15,6 @@ int		skip_white_spaces(char *str)
 	return (i);
 }
 
-int		is_even_quotes(char *line)
-{
-	int i;
-	int n;
-
-	n = 0;
-	i = 0;
-
-	while (line[i] != '\0')
-	{
-		if (line[i] == '"')
-			n++;
-		i++;
-	}
-	if (n % 2 == 0)
-		return (0);
-	return (1);
-}
-
 char	*delete_spaces(char *line)
 {
 	char *str;
@@ -75,7 +56,7 @@ char	*delete_spaces(char *line)
 	return (str_new);
 }
 
-void	split_on_arguments(t_shell *shell, t_fun *fun)
+void	split_on_arguments(t_shell *shell, t_lines *fun)
 {
 	int i;
 
@@ -84,9 +65,9 @@ void	split_on_arguments(t_shell *shell, t_fun *fun)
 		i = 0;
 		//ft_printf("%s\n", fun->line);
 		fun->line = delete_spaces(fun->line);
-		//fun->line = replace_line(shell->env, fun->line);
+		fun->line = replace_line(shell->env, fun->line);
 		fun->argv = ft_split(fun->line, ' ');
-		//check_v(shell, fun->argv);
+		check_v(shell, fun->argv);
 		// while (fun->argv[i])
 		// 	ft_printf("%s\n", fun->argv[i++]);
 		if (!(fun->next))

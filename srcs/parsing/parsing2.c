@@ -1,11 +1,9 @@
 #include "../../headers/minishell.h"
 char	*ft_strndup(char *str, int n);
-void	print_data(t_fun *fun);
-void	split_on_arguments(t_shell *shell, t_fun *fun);
-t_fun	*add_fun(t_fun *fun, char *data, char *r_symbol);
-char	*delete_spaces(char *line);
-int		is_even_quotes(char *line);
-//char    *replace_line(t_env *env, char *line);
+void	print_data(t_lines *fun);
+void	split_on_arguments(t_shell *shell, t_lines *fun);
+t_lines	*add_fun(t_lines *fun, char *data, char *r_symbol);
+char	*quotes(char *line);
 
 int		is_special_symbol(char *str)
 {
@@ -43,14 +41,14 @@ char		*copy_symbol(char *str)
 	return(symbol);
 }
 
-t_fun	*separator(char *str, t_fun *fun)
+t_lines	*separator(char *str, t_lines *lst_lines)
 {
 	int	i;
 	char *symbol;
 
 	i = 0;
 	if (*str == '\0')
-		return (fun);
+		return (lst_lines);
 	while (str[i])
 	{
 		if (str[i] == '"')
@@ -59,30 +57,26 @@ t_fun	*separator(char *str, t_fun *fun)
 			{
 				//ft_printf("special line: %s\n", ft_strndup(str, i));
 				symbol = copy_symbol(str + i);
-				fun = add_fun(fun, ft_strndup(str, i), symbol);
-				fun = separator(str + i + ft_strlen(symbol), fun);
-				return (fun);
+				lst_lines = add_fun(lst_lines, ft_strndup(str, i), symbol);
+				lst_lines = separator(str + i + ft_strlen(symbol), lst_lines);
+				return (lst_lines);
 			}
 		i++;
 	}
 	//ft_printf(" simple line: %s\n", str);
-	fun = add_fun(fun, ft_strdup(str), 0);
-	return (fun);
+	lst_lines = add_fun(lst_lines, ft_strdup(str), 0);
+	return (lst_lines);
 }
 
 void	parse_functions(t_shell *shell, char *line)
 {
-	t_fun 	*fun;
+	t_lines 	*lst_lines;
 	int		i;
 
-	if (is_even_quotes(line) != 0)
-		{
-			ft_printf(">\n");
-			exit(0);
-		}
-	fun = NULL;
-	fun = separator(line, fun);
-	split_on_arguments(shell, fun);
-	//print_data(fun);
-	launch_body(shell, fun);
+	line = quotes(line);
+	lst_lines = NULL;
+	lst_lines = separator(line, lst_lines);
+	split_on_arguments(shell, lst_lines);
+	//print_data(lst_lines);
+	launch_body(shell, lst_lines);
 }

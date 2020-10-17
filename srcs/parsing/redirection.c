@@ -61,7 +61,7 @@ int   open_file(char *symbol, char *file)
     return (fd);
 }
 
-int	ft_redirection(t_shell *shell, t_fun *fun)
+int	ft_redirection(t_shell *shell, t_lines *fun)
 {
 	int 	fd;
 	char 	**args;

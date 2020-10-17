@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/17 13:50:46 by truepath         ###   ########.fr       */
+/*   Updated: 2020/10/17 15:11:11 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ we need an array of function for our bulltin.
 
 typedef struct	s_shell t_shell;
 
-typedef struct functions
+typedef struct lines
 {
 	char			*line;
 	char			*cmd;
 	char			**argv;
 	char			*r_symbol;
 	char			*l_symbol;
-	struct functions *next;
-	struct functions *prev;
-}				t_fun;
+	struct lines *next;
+	struct lines *prev;
+}				t_lines;
 
 typedef struct	s_env
 {
@@ -124,11 +124,11 @@ int		ft_exit(char **argv, t_shell *shell);		//this will need to  be able to free
 // PARSE
 int		is_special_symbol(char *str);
 void	parse_functions(t_shell *shell, char *line);
-int     launch_body(t_shell *shell, t_fun *fun);
+int     launch_body(t_shell *shell, t_lines *fun);
 int   	launch_exec(t_shell *shell, char **args, int input, int output);
-void	semicolon(t_shell *shell, t_fun *fun, int input, int output);
-int		ft_pipe(t_shell *shell, t_fun *fun, int input);
-int     ft_redirection(t_shell *shell, t_fun *fun);
-int     ft_back_redirection(t_shell *shell, t_fun *fun);
+void	semicolon(t_shell *shell, t_lines *fun, int input, int output);
+int		ft_pipe(t_shell *shell, t_lines *fun, int input);
+int     ft_redirection(t_shell *shell, t_lines *fun);
+int     ft_back_redirection(t_shell *shell, t_lines *fun);
 
 #endif

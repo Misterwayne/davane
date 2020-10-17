@@ -33,7 +33,7 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
     return (0);
 }
 
-int     launch_body(t_shell *shell, t_fun *fun)
+int     launch_body(t_shell *shell, t_lines *fun)
 {
     int output = 0;
     int input = 0;

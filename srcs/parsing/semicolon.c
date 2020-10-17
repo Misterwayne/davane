@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void	semicolon(t_shell *shell, t_fun *fun, int input, int output)
+void	semicolon(t_shell *shell, t_lines *fun, int input, int output)
 {
 	if (fun->line[0] == '\0')
 	{
