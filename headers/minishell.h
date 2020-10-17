@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/17 15:11:11 by davlasov         ###   ########.fr       */
+/*   Updated: 2020/10/17 15:43:55 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@ typedef struct	s_shell t_shell;
 typedef struct lines
 {
 	char			*line;
-	char			*cmd;
 	char			**argv;
-	char			*r_symbol;
-	char			*l_symbol;
-	struct lines *next;
-	struct lines *prev;
+	char			*symbol;
+	char			*cmd;
+	struct lines	*next;
 }				t_lines;
 
 typedef struct	s_env
@@ -55,7 +53,6 @@ typedef struct	s_env
 	struct s_env	*prev;
 	struct s_env	*next;
 }					t_env;
-
 
 typedef struct 		s_local
 {

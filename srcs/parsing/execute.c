@@ -40,15 +40,15 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
 
     while (lst_lines)
 	{
-        if (!(lst_lines->r_symbol))
+        if (!(lst_lines->symbol))
             return (launch_exec(shell, lst_lines->argv, input, output));
-        if (ft_strcmp(lst_lines->r_symbol, ";") == 0)
+        if (ft_strcmp(lst_lines->symbol, ";") == 0)
             semicolon(shell, lst_lines, input, output);
-        else if (ft_strcmp(lst_lines->r_symbol, "|") == 0)
+        else if (ft_strcmp(lst_lines->symbol, "|") == 0)
             input = ft_pipe(shell, lst_lines, input);
-        else if (ft_strcmp(lst_lines->r_symbol, ">") == 0 || ft_strcmp(lst_lines->r_symbol, ">>") == 0)
+        else if (ft_strcmp(lst_lines->symbol, ">") == 0 || ft_strcmp(lst_lines->symbol, ">>") == 0)
             output = ft_redirection(shell, lst_lines);
-        else if (ft_strcmp(lst_lines->r_symbol, "<") == 0)
+        else if (ft_strcmp(lst_lines->symbol, "<") == 0)
             input = ft_back_redirection(shell, lst_lines);
         lst_lines = lst_lines->next;
 	}

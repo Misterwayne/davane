@@ -69,7 +69,7 @@ int	ft_redirection(t_shell *shell, t_lines *lst_lines)
         ft_printf("sh:  syntax error near unexpected token `newline\'\n");
     else if (lst_lines->next->line[0] == '\0')
         ft_printf("sh:  syntax error near unexpected token `newline\'\n");
-    fd = open_file(lst_lines->r_symbol, lst_lines->next->argv[0]);
+    fd = open_file(lst_lines->symbol, lst_lines->next->argv[0]);
     lst_lines->next->argv = cat_double_array(lst_lines->argv, lst_lines->next->argv + 1);
     return (fd);
 }
