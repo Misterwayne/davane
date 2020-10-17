@@ -56,22 +56,16 @@ char	*delete_spaces(char *line)
 	return (str_new);
 }
 
-void	split_on_arguments(t_shell *shell, t_lines *fun)
+void	split_on_arguments(t_shell *shell, t_lines *lst_lines)
 {
-	int i;
-
-	while(fun)
+	while(lst_lines)
 	{
-		i = 0;
-		//ft_printf("%s\n", fun->line);
-		fun->line = delete_spaces(fun->line);
-		fun->line = replace_line(shell->env, fun->line);
-		fun->argv = ft_split(fun->line, ' ');
-		check_v(shell, fun->argv);
-		// while (fun->argv[i])
-		// 	ft_printf("%s\n", fun->argv[i++]);
-		if (!(fun->next))
+		lst_lines->line = delete_spaces(lst_lines->line);
+		lst_lines->line = replace_line(shell->env, lst_lines->line);
+		lst_lines->argv = ft_split(lst_lines->line, ' ');
+		check_v(shell, lst_lines->argv);
+		if (!(lst_lines->next))
 			break ;
-		fun = fun->next;
+		lst_lines = lst_lines->next;
 	}
 }
