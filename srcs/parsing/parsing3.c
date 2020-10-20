@@ -24,21 +24,41 @@ char        *replace_line(t_env *env, char *line)
     void    *save;
 
 
-    tmp = ft_split_custom(line, '$');
+    tmp = split_$(line);
     i = 0;
     save = env;
     while (tmp[i])
     {
-        // ft_printf("pre change : %s\n",tmp[i]);
         env = save;
         flags = 0;
         if (tmp[i][0] == '$')
         {
             while (env)
             {
+                if (tmp[i][1] == '\0')
+                {
+                    flags = 1;
+                    free(tmp[i]);
+                    tmp[i] = "$";
+                    break;
+                }
+                if (tmp[i][1] == '$')
+                {
+                    flags = 1;
+                    free(tmp[i]);
+                    tmp[i] = "7";
+                    break;
+                }
+                if (tmp[i][1] == '?')
+                {
+                    flags = 1;
+                    free(tmp[i]);
+                    tmp[i] = "1";
+                    break;
+                }
                 if (ft_strcmp(env->key, (tmp[i] + 1)) == 0)
                 {
-                    // ft_printf("%s = %s\n",env->key, tmp[i]);
+                    free(tmp[i]);
                     tmp[i] = env->value;
                     flags = 1;
                     break;
@@ -47,16 +67,15 @@ char        *replace_line(t_env *env, char *line)
                     env = env->next;
             }
             if (flags == 0)
-                tmp[i] = ft_strdup(" ");
+            {
+                free(tmp[i]);
+                tmp[i] = ft_strdup("");
+            }
         }
-        // ft_printf("%s with flags %d\n",tmp[i],flags);
         i++;
     }
     i = 0;
     result = fusion(tmp);
-    // while(tmp[i])
-    //     ft_printf("post change : %s\n",tmp[i++]);
-    // ft_printf("result : %s\n", result);
     return (result);
 }
 
@@ -70,7 +89,6 @@ char        *fusion(char **args)
     while (args[i])
     {
         result = ft_strjoin(result, args[i]);
-        // ft_printf("%s\n",result);
         i++;
     }
     return (result);

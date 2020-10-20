@@ -91,7 +91,9 @@ char			**ft_split(char const *s, char c);
 char			*get_value(t_env *env, char *line);
 int     		check_commande(t_cmd *cnd, char *line);
 int				parsing_line(t_shell *shell, char **args);
-void     		check_v(t_shell *shell, char **args);		//check if one of the arguments stat with '$' and if yes replace it by its value
+void     		check_v(t_shell *shell, char **args);
+char			*ft_strndup(char *str, int n);
+char			**split_$(char *line);	//check if one of the arguments stat with '$' and if yes replace it by its value
 
 
 

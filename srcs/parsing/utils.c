@@ -1,14 +1,41 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "../../headers/minishell.h"
 
-int		ft_strlen_split2(char *s, char c)
+int		ft_strlen_split2(char *s, char *res)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (s[i] != '\0' && s[i] != c && s[i] != ' ')
+	if (s[i] == '$')
+	{
+		if (s[i + 1] == '$')
+		{
+			while (i < 2)
+			{
+				res[i] = s[i];
+				i++;
+			}
+			res[i] = '\0';
+			return (i);
+		}
+		while (s[i] != ' ' && s[i])
+		{
+			res[i] = s[i];
+			i++;
+			if (s[i] == '$')
+				break;
+		}
+		res[i] = '\0';
+		return (i);
+	}
+	while (s[i] != '$' && *s != '\0') 
+	{
+		res[i] = s[i];
 		i++;
-	return (i + 1);
+	}
+	res[i] = '\0';
+	return (i);
 }
 
 int		ft_strcount2(char *s, char c)
@@ -18,70 +45,34 @@ int		ft_strcount2(char *s, char c)
 
 	i = 0;
 	n = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
-		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0' || s[i + 1] == ' ') && s[i] != ' ')
-			n = n + 1;
+		if (s[i] == c || s[i] == ' ')
+			n++;
 		i++;
 	}
 	return (n);
 }
 
-char	*ft_full2(char const *s, int len, char c, int i)
+char	**split_$(char *str)
 {
-	char	*tmp;
-	int		j;
-	int		k;
-
-	j = 0;
-	k = 0;
-	if (!(tmp = malloc(len + 1)))
-		return (0);
-	while (j < len)
-		tmp[j++] = s[k++];
-	tmp[j] = '\0';
-	return (tmp);
-}
-
-char	**ft_split_custom(char const *s, char c)
-{
-	char	**arr;
+	char  	**res;
 	int		i;
-	int		k;
+	int		j;
+	int		o;
 	int		len;
-	int		len_arr;
 
 	i = 0;
-	k = 0;
-	len_arr = ft_strcount2((char *)s, c);
-	if (!(arr = malloc(sizeof(char *) * (len_arr + 1))))
+	o = 0;
+	len = ft_strcount2(str, '$');
+	if(!(res = malloc(sizeof(char *) * len + 1)))
 		return (0);
-	while (i < len_arr)
+	while (i < len)
 	{
-        while (((char *)s)[k] == c || (((char *)s)[k]) == ' ')
-			k++;
-		len = ft_strlen_split2(&(((char *)s)[k]), c);
-		if (!(arr[i] = malloc(len + 1)))
-			return (0);
-        if (k != 0)
-		    arr[i] = ft_full2(&(((char *)s)[k - 1]), len, c, i);
-        else
-            arr[i] = ft_full2(&(((char *)s)[k]), len, c, i); 
-		while ((((char *)s)[k]) != c && (((char *)s)[k]) != '\0' && (((char *)s)[k]) != ' ')
-			k++;
+		res[i] = malloc(sizeof(char) * 20);
+		o += ft_strlen_split2((str + o), res[i]);
 		i++;
 	}
-	arr[i] = 0;
-	return (arr);
+	res[i] = NULL;
+	return res;
 }
-
-// int main(void)
-// {
-//     char *test = "echo gh$e";
-//     char **res;
-
-//     res = ft_split_custom(test, '$');
-//     for (int i = 0; res[i]; i++)
-//         printf("%s\n",res[i]);
-//     return 0;
-// }
