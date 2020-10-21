@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-char	**ft_split_custom(char const *s, char c);
+
+int     as_dollar_inside(char *line);
 
 char        *fusion(char **args);
 
@@ -23,60 +24,63 @@ char        *replace_line(t_env *env, char *line)
     char    **tmp;
     void    *save;
 
-
-    tmp = split_$(line);
-    i = 0;
-    save = env;
-    while (tmp[i])
+    if (as_dollar_inside(line))
     {
-        env = save;
-        flags = 0;
-        if (tmp[i][0] == '$')
+        tmp = split_$(line);
+        i = 0;
+        save = env;
+        while (tmp[i])
         {
-            while (env)
+            env = save;
+            flags = 0;
+            if (tmp[i][0] == '$')
             {
-                if (tmp[i][1] == '\0')
+                while (env)
                 {
-                    flags = 1;
-                    free(tmp[i]);
-                    tmp[i] = "$";
-                    break;
+                    if (tmp[i][1] == '\0')
+                    {
+                        flags = 1;
+                        free(tmp[i]);
+                        tmp[i] = "$";
+                        break;
+                    }
+                    if (tmp[i][1] == '$')
+                    {
+                        flags = 1;
+                        free(tmp[i]);
+                        tmp[i] = "7";
+                        break;
+                    }
+                    if (tmp[i][1] == '?')
+                    {
+                        flags = 1;
+                        free(tmp[i]);
+                        tmp[i] = "1";
+                        break;
+                    }
+                    if (ft_strcmp(env->key, (tmp[i] + 1)) == 0)
+                    {
+                        free(tmp[i]);
+                        tmp[i] = env->value;
+                        flags = 1;
+                        break;
+                    }
+                    else 
+                        env = env->next;
                 }
-                if (tmp[i][1] == '$')
+                if (flags == 0)
                 {
-                    flags = 1;
                     free(tmp[i]);
-                    tmp[i] = "7";
-                    break;
+                    tmp[i] = ft_strdup("");
                 }
-                if (tmp[i][1] == '?')
-                {
-                    flags = 1;
-                    free(tmp[i]);
-                    tmp[i] = "1";
-                    break;
-                }
-                if (ft_strcmp(env->key, (tmp[i] + 1)) == 0)
-                {
-                    free(tmp[i]);
-                    tmp[i] = env->value;
-                    flags = 1;
-                    break;
-                }
-                else 
-                    env = env->next;
             }
-            if (flags == 0)
-            {
-                free(tmp[i]);
-                tmp[i] = ft_strdup("");
-            }
+            i++;
         }
-        i++;
+        i = 0;
+        result = fusion(tmp);
+        return (result);
     }
-    i = 0;
-    result = fusion(tmp);
-    return (result);
+    return (line);
 }
 
 char        *fusion(char **args)
