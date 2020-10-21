@@ -40,14 +40,14 @@ int     check_commande(t_cmd *cmd, char *line)
     // parse the commande list to find a match then return the index
     i = 0;
     if (line == NULL)
-        return (ERROR);
+        return (-3);
     while (cmd->cmd_lst[i] != NULL)
     {
         if (ft_strcmp(cmd->cmd_lst[i], line) == 0)
             return (i);
         i++;
     }
-    return (ERROR);
+    return (-2);
 }
 
 
