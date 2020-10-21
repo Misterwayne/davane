@@ -106,7 +106,7 @@ int 			launch(t_shell *shell, int index, char **argv);	//Where we launch everyth
 void    		load_cmd(t_cmd *cmd);					//	init the cmd struct
 int				add_var(char *line, t_shell *shell);	// ad variable to the env
 int				load_env(char **env, t_shell *shell);					// init the env struct
-void			print_promt(t_shell *shell);						// print the promt
+void			print_promt(void);						// print the promt
 char 			*add_path(t_shell *shell,char **args);
 
 // BUILTIN
@@ -129,5 +129,10 @@ void	semicolon(t_shell *shell, t_lines *fun, int input, int output);
 int		ft_pipe(t_shell *shell, t_lines *fun, int input);
 int     ft_redirection(t_shell *shell, t_lines *fun);
 int     ft_back_redirection(t_shell *shell, t_lines *fun);
+
+// SIGNAL_FUNCTION
+
+void    catch_signal(int sig);
+void    signal_handling(void);
 
 #endif
