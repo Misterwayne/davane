@@ -5,11 +5,13 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
 {  
     pid_t   pid;
     int     status;
-    char *executable;
+    int     index;
+    char    *executable;
 
 	if (!(args))
 		return 0;
     executable = add_path(shell, args);
+    index  = check_commande(shell->cmd, args[0]);
 	pid = fork();
     if (pid < 0)
     {
@@ -22,7 +24,10 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
            dup2(input, 0);
         if (output != 0)
            dup2(output, 1);
-        execv(executable, args);
+        if (index < 7)
+            shell->cmd->builtin_array[index](args, shell);
+        else
+            execv(executable, args);
     }
     else
         wait(&status);
@@ -37,10 +42,10 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
 {
     int     output;
     int     input;
+    int     index;
     
     input = 0;
     output = 0;
-
     while (lst_lines)
 	{
         if (!(lst_lines->symbol))

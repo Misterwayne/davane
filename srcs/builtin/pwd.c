@@ -19,7 +19,7 @@ int     pwd(char **argv, t_shell *shell)
     buff = malloc(sizeof(char)* 1024);
     getwd(buff);
     write(1, buff, ft_strlen(buff));
-    write(1, "\n", 1);
+    write(1, "!\n", 2);
     free(buff);
     return (0);
 }
