@@ -8,27 +8,7 @@ int		ft_strlen_split2(char *s, char *res)
 
 	i = 0;
 	if (s[i] == '$')
-	{
-		if (s[i + 1] == '$')
-		{
-			while (i < 2)
-			{
-				res[i] = s[i];
-				i++;
-			}
-			res[i] = '\0';
-			return (i);
-		}
-		while (s[i] != ' ' && s[i])
-		{
-			res[i] = s[i];
-			i++;
-			if (s[i] == '$' || s[i] == '=')
-				break;
-		}
-		res[i] = '\0';
-		return (i);
-	}
+		return (get_$(s, res, i));
 	while (s[i] != '$' && *s != '\0') 
 	{
 		res[i] = s[i];

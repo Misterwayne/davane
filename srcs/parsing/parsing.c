@@ -47,18 +47,25 @@ int     check_commande(t_cmd *cmd, char *line)
     return (-2);
 }
 
-
-void	change_env_vars(char **args, t_env *env, int i)
+int     get_$(char *s, char *res, int i)
 {
-    while (env)
-    {
-        if (ft_strcmp(env->key, (args[i] + 1)) == 0)
-        {
-            free(args[i]);
-            args[i] = env->value; 
-            return ;
-        }
-        env = env->next;
-    }
-    args[i] = "";
+    if (s[i + 1] == '$')
+	{
+	    while (i < 2)
+	    {
+		    res[i] = s[i];
+		    i++;
+	    }
+	    res[i] = '\0';
+	    return (i);
+	}
+	while (s[i] != ' ' && s[i])
+	{
+		res[i] = s[i];
+		i++;
+		if (s[i] == '$' || s[i] == '=')
+			break;
+	}
+	res[i] = '\0';
+	return (i);
 }

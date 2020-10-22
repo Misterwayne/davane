@@ -94,7 +94,7 @@ int				parsing_line(t_shell *shell, char **args);
 void     		check_v(t_shell *shell, char **args);
 char			*ft_strndup(char *str, int n);
 char			**split_$(char *line);	//check if one of the arguments stat with '$' and if yes replace it by its value
-
+int     		get_$(char *s, char *res, int i);
 
 
 
