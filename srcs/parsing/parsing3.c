@@ -26,7 +26,7 @@ char        *replace_line(t_shell *shell, char *line)
 
     if (as_dollar_inside(line))
     {
-        tmp = split_$(line);
+        tmp = split_dollar(line);
         i = 0;
         save = shell->env;
         while (tmp[i])

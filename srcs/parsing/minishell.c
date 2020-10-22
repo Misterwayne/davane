@@ -53,10 +53,11 @@ void		lsh_loop(t_shell *shell)
 
 int		main(int argc, char **argv, char **env)
 {
-	t_env envi; 	// chained list for environnement variable	// chained list struct for the variables
 	t_cmd cmd; 		// contient la liste des commandes
 	t_shell shell;	// global struct with all the other in it
 	
+	(void)argc;
+	(void)argv;
 	cmd.cmd_lst = malloc(sizeof(char*) * 20);
 	load_env(env, &shell);
 	load_cmd(&cmd);

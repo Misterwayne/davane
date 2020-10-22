@@ -30,7 +30,6 @@ char	**ft_split_env(char *s)
 t_env	*ft_create_elem(char *data)
 {
 	t_env	*elem;
-	int 	i;
 	char	**split;
 
 	elem = malloc(sizeof(t_env));

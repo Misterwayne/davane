@@ -47,7 +47,7 @@ int     check_commande(t_cmd *cmd, char *line)
     return (-2);
 }
 
-int     get_$(char *s, char *res, int i)
+int     get_dollar(char *s, char *res, int i)
 {
     if (s[i + 1] == '$')
 	{

@@ -16,6 +16,7 @@ int     ft_back_redirection(t_shell *shell, t_lines *lst_lines)
 {
     int     fd;
     
+    (void)shell;
     if ((fd = open(lst_lines->next->argv[0], O_RDONLY)) == -1)
         {
             ft_printf("%s\n", strerror(errno));

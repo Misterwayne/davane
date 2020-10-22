@@ -32,7 +32,7 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
             shell->last_return = execv(executable, args);
         else
         {
-            ft_printf("minishell: command not found: %s\n",args[0]);
+            ft_printf("minishell: command not found: %s\n", args[0]);
             return (-1);
         }
     }
@@ -52,7 +52,6 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
 {
     int     output;
     int     input;
-    int     index;
     
     input = 0;
     output = 0;

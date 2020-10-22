@@ -26,6 +26,7 @@ void	error_check(t_lines *lst_lines)
 
 void	lines_preprocessing(t_shell *shell, t_lines *lst_lines)
 {
+	(void)shell;
 	while(lst_lines)
 	{
 		lst_lines->line = delete_spaces(lst_lines->line);

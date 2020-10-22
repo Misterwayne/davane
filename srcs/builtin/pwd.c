@@ -16,6 +16,8 @@ int     pwd(char **argv, t_shell *shell)
 {
     char *buff;
 
+    (void)argv;
+    (void)shell;
     buff = malloc(sizeof(char)* 1024);
     getwd(buff);
     write(1, buff, ft_strlen(buff));

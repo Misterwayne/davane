@@ -65,6 +65,7 @@ int	ft_redirection(t_shell *shell, t_lines *lst_lines)
 {
 	int 	fd;
 
+    (void)shell;
     fd = open_file(lst_lines->symbol, lst_lines->next->argv[0]);
     lst_lines->next->argv = cat_double_array(lst_lines->argv, lst_lines->next->argv + 1);
     return (fd);

@@ -14,5 +14,7 @@
 
 int		ft_exit(char **argv, t_shell *shell)
 {
+	(void)shell;
+	(void)argv;
 	exit(0);
 }

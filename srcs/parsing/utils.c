@@ -8,7 +8,7 @@ int		ft_strlen_split2(char *s, char *res)
 
 	i = 0;
 	if (s[i] == '$')
-		return (get_$(s, res, i));
+		return (get_dollar(s, res, i));
 	while (s[i] != '$' && *s != '\0') 
 	{
 		res[i] = s[i];
@@ -34,11 +34,10 @@ int		ft_strcount2(char *s, char c)
 	return (n);
 }
 
-char	**split_$(char *str)
+char	**split_dollar(char *str)
 {
 	char  	**res;
 	int		i;
-	int		j;
 	int		o;
 	int		len;
 

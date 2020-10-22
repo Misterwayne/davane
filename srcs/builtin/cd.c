@@ -15,15 +15,16 @@
 
 int     cd(char **argv, t_shell *shell)
 {   
-    char  *path;
+	char  *path;
 
-    path = argv[1];
-    if (chdir(path) == -1)
-    {
-        write(1, "cd: no such file or directory: ", 31);
-        write(1, path, strlen(path));
-        write(1, "\n", 1);
-        return (-1);
-    }
-    return (0);
+	(void)shell;
+	path = argv[1];
+	if (chdir(path) == -1)
+	{
+		write(1, "cd: no such file or directory: ", 31);
+		write(1, path, strlen(path));
+		write(1, "\n", 1);
+		return (-1);
+	}
+	return (0);
 }

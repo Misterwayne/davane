@@ -15,6 +15,7 @@
 
 void	display_var(char **argv, t_env *env)
 {
+	(void)argv;
 	while(env)
 	{
 		ft_printf("%s", env->key);
@@ -29,6 +30,7 @@ void	display_var(char **argv, t_env *env)
 
 int 	env(char **argv, t_shell *shell)
 {
+	(void)argv;
 	display_var(argv, shell->env);
 	return (0);
 }

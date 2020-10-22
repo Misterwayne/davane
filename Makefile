@@ -21,12 +21,14 @@ BULITIN =	srcs/builtin/ft_echo.c \
 			srcs/builtin/cd.c \
 			srcs/builtin/ft_exit.c
 
+FLAGS	= -Wall -Werror -Wextra
+
 LIBRARY = libft/libft.a printf/libftprintf.a
 
 all: 	compile
 
 compile: libraries
-			gcc $(FILES) $(BULITIN) $(GNL) -o $(NAME) -L. $(LIBRARY)
+			gcc $(FLAGS) $(FILES) $(BULITIN) $(GNL) -o $(NAME) -L. $(LIBRARY)
 libraries:
 			$(MAKE) -C ./libft
 			$(MAKE) -C ./printf
