@@ -30,11 +30,18 @@ void	put_str(char *str)
 void	print_arguments(char **argv, t_shell *shell)
 {
 	int		i;
+	int		flag;
 	t_env	*env;
 	char	*var;
 
 	env = shell->env;
 	i = 1;
+	flag = 0;
+	if (argv[1][0] == '-' && argv[1][1] == 'n')
+	{
+		i++;	
+		flag = 1;
+	}
 	put_str(argv[i++]);
 	while (argv[i] != NULL)
 	{
@@ -43,7 +50,8 @@ void	print_arguments(char **argv, t_shell *shell)
 		put_str(argv[i]);
 		i++;
 	}
-	ft_printf("\n");
+	if (flag == 0)
+		ft_printf("\n");
 	exit(0);
 }
 
