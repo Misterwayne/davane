@@ -1,8 +1,11 @@
 #include "../../headers/minishell.h"
 
+char        *replace_line(t_shell *shell, char *line);
+
 t_lines		*create_lst_lines(char *data, char *r_symbol)
 {
 	t_lines	*new;
+	char 	*tmp;
 
 	new = malloc(sizeof(t_lines));
 	new->line = data;
@@ -12,7 +15,7 @@ t_lines		*create_lst_lines(char *data, char *r_symbol)
 	return (new);
 }
 
-t_lines	*add_lst_lines(t_lines *lst_lines, char *data, char *r_symbol)
+t_lines	*add_lst_lines(t_lines *lst_lines, char *data, char *r_symbol, t_shell *shell)
 {
 	t_lines *tmp;
 

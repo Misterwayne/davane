@@ -23,7 +23,7 @@ int		ft_strlen_split2(char *s, char *res)
 		{
 			res[i] = s[i];
 			i++;
-			if (s[i] == '$')
+			if (s[i] == '$' || s[i] == '=')
 				break;
 		}
 		res[i] = '\0';
@@ -47,7 +47,7 @@ int		ft_strcount2(char *s, char c)
 	n = 0;
 	while (s[i])
 	{
-		if (s[i] == c || s[i] == ' ')
+		if (s[i] == c || s[i] == ' ' || s[i] == '=')
 			n++;
 		i++;
 	}

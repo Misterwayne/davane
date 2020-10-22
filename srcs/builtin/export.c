@@ -44,7 +44,7 @@ void    add_variable(t_env *env, char *data)
 		tmp = ft_create_elem(data);
         if (find_variable(env, tmp) == -1)
             return ;
-		while(env->next)
+		while (env->next)
             env = env->next;
         env->next = tmp;
         return ;

@@ -16,7 +16,7 @@ int     as_dollar_inside(char *line);
 
 char        *fusion(char **args);
 
-char        *replace_line(t_env *env, char *line)
+char        *replace_line(t_shell *shell, char *line)
 {
     int     i;
     int     flags;
@@ -28,14 +28,14 @@ char        *replace_line(t_env *env, char *line)
     {
         tmp = split_$(line);
         i = 0;
-        save = env;
+        save = shell->env;
         while (tmp[i])
         {
-            env = save;
+            shell->env = save;
             flags = 0;
             if (tmp[i][0] == '$')
             {
-                while (env)
+                while (shell->env)
                 {
                     if (tmp[i][1] == '\0')
                     {
@@ -48,25 +48,25 @@ char        *replace_line(t_env *env, char *line)
                     {
                         flags = 1;
                         free(tmp[i]);
-                        tmp[i] = "7";
+                        tmp[i] = ft_itoa(shell->last_pid);
                         break;
                     }
                     if (tmp[i][1] == '?')
                     {
                         flags = 1;
                         free(tmp[i]);
-                        tmp[i] = "1";
+                        tmp[i] = ft_itoa(shell->last_return);
                         break;
                     }
-                    if (ft_strcmp(env->key, (tmp[i] + 1)) == 0)
+                    if (ft_strcmp(shell->env->key, (tmp[i] + 1)) == 0)
                     {
                         free(tmp[i]);
-                        tmp[i] = env->value;
+                        tmp[i] = shell->env->value;
                         flags = 1;
                         break;
                     }
                     else 
-                        env = env->next;
+                        shell->env = shell->env->next;
                 }
                 if (flags == 0)
                 {

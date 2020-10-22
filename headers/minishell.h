@@ -129,6 +129,7 @@ void	semicolon(t_shell *shell, t_lines *fun, int input, int output);
 int		ft_pipe(t_shell *shell, t_lines *fun, int input);
 int     ft_redirection(t_shell *shell, t_lines *fun);
 int     ft_back_redirection(t_shell *shell, t_lines *fun);
+char        *replace_line(t_shell *shell, char *line);
 
 // SIGNAL_FUNCTION
 

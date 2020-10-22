@@ -47,8 +47,6 @@ void		lsh_loop(t_shell *shell)
 		}
 		else
 			exit(0);
-		if (line[0] == 'x')
-			exit(0);
 		free(line);
 	}
 }

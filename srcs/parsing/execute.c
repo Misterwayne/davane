@@ -1,6 +1,8 @@
 
 #include "../../headers/minishell.h"
 
+char        *replace_line(t_shell *shell, char *line);
+
 int   launch_exec(t_shell *shell, char **args, int input, int output)
 {  
     pid_t   pid;
@@ -8,10 +10,10 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
     int     index;
     char    *executable;
 
-	if (!(args))
+	if (!(args) || args[0] == NULL)
 		return 0;
     executable = add_path(shell, args);
-    index  = check_commande(shell->cmd, args[0]);
+    index = check_commande(shell->cmd, args[0]);
 	pid = fork();
     if (pid < 0)
     {
@@ -24,13 +26,21 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
            dup2(input, 0);
         if (output != 0)
            dup2(output, 1);
-        if (index < 7)
-            shell->cmd->builtin_array[index](args, shell);
+        if (index < 7 && index > 0)
+            shell->last_return = shell->cmd->builtin_array[index](args, shell);
+        else if (executable != NULL)
+            shell->last_return = execv(executable, args);
         else
-            execv(executable, args);
+        {
+            ft_printf("minishell: command not found: %s\n",args[0]);
+            return (-1);
+        }
     }
     else
+    {
+        shell->last_pid = pid;
         wait(&status);
+    }
     if (input != 0)
         close (input);
     if (output != 0)
@@ -48,6 +58,8 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
     output = 0;
     while (lst_lines)
 	{
+        lst_lines->line = replace_line(shell, lst_lines->line);
+        lst_lines->argv = ft_split(lst_lines->line, ' ');
         if (!(lst_lines->symbol))
             return (launch_exec(shell, lst_lines->argv, input, output));
         if (ft_strcmp(lst_lines->symbol, ";") == 0)

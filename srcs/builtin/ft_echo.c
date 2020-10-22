@@ -14,6 +14,19 @@
 
 char	*call_set(void);
 
+void	put_str(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '\"')
+			write(1, &str[i], 1);
+		i++;
+	}
+}
+
 void	print_arguments(char **argv, t_shell *shell)
 {
 	int		i;
@@ -22,10 +35,12 @@ void	print_arguments(char **argv, t_shell *shell)
 
 	env = shell->env;
 	i = 1;
+	put_str(argv[i++]);
 	while (argv[i] != NULL)
 	{
 		var = call_set();
-		ft_printf("%s ", argv[i]);
+		ft_printf(" ");
+		put_str(argv[i]);
 		i++;
 	}
 	ft_printf("\n");

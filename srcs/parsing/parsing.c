@@ -14,7 +14,6 @@
 
 void    load_cmd(t_cmd *cmd)
 {
-    // initialize the array function and the list of commandes
     cmd->cmd_lst[0] = "pwd";
     cmd->cmd_lst[1] = "cd";
     cmd->cmd_lst[2] = "export";
@@ -22,7 +21,6 @@ void    load_cmd(t_cmd *cmd)
     cmd->cmd_lst[4] = "unset";
     cmd->cmd_lst[5] = "echo";
     cmd->cmd_lst[6] = NULL;
-    // initialize the array of pointer to function
     cmd->builtin_array[0] = &pwd;
     cmd->builtin_array[1] = &cd;
     cmd->builtin_array[2] = &export;
@@ -37,7 +35,6 @@ int     check_commande(t_cmd *cmd, char *line)
 {
     int i;
 
-    // parse the commande list to find a match then return the index
     i = 0;
     if (line == NULL)
         return (-3);
@@ -64,31 +61,4 @@ void	change_env_vars(char **args, t_env *env, int i)
         env = env->next;
     }
     args[i] = "";
-}
-
-void    check_v(t_shell *shell, char **args)// this function will check if $str is a key to a value if yes returns it or return NULL
-{
-    int i; 
-    
-    i = 0;
-    while (args[i])
-    {
-        if (args[i][0] == '$')
-        {
-            if (args[i][1] == '?')
-            {
-                    free(args[i]);
-                    args[i] = ft_itoa(shell->last_return);
-                    return ; 
-            }
-            if (args[i][1] == '$')
-            {
-                    free(args[i]);
-                    args[i] = ft_itoa(shell->last_pid);
-                    return ;
-            }
-            change_env_vars(args, shell->env, i);
-        }
-        i++;
-    }
 }

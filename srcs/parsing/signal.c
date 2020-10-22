@@ -17,6 +17,6 @@ void    catch_signal(int sig)
     }
     if (sig == SIGQUIT)
     {
-        ft_printf("SIGQUIT\n");
+        ft_printf("\b\b \b\b");
     }
 }
