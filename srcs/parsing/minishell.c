@@ -33,8 +33,8 @@ void	get_usr(t_shell *shell, char **env)
 
 void		lsh_loop(t_shell *shell)
 {
-	char *line;
-	int on;
+	char	*line;
+	int		on;
 	
 	on = 0;
 	signal_handling();
@@ -42,9 +42,7 @@ void		lsh_loop(t_shell *shell)
 	{
 		print_promt();
 		if (get_next_line(0, &line) > 0)
-		{
 			parse_functions(shell, line);
-		}
 		else
 			exit(0);
 		free(line);
@@ -53,11 +51,11 @@ void		lsh_loop(t_shell *shell)
 
 int		main(int argc, char **argv, char **env)
 {
-	t_cmd cmd; 		// contient la liste des commandes
-	t_shell shell;	// global struct with all the other in it
-	
+	t_cmd cmd;
+	t_shell shell;
 	(void)argc;
 	(void)argv;
+
 	cmd.cmd_lst = malloc(sizeof(char*) * 20);
 	load_env(env, &shell);
 	load_cmd(&cmd);

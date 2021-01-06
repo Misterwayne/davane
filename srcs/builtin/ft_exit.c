@@ -12,6 +12,13 @@
 
 #include "../../headers/minishell.h"
 
+void	ft_exit_error(int error, char *error_message)
+{
+	ft_printf("%s\n", error_message);
+	exit(error);
+}
+
+
 int		ft_exit(char **argv, t_shell *shell)
 {
 	(void)shell;

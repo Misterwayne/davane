@@ -3,7 +3,7 @@
 
 char        *replace_line(t_shell *shell, char *line);
 
-int   launch_exec(t_shell *shell, char **args, int input, int output)
+int         launch_exec(t_shell *shell, char **args, int input, int output)
 {  
     pid_t   pid;
     int     status;
@@ -14,27 +14,25 @@ int   launch_exec(t_shell *shell, char **args, int input, int output)
 		return 0;
     executable = add_path(shell, args);
     index = check_commande(shell->cmd, args[0]);
+    if (index == 6)
+        {
+            shell->last_return = shell->cmd->builtin_array[index](args, shell);
+            return (0);
+        }
 	pid = fork();
     if (pid < 0)
-    {
-        ft_printf("fork error");
-        exit(1);
-    }
+        ft_exit_error(0, "fork error");
     if (pid == 0)
     {
         if (input != 0)
            dup2(input, 0);
         if (output != 0)
            dup2(output, 1);
-        if (index < 7 && index > 0)
+        if (index >= 0 && index <= 5)
             shell->last_return = shell->cmd->builtin_array[index](args, shell);
-        else if (executable != NULL)
-            shell->last_return = execv(executable, args);
-        else
-        {
+        else if ((shell->last_return = execv(executable, args)) == -1) // check for (executable != NULL)
             ft_printf("minishell: command not found: %s\n", args[0]);
-            return (-1);
-        }
+        exit(0);
     }
     else
     {

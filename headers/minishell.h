@@ -136,4 +136,6 @@ char    			*replace_line(t_shell *shell, char *line);
 void    			catch_signal(int sig);
 void    			signal_handling(void);
 
+void	ft_exit_error(int error, char *error_message);
+
 #endif

@@ -15,16 +15,17 @@ int main(int argc, char **argv)
     struct stat info;
 
 	int status;
-	char *args[] = { "/bin/cat", "file1", 0};
+	char *args[] = { "/bin/ca", "file1", 0};
 	if (fork() == 0)
     {
     	//dup2(fd[1], 1);
-		execv(args[0], args); // child: call execv with the path and the args
+		printf("%d", execv(args[0], args)); // child: call execv with the path and the args
         exit(0);
 	}
     else
         wait(&status);        // parent: wait for the child (not really necessary)
-    strerror;
+    printf("check");
+    // strerror;
     //close(fd[1]);
     //close(fd[1]);
     // write(fd[1], "privet", 6);
