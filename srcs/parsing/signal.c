@@ -2,11 +2,12 @@
 
 void    catch_signal(int sig)
 {
+	ft_printf("check");
 	if (sig == SIGINT)
 	{
 		write(2, "\n", 1);
+		// print_promt();
 		ft_printf("sigint");
-		//print_promt();
 	}
 	if (sig == SIGQUIT)
 	{

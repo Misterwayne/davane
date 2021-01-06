@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: truepath <truepath@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2020/10/17 13:44:18 by truepath         ###   ########.fr       */
+/*   Updated: 2021/01/06 18:18:24 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		lsh_loop(t_shell *shell)
 		if (get_next_line(0, &line) > 0)
 			parse_functions(shell, line);
 		else
-			exit(0);
+			exit(-1);
 		free(line);
 	}
 }
