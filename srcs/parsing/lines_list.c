@@ -14,11 +14,10 @@ t_lines		*create_lst_lines(char *data, char *r_symbol)
 	return (new);
 }
 
-t_lines	*add_lst_lines(t_lines *lst_lines, char *data, char *r_symbol, t_shell *shell)
+t_lines	*add_lst_lines(t_lines *lst_lines, char *data, char *r_symbol)
 {
 	t_lines *tmp;
-
-	(void)shell;
+	
 	if(!(lst_lines)) 
 		return (create_lst_lines(data, r_symbol));
 	tmp = lst_lines;

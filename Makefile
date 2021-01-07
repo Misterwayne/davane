@@ -28,7 +28,9 @@ LIBRARY = libft/libft.a printf/libftprintf.a
 all: 	compile
 
 compile: libraries
-			gcc $(FLAGS) $(FILES) $(BULITIN) $(GNL) -o $(NAME) -L. $(LIBRARY)
+# 			gcc $(FLAGS) $(FILES) $(BULITIN) $(GNL) -o $(NAME) -L. $(LIBRARY)
+			gcc $(FILES) $(BULITIN) $(GNL) -o $(NAME) -L. $(LIBRARY)
+
 libraries:
 			$(MAKE) -C ./libft
 			$(MAKE) -C ./printf
