@@ -3,6 +3,7 @@
 char	*delete_spaces(char *line);
 char    *replace_line(t_shell *shell, char *line);
 
+
 int		empty_line(char *str)
 {
 	int i;
