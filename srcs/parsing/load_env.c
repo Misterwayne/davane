@@ -63,7 +63,6 @@ t_env	*put_to_the_end(t_env *list, char *data)
 	}
 }
 
-
 int		load_env(char **env, t_shell *shell)
 {
 	t_env	*begin_list;
@@ -76,7 +75,7 @@ int		load_env(char **env, t_shell *shell)
 		begin_list = put_to_the_end(begin_list, env[i]);
 		i++;
 	}
-	i = 0;
 	shell->env = begin_list;
+	shell->enviro = env;
 	return(0);
 }

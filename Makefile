@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME =  minishell
-FILES = srcs/parsing/*.c 
+FILES = srcs/parsing/*.c srcs/utils/*.c
 GNL =   srcs/parsing/gnl/*.c
 BULITIN =	srcs/builtin/ft_echo.c \
 			srcs/builtin/ft_env.c \

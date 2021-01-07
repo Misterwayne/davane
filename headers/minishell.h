@@ -103,12 +103,12 @@ int     			get_dollar(char *s, char *res, int i);
 
 void				lsh_loop(t_shell *shell);				//main function
 int 				launch(t_shell *shell, int index, char **argv);	//Where we launch everything
-void    			load_cmd(t_cmd *cmd);					//	init the cmd struct
+void    load_cmd(t_cmd *cmd, t_shell *shell);
+void				load_usr(char **env, t_shell *shell);				//	init the cmd struct
 int					add_var(char *line, t_shell *shell);	// ad variable to the env
 int					load_env(char **env, t_shell *shell);					// init the env struct
 void				print_promt(void);						// print the promt
 char 				*add_path(t_shell *shell,char **args);
-
 // BUILTIN
 
 int     			cd(char **argv, t_shell *shell);			// this one works but some errors are still possible

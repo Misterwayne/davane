@@ -4,7 +4,8 @@
 
 void f( int );
 
-int main () {
+int main () 
+{
     int i = 0;
     signal(SIGINT, f);
 
