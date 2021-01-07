@@ -3,7 +3,6 @@
 char	*delete_spaces(char *line);
 char    *replace_line(t_shell *shell, char *line);
 
-
 int		empty_line(char *str)
 {
 	int i;
@@ -29,7 +28,7 @@ int		error_check(t_lines *lst_lines)
       	symbol = *lst_lines->symbol;
       	if ((empty_line(lst_lines->line)) && (symbol == ';' || symbol == '|'))
       	{
-      		ft_printf("syntax error near unexpected token `");
+      		ft_printf("minishell: syntax error near unexpected token `");
       		ft_printf("%c", symbol);
       		ft_printf("\'\n");
       		return -1;
@@ -39,16 +38,19 @@ int		error_check(t_lines *lst_lines)
 	return 0;
 }
 
-// void	lines_preprocessing(t_shell *shell, t_lines *lst_lines)
-// {
-// 	(void)shell;
-// 	while(lst_lines)
-// 	{
-// 		lst_lines->line = delete_spaces(lst_lines->line);
-// 		// lst_lines->line = replace_line(shell, lst_lines->line);
-// 		// lst_lines->argv = ft_split(lst_lines->line, ' ');
-// 		if (!(lst_lines->next))
-// 			break ;
-// 		lst_lines = lst_lines->next;
-// 	}
-// }
+
+int     check_commande(t_cmd *cmd, char *line)
+{
+    int i;
+
+    i = 0;
+    if (line == NULL)
+        return (-3);
+    while (cmd->cmd_lst[i] != NULL)
+    {
+        if (ft_strcmp(cmd->cmd_lst[i], line) == 0)
+            return (i);
+        i++;
+    }
+    return (-2);
+}

@@ -111,3 +111,29 @@ int     as_dollar_inside(char *line)
     }
     return (0);
 }
+
+
+int     get_dollar(char *s, char *res, int i)
+{
+    if (s[i + 1] == '$')
+    {
+        while (i < 2)
+        {
+            res[i] = s[i];
+            i++;
+        }
+        res[i] = '\0';
+        return (i);
+    }
+    while (s[i] != ' ' && s[i])
+    {
+        res[i] = s[i];
+        i++;
+        if (s[i] == '$' || s[i] == '=')
+            break;
+    }
+    res[i] = '\0';
+    return (i);
+}
+
+

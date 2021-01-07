@@ -15,7 +15,6 @@
 
 t_lines		*cut_line(char *str, t_lines *lst_lines);
 int			error_check(t_lines *lst_lines);
-void		lines_preprocessing(t_shell *shell, t_lines *fun);
 void		print_data(t_lines *fun);
 
 
@@ -26,24 +25,18 @@ void		parse_functions(t_shell *shell, char *line)
 	// line = quotes(line);
 	lst_lines = NULL;
 	lst_lines = cut_line(line, lst_lines);
-	// lines_preprocessing(shell, lst_lines);
-	// if (error_check(lst_lines))
-	// 	return ;
 	if (error_check(lst_lines))
 		return ;
-	print_data(lst_lines);
-	//launch_body(shell, lst_lines);
+	//print_data(lst_lines);
+	launch_body(shell, lst_lines);
 }
-
 
 void		lsh_loop(t_shell *shell)
 {
 	char	*line;
-	int		on;
-	
-	on = 0;
+
 	signal_handling();
-	while (on == 0)
+	while (1)
 	{
 		print_promt();
 		if (get_next_line(0, &line) > 0)
