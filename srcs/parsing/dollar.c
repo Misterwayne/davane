@@ -12,7 +12,7 @@
 
 #include "../../headers/minishell.h"
 
-int     as_dollar_inside(char *line);
+int         as_dollar_inside(char *line);
 
 char        *fusion(char **args);
 
