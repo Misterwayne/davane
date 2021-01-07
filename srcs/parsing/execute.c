@@ -55,7 +55,7 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
     output = 0;
     while (lst_lines)
 	{
-        //lst_lines->line = replace_line(shell, lst_lines->line);
+        lst_lines->line = replace_line(shell, lst_lines->line);
         lst_lines->argv = ft_split(lst_lines->line, ' ');
         if (!(lst_lines->symbol))
             return (launch_exec(shell, lst_lines->argv, input, output));
