@@ -22,12 +22,12 @@ void		parse_functions(t_shell *shell, char *line)
 {
 	t_lines 	*lst_lines;
 
-	// line = quotes(line);
+	// line = quotes(line); // it might be not necessary because we are not handeling  multiline commands
 	lst_lines = NULL;
 	lst_lines = cut_line(line, lst_lines);
 	if (error_check(lst_lines))
 		return ;
-	//print_data(lst_lines);
+	print_data(lst_lines);
 	launch_body(shell, lst_lines);
 }
 
@@ -54,6 +54,7 @@ int		main(int argc, char **argv, char **env)
 	
 	(void)argc;
 	(void)argv;
+
 	load_env(env, &shell);
 	load_usr(env, &shell);
 	load_cmd(&cmd, &shell);

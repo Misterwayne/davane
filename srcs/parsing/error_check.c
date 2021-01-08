@@ -3,6 +3,22 @@
 char      *delete_spaces(char *line);
 char      *replace_line(t_shell *shell, char *line);
 
+int     check_commande(t_cmd *cmd, char *line)
+{
+    int i;
+
+    i = 0;
+    if (line == NULL)
+        return (-3);
+    while (cmd->cmd_lst[i] != NULL)
+    {
+        if (ft_strcmp(cmd->cmd_lst[i], line) == 0)
+            return (i);
+        i++;
+    }
+    return (-2);
+}
+
 int		empty_line(char *str)
 {
 	int i;
@@ -36,20 +52,4 @@ int		error_check(t_lines *lst_lines)
 		lst_lines = lst_lines->next;		
 	}
 	return 0;
-}
-
-int     check_commande(t_cmd *cmd, char *line)
-{
-    int i;
-
-    i = 0;
-    if (line == NULL)
-        return (-3);
-    while (cmd->cmd_lst[i] != NULL)
-    {
-        if (ft_strcmp(cmd->cmd_lst[i], line) == 0)
-            return (i);
-        i++;
-    }
-    return (-2);
 }

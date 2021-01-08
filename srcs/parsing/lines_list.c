@@ -9,8 +9,8 @@ t_lines		*create_lst_lines(char *data, char *r_symbol)
 	new = malloc(sizeof(t_lines));
 	new->line = data;
 	new->symbol = r_symbol;
-	new->argv = 0;
-	new->next = 0;
+	new->argv = NULL;
+	new->next = NULL;
 	return (new);
 }
 

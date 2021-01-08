@@ -17,8 +17,8 @@ void print_data(t_lines *lst_lines)
 		else
 			ft_printf("%s", tmp->line);
 		ft_printf("(%s)\n", tmp->symbol);
-		if (!(tmp->next))
-			return ;
 		tmp = tmp->next;
 	}
+	ft_printf("%s\n", tmp);
+	ft_printf("--------------------\n");
 }

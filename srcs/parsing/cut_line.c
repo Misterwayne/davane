@@ -44,8 +44,6 @@ t_lines		*cut_line(char *str, t_lines *lst_lines)
 	char *symbol;
 
 	i = 0;
-	// if (*str == '\0')
-	// 	return (lst_lines); //check line if its empty?
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
