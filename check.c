@@ -14,24 +14,25 @@ int main(int argc, char **argv)
     char	*buf;
     struct stat info;
 
+    pipe(fd);
 	int status;
-	char *args[] = { "/bin/ca", "file1", 0};
+	char *args[] = { "/bin/cat", "fil", "file1", 0};
 	if (fork() == 0)
     {
-    	//dup2(fd[1], 1);
+    	dup2(fd[1], 2);
 		printf("%d", execv(args[0], args)); // child: call execv with the path and the args
         exit(0);
 	}
     else
         wait(&status);        // parent: wait for the child (not really necessary)
-    printf("check");
+    printf("check\n");
     // strerror;
     //close(fd[1]);
-    //close(fd[1]);
+    // close(fd[1]);
     // write(fd[1], "privet", 6);
     
-    // buf = malloc(10);
-    // read(fd[0], buf, 10);
+    // buf = malloc(15);
+    // read(fd[0], buf, 15);
     // printf("%s", buf);
     // close(fd[0]);
     // close(fd[1]);

@@ -13,20 +13,18 @@
 
 #include "../../headers/minishell.h"
 
-char     *add_path(t_shell *shell, char **args)
+char     *add_path(t_shell *shell, char *cmd)
 {
     char **paths;
     char *line;
     int     i;
-    char *cmd;
-
-    cmd = args[0];
+  
     i = 0;
     if (cmd == NULL)
         return (0);
     while (shell->enviro[i] != NULL)
     {
-        if (ft_strncmp(shell->enviro[i],"PATH=",5) == 0)
+        if (ft_strncmp(shell->enviro[i],"PATH=", 5) == 0)
             break;
         i++;
     }

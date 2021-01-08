@@ -10,6 +10,8 @@ t_lines		*create_lst_lines(char *data, char *r_symbol)
 	new->line = data;
 	new->symbol = r_symbol;
 	new->argv = NULL;
+	new->executable = NULL;
+	new->index = -1;
 	new->next = NULL;
 	return (new);
 }

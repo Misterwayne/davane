@@ -1,4 +1,7 @@
 #include "../../headers/minishell.h"
+int     create_pipe(int *fd);
+
+void     fill_data(t_shell *shell, t_lines *lst_lines);
 
 int     array_len(char **argv)
 {
@@ -61,13 +64,17 @@ int   open_file(char *symbol, char *file)
     return (fd);
 }
 
-int	ft_redirection(t_shell *shell, t_lines *lst_lines)
+int	ft_redirection(t_shell *shell, t_lines *lst_lines, int input)
 {
 	int 	fd;
+    int i = -1;
 
-    (void)shell;
-    //fd = open_file(lst_lines->symbol, lst_lines->next->argv[0]);
-    // lst_lines->next->argv = cat_double_array(lst_lines->argv, lst_lines->next->argv + 1);
-    // return (fd);
-    return (0);
+    //ft_printf("%s", lst_lines->line);
+    fill_data(shell, lst_lines);
+    fill_data(shell, lst_lines->next);
+    fd = open_file(lst_lines->symbol, lst_lines->next->argv[0]);
+    lst_lines->next->argv = cat_double_array(lst_lines->argv, lst_lines->next->argv + 1);
+    //ft_printf("%s, %d, %s\n ",  lst_lines->cmd, lst_lines->index, lst_lines->executable); 
+    //lst_lines->next->cmd = lst_lines->cmd;
+    return (fd);
 }

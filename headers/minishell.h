@@ -40,9 +40,11 @@ typedef struct	s_shell t_shell;
 typedef struct lines
 {
 	char			*line;
-	char			**argv;
 	char			*symbol;
+	char			**argv;
 	char			*cmd;
+	int             index;
+	char			*executable;
 	struct lines	*next;
 }				t_lines;
 
@@ -108,7 +110,7 @@ void				load_usr(char **env, t_shell *shell);				//	init the cmd struct
 int					add_var(char *line, t_shell *shell);	// ad variable to the env
 int					load_env(char **env, t_shell *shell);					// init the env struct
 void				print_promt(void);						// print the promt
-char 				*add_path(t_shell *shell,char **args);
+char 				*add_path(t_shell *shell,char *cmd);
 // BUILTIN
 
 int     			cd(char **argv, t_shell *shell);			// this one works but some errors are still possible
@@ -124,12 +126,16 @@ int					ft_exit(char **argv, t_shell *shell);		//this will need to  be able to f
 int					is_special_symbol(char *str);
 void				parse_functions(t_shell *shell, char *line);
 int     			launch_body(t_shell *shell, t_lines *fun);
-int   				launch_exec(t_shell *shell, char **args, int input, int output);
-void				semicolon(t_shell *shell, t_lines *fun, int input, int output);
-int					ft_pipe(t_shell *shell, t_lines *fun, int input);
-int     			ft_redirection(t_shell *shell, t_lines *fun);
+// int   				launch_exec(t_shell *shell, char **args, int input, int output);
+int         		launch_exec(t_shell *shell, t_lines *lst_lines, int input, int output);
+void				semicolon(t_shell *shell, t_lines *lst_lines, int input, int output);
+// void				semicolon(t_shell *shell, t_lines *fun, int input, int output);
+int      			ft_pipe(t_shell *shell, t_lines *lst_lines, int input, int output);
+int					ft_redirection(t_shell *shell, t_lines *lst_lines, int input);
 int     			ft_back_redirection(t_shell *shell, t_lines *fun);
 char    			*replace_line(t_shell *shell, char *line);
+
+int		empty_line(char *str);
 
 // SIGNAL_FUNCTION
 

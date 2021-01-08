@@ -35,20 +35,26 @@ int		empty_line(char *str)
 
 int		error_check(t_lines *lst_lines)
 {
-    char symbol;
+    char *symbol;
 
     while (lst_lines)
 	{
         if (!(lst_lines->symbol))
           return 0;
-      	symbol = *lst_lines->symbol;
-      	if ((empty_line(lst_lines->line)) && (symbol == ';' || symbol == '|'))
+      	symbol = lst_lines->symbol;
+      	if ((empty_line(lst_lines->line)) && (*symbol == ';' || *symbol == '|'))
       	{
       		ft_printf("minishell: syntax error near unexpected token `");
       		ft_printf("%c", symbol);
       		ft_printf("\'\n");
       		return -1;
       	}
+        if (*symbol == '>') 
+          if (empty_line(lst_lines->next->line))
+            {
+              ft_printf("minishell: syntax error near unexpected token `newline\'\n");
+              return -1;
+            }
 		lst_lines = lst_lines->next;		
 	}
 	return 0;
