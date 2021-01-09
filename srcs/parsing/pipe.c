@@ -10,29 +10,25 @@ int     create_pipe(int *fd)
     return (0);
 }
 
-int     ft_pipe(t_shell *shell, t_lines *lst_lines, int input, int output)
+void    ft_pipe(t_shell *shell, t_lines *lst_lines)
 {
     int     fd[2];
     // int     output;
     char *buf;
     
+
+    if (!(lst_lines->argv))
+        lst_lines->argv = ft_split(lst_lines->line, ' ');
+    lst_lines->cmd = lst_lines->argv[0];
+    lst_lines->executable = add_path(shell, lst_lines->cmd);
+    lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);
+
     create_pipe(fd);
-    if (output != 0)
+    if (shell->output != 0)
         close(fd[1]);
     else 
-        output = fd[1];
-    // //ft_printf("%s, %d, %s\n ",  lst_lines->cmd, lst_lines->index, lst_lines->executable); 
-    // launch_exec(shell, lst_lines, input, fd[1]);
-    launch_exec(shell, lst_lines, input, output);
-    input = fd[0];
-    //close(fd[0]);
+        shell->output = fd[1];
+    launch_exec(shell, lst_lines, shell->input, shell->output);
 
-
-    // write(fd[1], "privet", 6);    // check whats in buffer - delete after working with it
-    // buf = malloc(15);
-    // read(fd[0], buf, 15);
-    // ft_printf("%s", buf);
-    // close(fd[1]);
-
-    return (input);
+    shell->input = fd[0]; // we need input fot string with a lift-pipe
 }

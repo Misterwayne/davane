@@ -5,7 +5,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdlib.h>
-#include<string.h>
+#include    <string.h>
+#include <fcntl.h>
 
 
 int main(int argc, char **argv)
@@ -13,19 +14,22 @@ int main(int argc, char **argv)
    	int fd[2];
     char	*buf;
     struct stat info;
+    int file;
 
+    file = open("file", O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH); 
     pipe(fd);
 	int status;
-	char *args[] = { "/bin/cat", "fil", "file1", 0};
+	char *args[] = { "/bin/echo",  0};
 	if (fork() == 0)
     {
-    	dup2(fd[1], 2);
+    	//dup2(file, 0);
 		printf("%d", execv(args[0], args)); // child: call execv with the path and the args
         exit(0);
 	}
     else
         wait(&status);        // parent: wait for the child (not really necessary)
     printf("check\n");
+    close(file);
     // strerror;
     //close(fd[1]);
     // close(fd[1]);

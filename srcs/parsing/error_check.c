@@ -55,7 +55,13 @@ int		error_check(t_lines *lst_lines)
               ft_printf("minishell: syntax error near unexpected token `newline\'\n");
               return -1;
             }
-		lst_lines = lst_lines->next;		
+       if (*symbol == '<') 
+          if (empty_line(lst_lines->next->line))
+            {
+              ft_printf("minishell: syntax error near unexpected token `newline\'\n");
+              return -1;
+            }
+		  lst_lines = lst_lines->next;		
 	}
 	return 0;
 }

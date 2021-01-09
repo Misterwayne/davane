@@ -83,6 +83,8 @@ typedef struct	s_shell
 	int				last_pid;
 	int				last_return;
 	int				var_flags;
+	int 			input;
+	int 			output;
 }					t_shell;
 
 
@@ -128,14 +130,13 @@ void				parse_functions(t_shell *shell, char *line);
 int     			launch_body(t_shell *shell, t_lines *fun);
 // int   				launch_exec(t_shell *shell, char **args, int input, int output);
 int         		launch_exec(t_shell *shell, t_lines *lst_lines, int input, int output);
-void				semicolon(t_shell *shell, t_lines *lst_lines, int input, int output);
-// void				semicolon(t_shell *shell, t_lines *fun, int input, int output);
-int      			ft_pipe(t_shell *shell, t_lines *lst_lines, int input, int output);
-int					ft_redirection(t_shell *shell, t_lines *lst_lines, int input);
-int     			ft_back_redirection(t_shell *shell, t_lines *fun);
+void				semicolon(t_shell *shell, t_lines *lst_lines);
+void    			ft_pipe(t_shell *shell, t_lines *lst_lines);
+void				ft_redirection(t_shell *shell, t_lines *lst_lines);
+void     			ft_back_redirection(t_shell *shell, t_lines *fun);
 char    			*replace_line(t_shell *shell, char *line);
-
-int		empty_line(char *str);
+void     			fill_data(t_shell *shell, t_lines *lst_lines);
+int					empty_line(char *str);
 
 // SIGNAL_FUNCTION
 

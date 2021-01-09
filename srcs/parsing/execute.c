@@ -2,7 +2,21 @@
 #include "../../headers/minishell.h"
 
 char        *replace_line(t_shell *shell, char *line);
-void        simple(t_shell *shell, char **args, int input, int output);
+
+void        close_used_fd(t_shell *shell)
+{
+    if (shell->input != 0)
+    {
+        close (shell->input);
+        shell->input = 0;
+    }
+    if (shell->output != 0)
+    {
+        close (shell->output);
+        shell->output = 0;
+    }
+}
+
 
 int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int output)
 {  
@@ -13,10 +27,10 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
         ft_exit_error(0, "fork error");
     if (pid == 0)
     {
-        if (input != 0)
-           dup2(input, 0);
-        if (output != 0)
-           dup2(output, 1);
+        if (shell->input != 0)
+           dup2(shell->input, 0);
+        if (shell->output != 0)
+           dup2(shell->output, 1);
         // if (lst_lines->index >= 0 && lst_lines->index <= 5)
         //     shell->last_return = shell->cmd->builtin_array[index](lst_lines->argv, shell);
         // else
@@ -28,10 +42,7 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
         shell->last_pid = pid;
         wait(&status);
     }
-    if (input != 0)
-        close (input);
-    if (output != 0)
-        close (output);
+    close_used_fd(shell);
     return (0);
 }
 
@@ -56,20 +67,18 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
     int     output;
     int     input;
     
-    input = 0;
-    output = 0;
+    shell->input = 0;
+    shell->output = 0;
     while (lst_lines)
 	{
-        //if (!(lst_lines->argv))
-        //    fill_data(shell, lst_lines);
         if (!(lst_lines->symbol) || (ft_strcmp(lst_lines->symbol, ";") == 0))
-            semicolon(shell, lst_lines, input, output);
+            semicolon(shell, lst_lines);
         else if (ft_strcmp(lst_lines->symbol, "|") == 0)
-            input = ft_pipe(shell, lst_lines, input, output);
+            ft_pipe(shell, lst_lines);
         else if (ft_strcmp(lst_lines->symbol, ">") == 0 || ft_strcmp(lst_lines->symbol, ">>") == 0)
-            output = ft_redirection(shell, lst_lines, input);
-        // else if (ft_strcmp(lst_lines->symbol, "<") == 0)
-        //     input = ft_back_redirection(shell, lst_lines);
+            ft_redirection(shell, lst_lines);
+        else if (ft_strcmp(lst_lines->symbol, "<") == 0)
+            ft_back_redirection(shell, lst_lines);
         lst_lines = lst_lines->next;
 	}
     return (0);
