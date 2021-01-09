@@ -17,12 +17,17 @@ void        close_used_fd(t_shell *shell)
     }
 }
 
-
 int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int output)
 {  
     pid_t   pid;
     int     status;
 
+    
+    if (lst_lines->index == 6)
+    {
+        shell->last_return = shell->cmd->builtin_array[6](lst_lines->argv, shell);
+        return 0;
+    }
     if ((pid = fork()) < 0)
         ft_exit_error(0, "fork error");
     if (pid == 0)
@@ -46,27 +51,18 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
     return (0);
 }
 
-
-void     fill_data(t_shell *shell, t_lines *lst_lines)
+void     prepare_exec(t_shell *shell, t_lines *lst_lines)
 {
     //lst_lines->line = replace_line(shell, lst_lines->line);
-    lst_lines->argv = ft_split(lst_lines->line, ' ');
-    if (!(lst_lines->argv) || lst_lines->argv[0] == NULL)
-        return ;
+    if (!(lst_lines->argv))
+        lst_lines->argv = ft_split(lst_lines->line, ' ');
+    lst_lines->cmd = lst_lines->argv[0];
     lst_lines->executable = add_path(shell, lst_lines->cmd);
     lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);
-    if (lst_lines->index == 6)
-    {
-        shell->last_return = shell->cmd->builtin_array[6](lst_lines->argv, shell);
-        return ;
-    }
 }
 
 int     launch_body(t_shell *shell, t_lines *lst_lines)
-{
-    int     output;
-    int     input;
-    
+{   
     shell->input = 0;
     shell->output = 0;
     while (lst_lines)

@@ -25,7 +25,7 @@ void		parse_functions(t_shell *shell, char *line)
 	// line = quotes(line); // it might be not necessary because we are not handeling  multiline commands
 	lst_lines = NULL;
 	lst_lines = cut_line(line, lst_lines);
-	if (error_check(lst_lines))
+	if (error_check(lst_lines)) // stop the cycle when this is an error in the line
 		return ;
 	print_data(lst_lines);
 	launch_body(shell, lst_lines);

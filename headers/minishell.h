@@ -135,7 +135,7 @@ void    			ft_pipe(t_shell *shell, t_lines *lst_lines);
 void				ft_redirection(t_shell *shell, t_lines *lst_lines);
 void     			ft_back_redirection(t_shell *shell, t_lines *fun);
 char    			*replace_line(t_shell *shell, char *line);
-void     			fill_data(t_shell *shell, t_lines *lst_lines);
+void   				  prepare_exec(t_shell *shell, t_lines *lst_lines);
 int					empty_line(char *str);
 
 // SIGNAL_FUNCTION
