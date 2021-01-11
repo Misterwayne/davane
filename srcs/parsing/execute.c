@@ -22,12 +22,6 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
     pid_t   pid;
     int     status;
 
-    
-    if (lst_lines->index == 6)
-    {
-        shell->last_return = shell->cmd->builtin_array[6](lst_lines->argv, shell);
-        return 0;
-    }
     if ((pid = fork()) < 0)
         ft_exit_error(0, "fork error");
     if (pid == 0)
@@ -37,9 +31,10 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
         if (shell->output != 0)
            dup2(shell->output, 1);
         // if (lst_lines->index >= 0 && lst_lines->index <= 5)
-        //     shell->last_return = shell->cmd->builtin_array[index](lst_lines->argv, shell);
+        //     shell->last_return = shell->cmd->builtin_array[lst_lines->index](lst_lines->argv, shell);
         // else
-        shell->last_return = execv(lst_lines->executable, lst_lines->argv); // add if shell->last_return == -1 ft_printf("minishell: %s: command not found\n", args[0]);
+        //shell->last_return = execv(lst_lines->executable, lst_lines->argv); // add if shell->last_return == -1 ft_printf("minishell: %s: command not found\n", args[0]);
+        export (lst_lines->argv, shell);
         exit(0);
     }
     else
@@ -47,6 +42,7 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
         shell->last_pid = pid;
         wait(&status);
     }
+    ft_printf("new: %s", shell->env->value);
     close_used_fd(shell);
     return (0);
 }
@@ -59,6 +55,9 @@ void     prepare_exec(t_shell *shell, t_lines *lst_lines)
     lst_lines->cmd = lst_lines->argv[0];
     lst_lines->executable = add_path(shell, lst_lines->cmd);
     lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);
+    if (lst_lines->index == 6)
+        shell->last_return = shell->cmd->builtin_array[6](lst_lines->argv, shell);
+    // need to check if it is possible to execute this
 }
 
 int     launch_body(t_shell *shell, t_lines *lst_lines)

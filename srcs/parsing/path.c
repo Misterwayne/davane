@@ -24,7 +24,7 @@ char     *add_path(t_shell *shell, char *cmd)
         return (0);
     while (shell->enviro[i] != NULL)
     {
-        if (ft_strncmp(shell->enviro[i],"PATH=", 5) == 0)
+        if (ft_strncmp(shell->enviro[i], "PATH=", 5) == 0)
             break;
         i++;
     }

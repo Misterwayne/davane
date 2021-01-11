@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/11 14:57:47 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/11 14:56:19 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char 				*add_path(t_shell *shell,char *cmd);
 // BUILTIN
 
 int     			cd(char **argv, t_shell *shell);			// this one works but some errors are still possible
-int     			export(char **argv, t_shell *shell);		//this function needs to stock the variable inside the chained list
+int   				export(char **argv, t_shell *shell);		//this function needs to stock the variable inside the chained list
 int 				echo(char **argv, t_shell *shell);			//it needs to be able to print an env variable from a key
 int 				env(char **argv, t_shell *shell);			//i don't know yet
 int					unset(char **argv, t_shell *shell);			//it needs to pop a variable from the chained list
@@ -128,14 +128,13 @@ int					ft_exit(char **argv, t_shell *shell);		//this will need to  be able to f
 int					is_special_symbol(char *str);
 void				parse_functions(t_shell *shell, char *line);
 int     			launch_body(t_shell *shell, t_lines *fun);
-// int   				launch_exec(t_shell *shell, char **args, int input, int output);
 int         		launch_exec(t_shell *shell, t_lines *lst_lines, int input, int output);
 void				semicolon(t_shell *shell, t_lines *lst_lines);
 void    			ft_pipe(t_shell *shell, t_lines *lst_lines);
 void				ft_redirection(t_shell *shell, t_lines *lst_lines);
 void     			ft_back_redirection(t_shell *shell, t_lines *fun);
 char    			*replace_line(t_shell *shell, char *line);
-void   				  prepare_exec(t_shell *shell, t_lines *lst_lines);
+void   				 prepare_exec(t_shell *shell, t_lines *lst_lines);
 int					empty_line(char *str);
 
 // SIGNAL_FUNCTION

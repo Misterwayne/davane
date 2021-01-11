@@ -10,7 +10,7 @@ void    load_cmd(t_cmd *cmd, t_shell *shell)
     cmd->cmd_lst[3] = "env";
     cmd->cmd_lst[4] = "unset";
     cmd->cmd_lst[5] = "echo";
-    cmd->cmd_lst[6] = "exit()";
+    cmd->cmd_lst[6] = "exit";
     cmd->builtin_array[0] = &pwd;
     cmd->builtin_array[1] = &cd;
     cmd->builtin_array[2] = &export;
