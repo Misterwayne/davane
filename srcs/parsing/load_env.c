@@ -9,7 +9,8 @@ char	*ft_name(char *s)
 	char	*name;
 	int 	i;
 
-	tmp = ft_split(s, '=');
+	if (!(tmp = ft_split(s, '=')))
+		return (NULL);
 	name = tmp[0];
 	i = 1;
 	while (tmp[i])
@@ -21,6 +22,20 @@ char	*ft_name(char *s)
 	return (name);
 }
 
+void 	ft_clean_elem(t_env	**env)
+{
+	if (!(env))
+		return ;
+	if ((*env)->key)
+		free((*env)->key);
+	if ((*env)->value)
+		free((*env)->value);
+	(*env)->key = NULL;
+	(*env)->value = NULL;
+	free(*env);
+	*env = NULL;
+}
+
 t_env	*ft_create_elem(char *data)
 {
 	t_env	*elem;
@@ -28,7 +43,10 @@ t_env	*ft_create_elem(char *data)
 
 	elem = malloc(sizeof(t_env));
 	elem->key = ft_name(data);
-	elem->value = ft_strdup(ft_strchr(data, '=') + 1);
+	if (!(elem->key ) || !(ft_strchr(data, '=')))
+		elem->value = NULL;
+	else
+		elem->value = ft_strdup(ft_strchr(data, '=') + 1);
 	elem->prev = NULL;
 	elem->next = NULL;
 	return(elem);

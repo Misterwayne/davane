@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 13:45:06 by mwane             #+#    #+#             */
-/*   Updated: 2019/10/10 16:04:23 by mwane            ###   ########.fr       */
+/*   Updated: 2021/01/11 16:20:08 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(const char *str)
 	int		i;
 
 	i = 0;
+	if (str == NULL)
+		return (NULL);
 	while (str[i] != 0)
 		i++;
 	if (!(nstr = malloc((sizeof(char) * (i + 1)))))
