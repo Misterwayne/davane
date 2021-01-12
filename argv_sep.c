@@ -103,6 +103,7 @@ int 	find_size(char *line)
 		{
 			data = copy_line(line + i);
 			i = i + ft_strlen(data);
+			free(data);
 			n++;
 		}
 		else
