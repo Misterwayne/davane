@@ -34,7 +34,7 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
         ft_exit_error(0, "fork error");
     if (pid == 0)
     {
-        ft_printf("OK");
+        //ft_printf("OK");
         if (shell->input != 0)
            dup2(shell->input, 0);
         if (shell->output != 0)
