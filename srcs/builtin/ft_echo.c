@@ -6,18 +6,47 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/13 18:57:27 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/13 19:00:22 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
+char 				*change_var(char *line);
 int		option(char *str)
 {
 	if ((ft_strcmp(str, "-n")) == 0)
 		return (1);
 	return (0);
 }
+
+char *change_var(char *line)
+{
+	int i;
+	int j;
+	char symbol;
+	char *copy;
+
+	i = 0;
+	j = 0;
+	copy = malloc(ft_strlen(line));
+	symbol = 0;
+	while (line[i] != '\0')
+	{	
+		if (line[i] == '$' && symbol != '\'')
+			line[i] = 'D';
+		if ((line[i] == '\'' || line[i]== '\"') && symbol == 0)
+			symbol = line[i];
+		else if (line[i] == symbol && symbol != 0)
+			symbol = 0;
+		i++;
+	}
+	//copy[j] = '\0';
+	ft_printf("%s", line);
+	//free(line);
+	return (copy);
+	
+}
+
 
 char 	*delete_quotes(char *line)
 {
@@ -80,7 +109,7 @@ int		echo(char **argv, t_shell *shell)
 	int i = 0;
 	while (argv[i])
 	{
-		change_variable(argv[i]);
+		change_var(argv[i]);
 		argv[i] = delete_quotes(argv[i]);
 		i++;
 	}
