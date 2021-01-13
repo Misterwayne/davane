@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/13 15:11:24 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/13 18:58:36 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ char    			*replace_line(t_shell *shell, char *line);
 void   				  prepare_exec(t_shell *shell, t_lines *lst_lines);
 int					empty_line(char *str);
 char 				**ft_split_argv(char *line);
+char 				*change_variabe(char *line);
 
 // SIGNAL_FUNCTION
 

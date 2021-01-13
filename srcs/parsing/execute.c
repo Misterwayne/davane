@@ -59,10 +59,10 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
 void     prepare_exec(t_shell *shell, t_lines *lst_lines)
 {
     //lst_lines->line = replace_line(shell, lst_lines->line);
+    
     if (!(lst_lines->argv))
         //lst_lines->argv = ft_split(lst_lines->line, ' ');
         lst_lines->argv = ft_split_argv(lst_lines->line);
-        //return ;
     lst_lines->cmd = lst_lines->argv[0];
     lst_lines->executable = add_path(shell, lst_lines->cmd);
     lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);

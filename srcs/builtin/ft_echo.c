@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/13 17:40:54 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/13 18:57:27 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		echo(char **argv, t_shell *shell)
 	int i = 0;
 	while (argv[i])
 	{
+		change_variable(argv[i]);
 		argv[i] = delete_quotes(argv[i]);
 		i++;
 	}
