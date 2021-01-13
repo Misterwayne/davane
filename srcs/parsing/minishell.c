@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/11 15:08:53 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:09:05 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 t_lines		*cut_line(char *str, t_lines *lst_lines);
 int			error_check(t_lines *lst_lines);
 void		print_data(t_lines *fun);
-
 
 void		parse_functions(t_shell *shell, char *line)
 {

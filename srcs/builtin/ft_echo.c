@@ -6,58 +6,83 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 16:01:45 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/13 17:40:54 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-char	*call_set(void);
+int		option(char *str)
+{
+	if ((ft_strcmp(str, "-n")) == 0)
+		return (1);
+	return (0);
+}
 
-void	put_str(char *str)
+char 	*delete_quotes(char *line)
 {
 	int i;
+	int j;
+	char symbol;
+	char *copy;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '\"')
-			write(1, &str[i], 1);
-		i++;
+	j = 0;
+	copy = malloc(ft_strlen(line));
+	symbol = 0;
+	while (line[i] != '\0')
+	{	
+		if ((line[i] == '\'' || line[i]== '\"') && symbol == 0)
+			{
+				symbol = line[i];
+				i++;
+			}
+		else if (line[i] == symbol)
+			{
+				symbol = 0;
+				i++;
+				continue ;
+			}
+		else
+		 copy[j++] = line[i++];
 	}
+	copy[j] = '\0';
+	free(line);
+	return (copy);
 }
 
 void	print_arguments(char **argv, t_shell *shell)
 {
 	int		i;
 	int		flag;
-	t_env	*env;
-	char	*var;
 
-	env = shell->env;
 	i = 1;
-	flag = 0;
-	if (argv[1][0] == '-' && argv[1][1] == 'n')
-	{
-		i++;	
-		flag = 1;
-	}
-	put_str(argv[i++]);
-	while (argv[i] != NULL)
-	{
-		var = call_set();
-		ft_printf(" ");
-		put_str(argv[i]);
-		i++;
-	}
-	if (flag == 0)
+	flag = 1;
+	if (!(argv[1]) || !(option(argv[1])))
+		flag = 0;
+	if (flag == 1)
+		i = 2;
+	if (!(argv[i]) && flag == 0)
 		ft_printf("\n");
-	exit(0);
+	while (argv[i])
+		{
+			ft_printf("%s", argv[i]);
+			if (argv[i + 1])
+				ft_printf(" ");
+			else if (!(argv[i + 1]) && flag == 0)
+				ft_printf("\n");
+			i++;
+		}
 }
 
 int		echo(char **argv, t_shell *shell)
 {
+	int i = 0;
+	while (argv[i])
+	{
+		argv[i] = delete_quotes(argv[i]);
+		i++;
+	}
 	print_arguments(argv, shell);
-	ft_printf("\n");
 	return (0);
 }

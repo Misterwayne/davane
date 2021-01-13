@@ -60,12 +60,18 @@ void     prepare_exec(t_shell *shell, t_lines *lst_lines)
 {
     //lst_lines->line = replace_line(shell, lst_lines->line);
     if (!(lst_lines->argv))
-        lst_lines->argv = ft_split(lst_lines->line, ' ');
+        //lst_lines->argv = ft_split(lst_lines->line, ' ');
+        lst_lines->argv = ft_split_argv(lst_lines->line);
+        //return ;
     lst_lines->cmd = lst_lines->argv[0];
     lst_lines->executable = add_path(shell, lst_lines->cmd);
     lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);
     if (lst_lines->index == 6)
         shell->last_return = shell->cmd->builtin_array[6](lst_lines->argv, shell);
+    // int i = 0;
+    // while (lst_lines->argv[i])
+    //     ft_printf("%s", lst_lines->argv[i++]);
+    // ft_printf("\n");
     // need to check if it is possible to execute this
 }
 
@@ -75,6 +81,7 @@ int     launch_body(t_shell *shell, t_lines *lst_lines)
     shell->output = 0;
     while (lst_lines)
 	{
+        //prepare_exec(shell, lst_lines);
         if (!(lst_lines->symbol) || (ft_strcmp(lst_lines->symbol, ";") == 0))
             semicolon(shell, lst_lines);
         else if (ft_strcmp(lst_lines->symbol, "|") == 0)
