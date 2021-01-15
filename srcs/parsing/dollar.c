@@ -20,7 +20,7 @@ char *get_key(char *line)
 	i = 0;
 	while (line[i] != '\0' && line[i] != ' ' && line[i] != '\'' && line[i] != '\"' && line[i] != '$')
 		i++;
-	if (i == 0 && line[0] == '$')
+	if (i == 0 && line[0] == '$') // PID
 		return (ft_strdup("$$"));
 	else if (i == 0)
 		return (NULL);
@@ -41,10 +41,10 @@ char *left_part(char *line, int i, t_env *env)
 	n = 0;
 	if (!(key = get_key(line + i + 1)))
 		return (ft_strndup(line, i + 1));
-	if (ft_strcmp(key, "$$") == 0)
+	if (ft_strcmp(key, "$$") == 0) // PID
 		return (ft_strdup("PID"));
 	if (ft_strcmp(key, "?") == 0)
-		return (ft_strdup("RETURN"));
+		return (ft_strdup("RETURN")); // LAST RETURN
 	if (!(var = get_value(env, key)))
 		{
 			free(key);
@@ -86,9 +86,7 @@ char	 *dollar(char *line, t_env *env)
 		if (line[i] == '$' && symbol != '\'')
 			{
 				str1 = left_part(line, i, env);
-				//ft_printf("left:%s\n", str1);
 				str2 = right_part(line + i + 1);
-				//ft_printf("right:%s\n", str2);
 				i = ft_strlen(str1);
 				free(line);
 				line = ft_strjoin(str1, str2);
@@ -102,6 +100,5 @@ char	 *dollar(char *line, t_env *env)
 			symbol = 0;
 		i++;
 	}
-	//ft_printf("new line:%s\n", line);
 	return (line);
 }
