@@ -4,18 +4,18 @@
 
 int		ft_strlen_split2(char *s, char *res)
 {
-	int i;
+	// int i;
 
-	i = 0;
-	if (s[i] == '$')
-		return (get_dollar(s, res, i));
-	while (s[i] != '$' && *s != '\0') 
-	{
-		res[i] = s[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (i);
+	// i = 0;
+	// if (s[i] == '$')
+	// 	return (get_dollar(s, res, i));
+	// while (s[i] != '$' && *s != '\0') 
+	// {
+	// 	res[i] = s[i];
+	// 	i++;
+	// }
+	// res[i] = '\0';
+	return (0);
 }
 
 int		ft_strcount2(char *s, char c)
