@@ -71,15 +71,12 @@ char	 **split_argv(char *line, int n)
 	return (pointers);
 }
 
-char 	**ft_split_argv(char *line)
+char 	**ft_split_argv(char *line, t_shell *shell)
 {
-	char **pointers;
-	int i = 0;
+	char **argv;
 	int n;
 
 	n = arrays_size(line);
-	pointers = split_argv(line, n);
-	// while (pointers[i])
-	// 	printf("%s\n", pointers[i++]);
-	return (pointers);
+	argv = split_argv(line, n);
+	return (argv);
 }

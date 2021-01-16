@@ -1,5 +1,4 @@
 #include "../../headers/minishell.h"
-char        *replace_line(t_shell *shell, char *line);
 
 void	semicolon(t_shell *shell, t_lines *lst_lines)
 {

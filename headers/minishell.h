@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/13 18:58:36 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/16 13:31:26 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,12 @@ void    			ft_pipe(t_shell *shell, t_lines *lst_lines);
 void				ft_redirection(t_shell *shell, t_lines *lst_lines);
 void     			ft_back_redirection(t_shell *shell, t_lines *fun);
 char    			*replace_line(t_shell *shell, char *line);
-void   				  prepare_exec(t_shell *shell, t_lines *lst_lines);
+void   				prepare_exec(t_shell *shell, t_lines *lst_lines);
 int					empty_line(char *str);
-char 				**ft_split_argv(char *line);
+char 				**ft_split_argv(char *line, t_shell *shell);
 char 				*change_variabe(char *line);
+char 				*dollar(char *line, t_env *env);
+char 				*delete_quotes(char *line);
 
 // SIGNAL_FUNCTION
 
