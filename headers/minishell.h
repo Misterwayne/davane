@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/16 13:31:26 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/17 16:29:35 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char 				**ft_split_argv(char *line, t_shell *shell);
 char 				*change_variabe(char *line);
 char 				*dollar(char *line, t_env *env);
 char 				*delete_quotes(char *line);
+char 				*protect_quotes(char *line);
 
 // SIGNAL_FUNCTION
 

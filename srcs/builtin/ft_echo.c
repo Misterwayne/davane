@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/16 13:23:20 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/17 16:50:08 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	print_arguments(char **argv, t_shell *shell)
 int		echo(char **argv, t_shell *shell)
 {
 	print_arguments(argv, shell);
-	return (0);
+	exit(999);
+	return (-999);
 }

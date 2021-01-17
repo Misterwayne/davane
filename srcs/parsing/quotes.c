@@ -47,7 +47,12 @@ char 	*delete_quotes(char *line)
 	symbol = 0;
 	while (line[i] != '\0')
 	{	
-		if ((line[i] == '\'' || line[i]== '\"') && symbol == 0)
+		if (line[i] == '\\')
+			{
+				copy[j++] = line[i + 1];
+				i = i + 2;
+			}
+		else if ((line[i] == '\'' || line[i]== '\"') && symbol == 0)
 			{
 				symbol = line[i];
 				i++;
@@ -64,4 +69,28 @@ char 	*delete_quotes(char *line)
 	copy[j] = '\0';
 	free(line);
 	return (copy);
+}
+
+char *protect_quotes(char *line)
+{
+	int i;
+	char *str1;
+	char *str2;
+	char *symbol;
+
+	i = 0;
+
+	while (line[i] != '\0')
+	{	
+		if (line[i] == '\'' || line[i] == '\"')
+			{
+				str1 = strndup(line, i);
+				str2 = ft_strjoin("\\", line + i);
+				free(line);
+				line = ft_strjoin(str1, str2);
+				i++;
+			}
+		i++;
+	}
+	return (line);
 }

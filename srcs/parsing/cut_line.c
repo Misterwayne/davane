@@ -31,7 +31,7 @@ int			skip_quotes(char *str, char quotes)
 	i = 1;
 	while (str[i] != '\0')
 	{
-		if (str[i] == quotes)
+		if (str[i] == quotes && (i == 1 || str[i - 1] != '\\'))
 			return (i);
 		i++;
 	}
@@ -46,7 +46,7 @@ t_lines		*cut_line(char *str, t_lines *lst_lines)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if ((str[i] == '"' || str[i] == '\'') && (i == 0 || str[i - 1] != '\\'))
 			i = i + skip_quotes(str + i, str[i]);
 		else if (is_special_symbol(str + i))
 		{

@@ -10,12 +10,16 @@ int 	line_size(char *line)
 	{
 		if (line[i] == ' ')
 			break;
-		if (line[i] == '\"' || line[i] == '\'')
+		if ((line[i] == '\"' || line[i] == '\'') && (i == 0 || line[i - 1] != '\\'))
 			{
 				symbol = line[i];
 				i++;
-				while(line[i] != symbol && line[i + 1] != '\0')
+				while (line[i + 1] != '\0')
+				{
+					if (line[i] == symbol && line[i - 1] != '\\')
+						break;
 					i++;
+				}
 			}
 		i++;
 	}

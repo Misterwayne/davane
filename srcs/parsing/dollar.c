@@ -1,17 +1,6 @@
 
 #include "../../headers/minishell.h"
 
-char *get_value(t_env *env, char *key)
-{
-	while(env)
-    {
-		if (ft_strcmp(env->key, key) == 0)
-	   		return (env->value);
-		env = env->next;
-    }
-	return (NULL);
-}
-
 char *get_key(char *line)
 {
 	char	*str;
@@ -28,6 +17,16 @@ char *get_key(char *line)
 	return (str);
 }
 
+char *get_value(t_env *env, char *key)
+{
+	while(env)
+    {
+		if (ft_strcmp(env->key, key) == 0)
+	   		return (env->value);
+		env = env->next;
+    }
+	return (NULL);
+}
 
 char *left_part(char *line, int i, t_env *env)
 {
@@ -50,10 +49,11 @@ char *left_part(char *line, int i, t_env *env)
 			free(key);
 			return (ft_strndup(line, i));
 		}
-	else
-		str2 = ft_strdup(var);
 	str1 = ft_strndup(line, i);
+	str2 = ft_strdup(var);
+	str2 = protect_quotes(str2);
 	new = ft_strjoin(str1, str2);
+	free(key);
 	free(str1);
 	free(str2);
 	return (new);
