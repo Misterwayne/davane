@@ -16,7 +16,7 @@ void print_data(t_lines *lst_lines)
 			ft_printf("emply line");
 		else
 			ft_printf("%s", tmp->line);
-		ft_printf("(%s)\n", tmp->symbol);
+		ft_printf("(input: %d)(output: %d)\n", tmp->input, tmp->output);
 		tmp = tmp->next;
 	}
 	ft_printf("%s\n", tmp);

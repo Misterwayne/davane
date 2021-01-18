@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/17 16:29:35 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/18 13:35:02 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ typedef struct lines
 	char			*symbol;
 	char			**argv;
 	char			*cmd;
+	int 			input;
+	int				output;
 	int             index;
+	char *file;
+	char *file_flag;
 	char			*executable;
 	struct lines	*next;
 }				t_lines;
