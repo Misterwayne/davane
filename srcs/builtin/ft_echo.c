@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 17:18:54 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/17 16:50:08 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/18 10:18:44 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_arguments(char **argv, t_shell *shell)
 			ft_printf("%s", argv[i]);
 			if (argv[i + 1])
 				ft_printf(" ");
+				
 			else if (!(argv[i + 1]) && flag == 0)
 				ft_printf("\n");
 			i++;
