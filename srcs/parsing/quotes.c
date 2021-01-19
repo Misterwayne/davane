@@ -1,35 +1,59 @@
 
 #include "../../headers/minishell.h"
 
-int		is_even_quotes(char *line) // am I using it?
+// int		is_even_quotes(char *line) // am I using it?
+// {
+// 	int i;
+// 	int n;
+
+// 	n = 0;
+// 	i = 0;
+
+// 	while (line[i] != '\0')
+// 	{
+// 		if (line[i] == '"')
+// 			n++;
+// 		i++;
+// 	}
+// 	if (n % 2 == 0)
+// 		return (0);
+// 	return (1);
+// }
+
+// char	*quotes(char *line) // am I using it?
+// {
+// 	char	*line2;
+
+// 	while (is_even_quotes(line) != 0)
+// 	{
+// 		ft_printf(">");
+// 		line = ft_strjoin(line, "\n");
+// 		if (get_next_line(0, &line2) > 0)
+// 			line = ft_strjoin(line, line2);
+// 	}
+// 	return (line);
+// }
+
+char *protect_quotes(char *line)
 {
 	int i;
-	int n;
+	char *str1;
+	char *str2;
+	char *symbol;
 
-	n = 0;
 	i = 0;
 
 	while (line[i] != '\0')
-	{
-		if (line[i] == '"')
-			n++;
+	{	
+		if (line[i] == '\'' || line[i] == '\"')
+			{
+				str1 = strndup(line, i);
+				str2 = ft_strjoin("\\", line + i);
+				free(line);
+				line = ft_strjoin(str1, str2);
+				i++;
+			}
 		i++;
-	}
-	if (n % 2 == 0)
-		return (0);
-	return (1);
-}
-
-char	*quotes(char *line) // am I using it?
-{
-	char	*line2;
-
-	while (is_even_quotes(line) != 0)
-	{
-		ft_printf(">");
-		line = ft_strjoin(line, "\n");
-		if (get_next_line(0, &line2) > 0)
-			line = ft_strjoin(line, line2);
 	}
 	return (line);
 }
@@ -71,26 +95,16 @@ char 	*delete_quotes(char *line)
 	return (copy);
 }
 
-char *protect_quotes(char *line)
+
+char    **quotes(t_shell *shell, char **argv)
 {
 	int i;
-	char *str1;
-	char *str2;
-	char *symbol;
 
-	i = 0;
-
-	while (line[i] != '\0')
-	{	
-		if (line[i] == '\'' || line[i] == '\"')
-			{
-				str1 = strndup(line, i);
-				str2 = ft_strjoin("\\", line + i);
-				free(line);
-				line = ft_strjoin(str1, str2);
-				i++;
-			}
-		i++;
-	}
-	return (line);
+    i = 0;
+    while (argv[i])
+    {
+        argv[i] = delete_quotes(argv[i]);
+        i++;
+    }
+    return (argv);
 }

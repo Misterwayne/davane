@@ -58,7 +58,7 @@ static int	find_symbol(char *line)
 	return (i);
 }
 
-static void		fill_stucture(t_lines **lst_lines, char *line, int i)
+int	fill_stucture(t_lines **lst_lines, char *line, int i)
 {
 	char *str;
 	t_lines *elem;
@@ -67,20 +67,39 @@ static void		fill_stucture(t_lines **lst_lines, char *line, int i)
 	elem = create_elem(str);
 	add_to_end(lst_lines, elem);
 	if (line[i] == ';' || line[i] == '|')
-		elem->c = line[i];
+		{
+			elem->c = line[i];
+			if (empty_line(str))
+				{
+					ft_printf("minishell: syntax error near unexpected token `");
+					ft_printf("%c", elem->c);
+					ft_printf("\'\n");
+					return (-1);
+				}
+		}
+	return (0);
 }
 
-t_lines		*parse(char *line, t_lines **lst_lines)
+int 	parse(char *line, t_lines **lst_lines)
 {
 	int i;
 	
 	while (line)
 	{
 		i = find_symbol(line);
-		fill_stucture(lst_lines, line, i);
+		if (fill_stucture(lst_lines, line, i) == -1)
+			return (-1);
 		if (line[i] == '\0')
 			break;
+		// if (line[i] == '|' && empty_line(line + i + 1))
+		// {
+		// 	free(line);
+		// 	ft_printf(">");
+		// 	get_next_line(0, &line);
+		// 	i = 0;
+		// 	continue;
+		// }
 		line = line + i + 1;
 	}
-	return (NULL);
+	return (0);
 }

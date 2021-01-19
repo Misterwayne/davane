@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/19 13:37:50 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/19 15:56:11 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ char				*ft_strndup(char *str, int n);
 char				**split_dollar(char *line);	//check if one of the arguments stat with '$' and if yes replace it by its value
 int     			get_dollar(char *s, char *res, int i);
 
-void				parse_redirections(t_lines *lst_lines);
+int					parse(char *line, t_lines **lst_lines);
+int					parse_redirections(t_lines *lst_lines);
 
 
 
@@ -144,8 +145,7 @@ int					ft_exit(char **argv, t_shell *shell);		//this will need to  be able to f
 int					is_special_symbol(char *str);
 void				parse_functions(t_shell *shell, char *line);
 int     			launch_body(t_shell *shell, t_lines *fun);
-// int   				launch_exec(t_shell *shell, char **args, int input, int output);
-int         		launch_exec(t_shell *shell, t_lines *lst_lines, int input, int output);
+int       	  launch_exec(t_shell *shell, t_lines *lst_lines);
 void				semicolon(t_shell *shell, t_lines *lst_lines);
 void    			ft_pipe(t_shell *shell, t_lines *lst_lines);
 void				ft_redirection(t_shell *shell, t_lines *lst_lines);
@@ -158,6 +158,7 @@ char 				*change_variabe(char *line);
 char 				*dollar(char *line, t_env *env);
 char 				*delete_quotes(char *line);
 char 				*protect_quotes(char *line);
+char    			**quotes(t_shell *shell, char **argv);
 
 // SIGNAL_FUNCTION
 
