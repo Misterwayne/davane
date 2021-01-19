@@ -3,34 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   launch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwane <mwane@student.42.fr>                +#+  +:+       +#+        */
+/*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:17:08 by truepath          #+#    #+#             */
-/*   Updated: 2020/08/21 15:57:40 by mwane            ###   ########.fr       */
+/*   Updated: 2021/01/19 11:51:56 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int		launch(t_shell *shell, int index, char **argv)
+static int     create_pipe(t_lines *elem)
 {
-	pid_t pid;
+   int     fd[2];
+   
+   if(pipe(fd) < 0)
+    {
+        ft_printf("Can\'t create pipe\n");
+        exit(-1); 
+    }
+   elem->output = fd[1];
+   return (fd[0]);
+}
 
-	
-	pid = fork();
-	shell->last_pid = pid;
-	if (pid < 0)
+void     launch(t_shell *shell, t_lines *lst_lines)
+{
+	while (lst_lines)
 	{
-		perror("fork failed");
-		exit(1);
+		prepare_exec(shell, lst_lines);
+		// if (lst_lines->c == '|')
+		// 	create_pipe(lst_lines);
+    	launch_exec(shell, lst_lines, 0, 0);
+		lst_lines = lst_lines->next;
 	}
-	if (pid == 0)// use the index to acces the right function and then passes the argvs 
-	{
-		if (index > 6)
-			return ERROR;
-		shell->last_return = shell->cmd->builtin_array[index](argv, shell);
-	}
-	else
-		waitpid(pid, NULL, 0);
-	return (0);
 }

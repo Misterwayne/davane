@@ -39,8 +39,8 @@ void        pipe_functions(t_shell *shell, t_lines *lst_lines)
         shell->last_pid = pid;
         wait(&status);
     }
-    ft_printf("%d,", status);
-    ft_printf("%d, ", shell->last_return);
+    // ft_printf("%d,", status);
+    // ft_printf("%d, ", shell->last_return);
     close_used_fd(shell);
 }
 
@@ -56,22 +56,22 @@ int         launch_exec(t_shell *shell, t_lines *lst_lines, int input, int outpu
     return (0);
 }
 
-int     launch_body(t_shell *shell, t_lines *lst_lines)
-{   
-    shell->input = 0;
-    shell->output = 0;
-    while (lst_lines)
-	{
-        // prepare_exec(shell, lst_lines);
-        if (!(lst_lines->symbol) || (ft_strcmp(lst_lines->symbol, ";") == 0))
-            semicolon(shell, lst_lines);
-        else if (ft_strcmp(lst_lines->symbol, "|") == 0)
-            ft_pipe(shell, lst_lines);
-        else if (ft_strcmp(lst_lines->symbol, ">") == 0 || ft_strcmp(lst_lines->symbol, ">>") == 0)
-            ft_redirection(shell, lst_lines);
-        else if (ft_strcmp(lst_lines->symbol, "<") == 0)
-            ft_back_redirection(shell, lst_lines);
-        lst_lines = lst_lines->next;
-	}
-    return (0);
-}
+// int     launch_body(t_shell *shell, t_lines *lst_lines)
+// {   
+//     shell->input = 0;
+//     shell->output = 0;
+//     while (lst_lines)
+// 	{
+//         // prepare_exec(shell, lst_lines);
+//         if (!(lst_lines->symbol) || (ft_strcmp(lst_lines->symbol, ";") == 0))
+//             semicolon(shell, lst_lines);
+//         else if (ft_strcmp(lst_lines->symbol, "|") == 0)
+//             ft_pipe(shell, lst_lines);
+//         else if (ft_strcmp(lst_lines->symbol, ">") == 0 || ft_strcmp(lst_lines->symbol, ">>") == 0)
+//             ft_redirection(shell, lst_lines);
+//         else if (ft_strcmp(lst_lines->symbol, "<") == 0)
+//             ft_back_redirection(shell, lst_lines);
+//         lst_lines = lst_lines->next;
+// 	}
+//     return (0);
+// }

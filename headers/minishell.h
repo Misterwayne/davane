@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/02 16:29:20 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/18 13:35:02 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:37:50 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,27 @@ we need an array of function for our bulltin.
 
 typedef struct	s_shell t_shell;
 
+typedef struct files 
+{
+	char	 *name;
+	char 	*symbol;
+	struct files 	*next;
+}			t_files;
+
 typedef struct lines
 {
 	char			*line;
 	char			*symbol;
 	char			**argv;
 	char			*cmd;
+	char			c;
 	int 			input;
 	int				output;
 	int             index;
-	char *file;
-	char *file_flag;
+	char 			*file;
+	char 			*file_flag;
 	char			*executable;
+	struct files	*files;
 	struct lines	*next;
 }				t_lines;
 
@@ -104,13 +113,16 @@ char				*ft_strndup(char *str, int n);
 char				**split_dollar(char *line);	//check if one of the arguments stat with '$' and if yes replace it by its value
 int     			get_dollar(char *s, char *res, int i);
 
+void				parse_redirections(t_lines *lst_lines);
+
 
 
 
 // MINISHELL CORE
 
 void				lsh_loop(t_shell *shell);				//main function
-int 				launch(t_shell *shell, int index, char **argv);	//Where we launch everything
+//int 				launch(t_shell *shell, int index, char **argv);	//Where we launch everything
+void     			launch(t_shell *shell, t_lines *lst_lines);
 void				load_cmd(t_cmd *cmd, t_shell *shell);
 void				load_usr(char **env, t_shell *shell);				//	init the cmd struct
 int					add_var(char *line, t_shell *shell);	// ad variable to the env

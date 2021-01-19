@@ -1,7 +1,5 @@
 
 #include "../../headers/minishell.h"
-char      *delete_spaces(char *line);
-char      *replace_line(t_shell *shell, char *line);
 
 int     check_commande(t_cmd *cmd, char *line)
 {

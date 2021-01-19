@@ -20,10 +20,10 @@ void     prepare_exec(t_shell *shell, t_lines *lst_lines)
     
     int i = 0;
     
-    lst_lines->line = dollar(lst_lines->line, shell->env);
+    //lst_lines->line = dollar(lst_lines->line, shell->env);
     if (!(lst_lines->argv))
         lst_lines->argv = ft_split_argv(lst_lines->line, shell);
-    lst_lines->argv = line_replacement(shell, lst_lines->argv);
+    //lst_lines->argv = line_replacement(shell, lst_lines->argv);
     lst_lines->cmd = lst_lines->argv[0];
     lst_lines->executable = add_path(shell, lst_lines->cmd);
     lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);

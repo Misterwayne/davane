@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/18 16:02:47 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:47:27 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void		parse_functions(t_shell *shell, char *line)
 
 	// line = quotes(line); // it might be not necessary because we are not handeling  multiline commands
 	lst_lines = NULL;
-	//lst_lines = cut_line(line, lst_lines);
 	parse(line, &lst_lines);
+	parse_redirections(lst_lines);
 	// if (error_check(lst_lines)) // stop the cycle when this is an error in the line
 	// 	return ;
-	// print_data(lst_lines);
-	//launch_body(shell, lst_lines);
+	print_data(lst_lines);
+	launch(shell, lst_lines);
 }
 
 void		lsh_loop(t_shell *shell)
