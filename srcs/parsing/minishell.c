@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/19 14:52:56 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/20 13:12:58 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void		parse_functions(t_shell *shell, char *line)
 	lst_lines = NULL;
 	if (parse(line, &lst_lines) == -1)
 		return ;
-	if (parse_redirections(lst_lines) == -1)
-		return ;
+	// if (parse_redirections(lst_lines) == -1)
+	// 	return ;
 	print_data(lst_lines);
 	launch(shell, lst_lines);
 }

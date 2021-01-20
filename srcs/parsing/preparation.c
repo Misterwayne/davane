@@ -24,6 +24,7 @@ void     prepare_exec(t_shell *shell, t_lines *lst_lines)
     lst_lines->cmd = lst_lines->argv[0];
     lst_lines->executable = add_path(shell, lst_lines->cmd);
     lst_lines->index = check_commande(shell->cmd, lst_lines->cmd);
+
     // while (lst_lines->argv[i])
     //     ft_printf("%s\n", lst_lines->argv[i++]);
     // need to check if it is possible to execute this

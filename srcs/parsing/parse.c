@@ -15,12 +15,13 @@ static void			add_to_end(t_lines **begin_list, t_lines *elem)
 	}
 }
 
-static t_lines		*create_elem(char *data)
+static t_lines		*create_elem(char *data, char *symbol)
 {
 	t_lines	*new;
 
 	new = malloc(sizeof(t_lines));
 	new->line = data;
+	new->symbol = symbol;
 	new->argv = NULL;
 	new->executable = NULL;
 	new->c = '0';
@@ -51,33 +52,34 @@ static int	find_symbol(char *line)
 				flag = line[i];
 			else
 				flag = 0;
-		else if ((line[i] == '|' ||  line[i] == ';') && flag == 0) // find |>;<
+		else if ((line[i] == '|' ||  line[i] == ';' || line[i] == '>' ||  line[i] == '<') && flag == 0) // find |>;<
 			return (i);
 		i++;
 	}
 	return (i);
 }
 
-int	fill_stucture(t_lines **lst_lines, char *line, int i)
+int		fill_stucture(t_lines **lst_lines, char *line, int i)
 {
 	char *str;
+	char *symbol;
 	t_lines *elem;
 
 	str = ft_strndup(line, i);
-	elem = create_elem(str);
+	if (line[i] == '>' && line[i + 1] == '>')
+		symbol = ft_strdup(">>");
+	else
+		symbol = ft_strndup(line + i, 1);
+	elem = create_elem(str, symbol);
 	add_to_end(lst_lines, elem);
-	if (line[i] == ';' || line[i] == '|')
-		{
-			elem->c = line[i];
-			if (empty_line(str))
-				{
-					ft_printf("minishell: syntax error near unexpected token `");
-					ft_printf("%c", elem->c);
-					ft_printf("\'\n");
-					return (-1);
-				}
-		}
 	return (0);
+	// if (empty_line(str))
+	// 	{
+	// 		ft_printf("minishell: syntax error near unexpected token `");
+	// 		ft_printf("%c", elem->c);
+	// 		ft_printf("\'\n");
+	// 		return (-1);
+	// 	}
 }
 
 int 	parse(char *line, t_lines **lst_lines)
@@ -87,10 +89,13 @@ int 	parse(char *line, t_lines **lst_lines)
 	while (line)
 	{
 		i = find_symbol(line);
-		if (fill_stucture(lst_lines, line, i) == -1)
-			return (-1);
+		fill_stucture(lst_lines, line, i);
 		if (line[i] == '\0')
-			break;
+			break ;
+		else if (line[i] == '>' && line[i + 1] == '>')
+			line = line + i + 2;
+		else 
+			line = line + i + 1;
 		// if (line[i] == '|' && empty_line(line + i + 1))
 		// {
 		// 	free(line);
@@ -99,7 +104,6 @@ int 	parse(char *line, t_lines **lst_lines)
 		// 	i = 0;
 		// 	continue;
 		// }
-		line = line + i + 1;
 	}
 	return (0);
 }
