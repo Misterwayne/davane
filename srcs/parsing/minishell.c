@@ -6,7 +6,7 @@
 /*   By: davlasov <davlasov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 19:15:21 by truepath          #+#    #+#             */
-/*   Updated: 2021/01/20 13:12:58 by davlasov         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:05:11 by davlasov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void		parse_functions(t_shell *shell, char *line)
 	// 	return ;
 	print_data(lst_lines);
 	launch(shell, lst_lines);
+	//print_data(lst_lines);
 }
 
 void		lsh_loop(t_shell *shell)
