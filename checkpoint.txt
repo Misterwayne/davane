@@ -1,9 +1,0 @@
-
-
-ECHO
-	echo $$ - number of process (if you do "sh", the number of process is changing)
-
-
-
-ENV
-	env myvar=6 - change the value of myvar and shows all var
